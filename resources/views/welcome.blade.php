@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                  <img src=" {{ asset('images/logo.svg') }}" width="1200px" alt="" class="img-responsive">
+                  <img src=" {{ asset('images/logo.svg') }}" width="1400px" alt="" class="img-responsive">
                 </div>
 
                 <p class="meta">
