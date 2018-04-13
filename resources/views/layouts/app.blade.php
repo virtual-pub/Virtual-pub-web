@@ -20,11 +20,15 @@
    height: 100%;
    width: auto;
    margin: 0 auto;
+   
 
 
    /* probably not needed anymore, but doesn't hurt */
    -o-object-fit: contain;
    object-fit: contain; 
+    }
+    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a {
+        color: #FFF800;
     }
 
     </style>

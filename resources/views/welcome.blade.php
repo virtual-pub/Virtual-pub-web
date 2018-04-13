@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- Styles -->
+        <link rel="shortcut icon" href="{{ asset('images/laravel.ico') }}">
         <style>
             html, body {
                 background-color: #f0f0f0;
@@ -42,7 +43,6 @@
             }
 
             .content {
-                background: #ffffff;
                 text-align: center;
             }
 
@@ -63,6 +63,10 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .menu-logo{
+                filter: contrast(0);
+                
+            }
         </style>
     </head>
     <body>
@@ -81,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                  <img src=" {{ asset('images/logo.svg') }}" width="1400px" alt="" class="img-responsive">
+                  <img src=" {{ asset('images/logo.svg') }}" width="1400px" alt="" class="img-responsive menu-logo">
                 </div>
 
                 <p class="meta">
