@@ -15,6 +15,9 @@ class CreateCervejasTable extends Migration
     {
         Schema::create('cervejas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome',150);
+            $table->smallInteger('amargor');
+            $table->smallInteger('teor_alcoolico');
             $table->timestamps();
         });
     }
