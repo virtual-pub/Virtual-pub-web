@@ -67,6 +67,7 @@
         .menu-logo {
             filter: contrast(0);
             margin-top:30px;
+            fill: #fff !important;
 
         }
 
@@ -81,6 +82,8 @@
         
         .bg-purple {
             background-color: #8B17CE;
+            color: 
+
         }
     </style>
 </head>
