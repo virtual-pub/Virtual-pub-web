@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Estilo;
 
 class CervejaController extends Controller
 {
@@ -80,5 +81,31 @@ class CervejaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ws($id = null) {
+        //indica o tipo de retorno do metodo
+        header("content-type: application/json; charset=utf-8");
+        if ($id == null) {
+            $retorno = array(
+                "situacao" => "erro",
+                "nome" => null);
+        } else {
+            // obtem o registro do id passado
+            $reg = Estilo::find($id);
+
+            //se encontrou
+            if (isset($reg)) {
+                $retorno = array(
+                    "situacao" => "encontrado",
+                    "nome" => $reg->nome);
+            } else {
+                $retorno = array(
+                    "situacao" => "inexistente",
+                    "nome" => null);
+            }
+        }
+        //converte array para o formato JSON
+        echo json_encode($retorno, JSON_PRETTY_PRINT);
     }
 }

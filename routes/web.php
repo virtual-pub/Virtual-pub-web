@@ -25,3 +25,4 @@ Route::get('oauth/{driver}', 'Auth\SocialAuthController@redirectToProvider')->na
 Route::get('oauth/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 
 
+Route::get('api/estilo/{id?}', 'CervejaController@ws');
