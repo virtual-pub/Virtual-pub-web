@@ -15,7 +15,7 @@ class CreateCoposTable extends Migration
     {
         Schema::create('copos', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('nome',40);
+            $table->string('nome',150);
             //$table->timestamps();
         });
     }

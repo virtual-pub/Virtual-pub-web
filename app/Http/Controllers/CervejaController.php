@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Estilo;
+use App\Cerveja;
 
 class CervejaController extends Controller
 {
@@ -15,6 +15,8 @@ class CervejaController extends Controller
     public function index()
     {
         //
+        $cervejas = Cerveja::paginate(3);
+        return view('cervejas_list', compact('cervejas'));
     }
 
     /**
