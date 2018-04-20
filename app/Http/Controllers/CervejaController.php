@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cerveja;
+use App\Estilo;
+use App\Copo;
+use App\Color;
 
 class CervejaController extends Controller
 {
@@ -94,7 +97,7 @@ class CervejaController extends Controller
                 "nome" => null);
         } else {
             // obtem o registro do id passado
-            $reg = Estilo::find($id);
+            $reg = Cerveja::find($id);
 
             //se encontrou
             if (isset($reg)) {
