@@ -25,4 +25,5 @@ Route::get('oauth/{driver}', 'Auth\SocialAuthController@redirectToProvider')->na
 Route::get('oauth/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 
 Route::resource('cervejas', 'CervejaController');
-Route::get('api/estilo/{id?}', 'CervejaController@ws');
+Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
+Route::get('api/cervejas', 'CervejaController@webServiceAll');
