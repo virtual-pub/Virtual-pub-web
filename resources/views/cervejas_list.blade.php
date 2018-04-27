@@ -28,10 +28,12 @@
                 <td> {{$cerveja->estilo->nome}} </td>
                 <td style="background-color: {{$cerveja->color->Tonalidade}};"> {{$cerveja->color->nome}} </td>
                 <td> {{$cerveja->copo->nome}} </td>
-                <td> <a href="{{route('cervejas.edit', '$cerveja->id')}}"
-                class='btn btn-info' 
-                role='button'> Alterar </a>
-            <form style="display: inline-block"
+                <td>
+                <a href="{{ route('cervejas.show', $cerveja->id) }}" 
+              class="btn btn-success btn-sm" role="button">Consultar</a>
+                <a href="{{ route('cervejas.edit', $cerveja->id) }}" class='btn btn-info btn-sm' role='button'> Alterar </a>
+
+                <form style="display: inline-block"
                   method="post"
                   action="{{route('cervejas.destroy', $cerveja->id)}}"
                   onsubmit="return confirm('Confirma Exclusão?')">

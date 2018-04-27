@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
-@section('conteudo')
+@section('content')
 
 
 <div class='col-sm-11'>
     @if ($acao == 1)
     <h2> Inclusão de Cervejas </h2>
-    @else 
+    @elseif ($acao == 2) 
     <h2> Alteração de Cervejas </h2>
+    @else
+    <h2> Consulta Cerveja </h2>
     @endif
 </div>
 <div class='col-sm-1'>
@@ -15,102 +17,109 @@
        role='button'> Voltar </a>
 </div>
 
+@if ($errors->any())
 <div class="col-sm-12">
-    @if (count($errors) > 0)
     <div class="alert alert-danger">
         <ul>
-            @foreach ($errors->all() as $error)
+        @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
-            @endforeach
+        @endforeach
         </ul>
     </div>
-    @endif    
 </div>
+@endif    
 
 
 
 <div class='col-sm-12'>
     @if ($acao == 1)
     <form method="post" action="{{route('cervejas.store')}}">
-        @else 
-        <form method="post" action="{{route('cervejas.update', $reg->id)}}">
-            {!! method_field('put') !!}
-            @endif
-            {{ csrf_field() }}
-            <div class="form-group">
-                <label for="modelo">Modelo do Veículo:</label>
-                <input type="text" class="form-control" id="modelo" 
-                       name="modelo" 
-                       value="{{$reg->modelo or old('modelo')}}"
+     @elseif ($acao == 2) 
+    <form method="post" action="{{route('cervejas.update', $reg->id)}}">
+        {!! method_field('put') !!}
+    @endif
+        {{ csrf_field() }}
+        <div class="form-group">
+                <label for="nome">Nome da Ceveja:</label>
+                <input type="text" class="form-control" id="nome" 
+                       name="nome" 
+                       value="{{$reg->nome or old('nome')}}"
                        required>
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="marca_id">Marca:</label>
-                <select class="form-control" id="marca_id" name="marca_id">
-                    @foreach ($marcas as $marca)    
-                    <option value="{{$marca->id}}" 
-                            @if ((isset($reg) && $reg->marca_id==$marca->id) 
-                            or old('marca_id') == $marca->id) selected @endif>
-                            {{$marca->nome}}</option>
-                    @endforeach    
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="copo_id">Copo:</label>
+            <select class="form-control" id="copo_id" name="copo_id">
+                @foreach ($copos as $copo)    
+                <option value="{{$copo->id}}" 
+                        @if ((isset($reg) && $reg->copo_id==$copo->id) 
+                        or old('copo_id') == $copo->id) selected @endif>
+                        {{$copo->nome}}</option>
+                @endforeach    
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="estilo_id">Estilo:</label>
+            <select class="form-control" id="estilo_id" name="estilo_id">
+                @foreach ($estilos as $estilo)    
+                <option value="{{$estilo->id}}" 
+                        @if ((isset($reg) && $reg->estilo_id==$estilo->id) 
+                        or old('estilo_id') == $estilo->id) selected @endif>
+                        {{$estilo->nome}}</option>
+                @endforeach    
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="color_id">Cor:</label>
+            <select class="form-control" id="color_id" name="color_id">
+                @foreach ($colors as $color)    
+                <option value="{{$color->id}}" 
+                        @if ((isset($reg) && $reg->color_id==$color->id) 
+                        or old('color_id') == $color->id) selected @endif>
+                        {{$color->nome}}</option>
+                @endforeach    
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label for="cor">Cor:</label>
-                <input type="text" class="form-control" id="cor" 
-                       name="cor" 
-                       value="{{$reg->cor or old('cor')}}"
-                       required>
-            </div>
+        <div class="form-group">
+            <label for="IBU">IBU:</label>
+            <input type="text" class="form-control" id="IBU" 
+                   name="IBU" 
+                   value="{{$reg->IBU or old('IBU')}}"
+                   required>
+        </div>
 
-            <div class="form-group">
-                <label for="ano">Ano:</label>
-                <input type="text" class="form-control" id="ano" 
-                       name="ano" 
-                       value="{{$reg->ano or old('ano')}}"
-                       required>
-            </div>
+        <div class="form-group">
+            <label for="ABV">ABV:</label>
+            <input type="text" class="form-control" id="ABV" 
+                   name="ABV" 
+                   value="{{$reg->ABV or old('ABV')}}"
+                   required>
+        </div>
 
-            <div class="form-group">
-                <label for="preco">Preço R$:</label>
-                <input type="text" class="form-control" id="preco" 
-                       name="preco" 
-                       value="{{$reg->preco or old('preco')}}"                   
-                       required>
-            </div>
+        <div class="form-group">
+            <label for="SRM">SRM:</label>
+            <input type="text" class="form-control" id="SRM" 
+                   name="SRM" 
+                   value="{{$reg->SRM or old('SRM')}}"
+                   required>
+        </div>
 
-            <div class="form-group">
-                <label for="combustivel">Combustível:</label>
-                <select class="form-control" id="combustivel" name="combustivel">
-                    <option value="A" 
-                            @if ((isset($reg) && $reg->combustivel=="Álcool") 
-                            or old('combustivel') == "A") selected @endif>
-                            Álcool</option>
-                    <option value="G"
-                            @if ((isset($reg) && $reg->combustivel=="Gasolina") 
-                            or old('combustivel') == "G") selected @endif>                        
-                            Gasolina</option>
-                    <option value="D"
-                            @if ((isset($reg) && $reg->combustivel=="Diesel") 
-                            or old('combustivel') == "D") selected @endif>
-                            Diesel</option>
-                    <option value="F"
-                            @if ((isset($reg) && $reg->combustivel=="Flex") 
-                            or old('combustivel') == "F") selected @endif>
-                            Flex</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="EBC">EBC:</label>
+            <input type="text" class="form-control" id="EBC" 
+                   name="EBC" 
+                   value="{{$reg->EBC or old('EBC')}}"
+                   required>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>    
+        @if($acao == 1 or $acao == 2)
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="reset" class="btn btn-success">Limpar</button>
+        @endif
+    </form>    
 </div>
 
-<script>
-$(document).ready(function () {
-    $('#preco').mask("##.###.##0,00", {reverse: true});
-});
-</script>
 
 @endsection

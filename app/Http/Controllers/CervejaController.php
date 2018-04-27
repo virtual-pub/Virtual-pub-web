@@ -45,6 +45,13 @@ class CervejaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nome' => 'required|unique:cervejas,nome,'.$id.'|min:3|max:100',
+            'IBU' => 'required|numeric|min:0|max:60',
+            'ABV' => 'required|numeric|min:0|max:60',
+            'EBC' => 'required|numeric|min:0|max:90',
+            'SRM' => 'required'
+        ]);
         // recupera todos os campos do formulário
         $dados = $request->all();
 
@@ -65,7 +72,18 @@ class CervejaController extends Controller
      */
     public function show($id)
     {
-        //
+        $reg = Cerveja::find($id);
+
+        // obtém as marcas para exibir no form de consulta
+        $copos = Copo::orderBy('nome')->get();
+        $estilos = Estilo::orderBy('nome')->get();
+        $colors = Color::orderBy('nome')->get();
+  
+        // indica ao form que será visualizado
+        $acao = 3;
+  
+        return view('cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+
     }
 
     /**
@@ -99,6 +117,13 @@ class CervejaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'nome' => 'required|unique:cervejas,nome,'.$id.'|min:3|max:100',
+            'IBU' => 'required|numeric|min:0|max:60',
+            'ABV' => 'required|numeric|min:0|max:60',
+            'EBC' => 'required|numeric|min:0|max:90',
+            'SRM' => 'required'
+        ]);
         $reg = Cerveja::find($id);
 
         $dados = $request->all();
