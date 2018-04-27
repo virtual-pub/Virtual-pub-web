@@ -46,7 +46,7 @@ class CervejaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nome' => 'required|unique:cervejas,nome,'.$id.'|min:3|max:100',
+            'nome' => 'required|unique:cervejas|min:3|max:100',
             'IBU' => 'required|numeric|min:0|max:60',
             'ABV' => 'required|numeric|min:0|max:60',
             'EBC' => 'required|numeric|min:0|max:90',
@@ -178,7 +178,9 @@ class CervejaController extends Controller
             }
         }
         //converte array para o formato JSON
+        echo "<pre>";
         echo json_encode($retorno, JSON_PRETTY_PRINT);
+        echo "</pre>";
     }
     
 }

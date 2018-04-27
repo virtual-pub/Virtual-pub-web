@@ -2,6 +2,16 @@
 
 @section('content')
 <div class='col-sm-12'>
+    <div class='row'>
+    <a href="{{ route('cervejas.create') }}" 
+         class="btn btn-info" role="button">
+           Novo</a>
+    </div>
+    @if (session('status'))
+    <div class="alert alert-success">
+      {{ session('status') }}
+    </div>
+    @endif
     <table class="table table-hover">
         <thead>
             <tr>
