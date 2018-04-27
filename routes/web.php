@@ -27,3 +27,8 @@ Route::get('oauth/{driver}/callback', 'Auth\SocialAuthController@handleProviderC
 Route::resource('cervejas', 'CervejaController');
 Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
 Route::get('api/cervejas', 'CervejaController@webServiceAll');
+
+Route::get('cervejafoto/{id}', 'CervejaController@foto')
+        ->name('cervejas.foto');
+Route::post('cervejasfotostore', 'CervejaController@storefoto')
+        ->name('cervejas.storefoto');

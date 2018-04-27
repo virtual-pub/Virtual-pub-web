@@ -182,5 +182,34 @@ class CervejaController extends Controller
         echo json_encode($retorno, JSON_PRETTY_PRINT);
         echo "</pre>";
     }
+
+    public function foto($id) {
+    
+        // obtém os dados do registro a ser exibido
+        $reg = Cerveja::find($id);
+
+        // obtém as marcas para exibir no form de cadastro
+        $copos = Copo::orderBy('nome')->get();
+        $estilos = Estilo::orderBy('nome')->get();
+        $colors = Color::orderBy('nome')->get();
+
+        return view('cerveja_foto', compact('reg', 'copos', 'estilos', 'colors'));
+    }
+
+    public function storefoto(Request $request) {
+
+        // recupera todos os campos do formulário
+        $dados = $request->all();
+
+        $id = $dados['id'];
+
+        if (isset($dados['foto'])) {
+            $fotoId = $id . '.jpg';
+            $request->foto->move(public_path('cervejas-img'), $fotoId);
+        }
+
+        return redirect()->route('cervejas.index')
+                        ->with('status', $request->nome . ' com Foto Cadastrada!');
+    }
     
 }
