@@ -28,6 +28,18 @@
                 <td> {{$cerveja->estilo->nome}} </td>
                 <td style="background-color: {{$cerveja->color->Tonalidade}};"> {{$cerveja->color->nome}} </td>
                 <td> {{$cerveja->copo->nome}} </td>
+                <td> <a href="{{route('cervejas.edit', '$cerveja->id')}}"
+                class='btn btn-info' 
+                role='button'> Alterar </a>
+            <form style="display: inline-block"
+                  method="post"
+                  action="{{route('cervejas.destroy', $cerveja->id)}}"
+                  onsubmit="return confirm('Confirma Exclusão?')">
+                {{ method_field('delete') }}
+                {{ csrf_field() }}
+                <button type="submit"
+                        class="btn btn-danger"> Excluir </button>
+            </form>              
             </tr>
             @endforeach
         </tbody>

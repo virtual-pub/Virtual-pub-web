@@ -87,7 +87,7 @@ class CervejaController extends Controller
         // indica ao form que será alteração
         $acao = 2;
 
-        return view('carros_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        return view('cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
     }
 
     /**
