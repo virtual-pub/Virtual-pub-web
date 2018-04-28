@@ -227,5 +227,34 @@ class CervejaController extends Controller
         return redirect()->route('cervejas.index')
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
     }
+
+    public function search() {
+        // se não estiver autenticado, redireciona para login
+        
+        $carros = Cerveja::paginate(3);
+        return view('cervejas_pesq', compact('cervejas'));
+    }
+
+    public function filtro(Request $request) {
+        // obtém dados do form de pesquisa
+        $nome = $request->nome;
+        $IBU = $request->IBU;
+
+        $cond = array();
+
+        if (!empty($nome)) {
+            array_push($cond, array('nome', 'like', '%' . $nome . '%'));
+        }
+
+        if (!empty($IBU)) {
+            array_push($cond, array('IBU', '<=', $IBU));
+        }
+
+        $cervejas = Cerveja::where($cond)
+                        ->orderBy('nome')->paginate(3);
+        return view('cervejas_pesq', compact('cervejas'));
+    }
+
+ 
     
 }

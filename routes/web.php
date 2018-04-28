@@ -30,6 +30,12 @@ Route::get('api/cervejas', 'CervejaController@webServiceAll');
 
 Route::get('ativar/{id}', 'CervejaController@ativar')
         ->name('cervejas.ativar');
+
+Route::get('cervejaspesq', 'CervejaController@search')
+        ->name('cervejas.search');
+Route::post('cervejasfiltro', 'CervejaController@filtro')
+        ->name('cervejas.filtro');
+
 Route::get('cervejafoto/{id}', 'CervejaController@foto')
         ->name('cervejas.foto');
 Route::post('cervejasfotostore', 'CervejaController@storefoto')
