@@ -28,6 +28,8 @@ Route::resource('cervejas', 'CervejaController');
 Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
 Route::get('api/cervejas', 'CervejaController@webServiceAll');
 
+Route::get('ativar/{id}', 'CervejaController@ativar')
+        ->name('cervejas.ativar');
 Route::get('cervejafoto/{id}', 'CervejaController@foto')
         ->name('cervejas.foto');
 Route::post('cervejasfotostore', 'CervejaController@storefoto')

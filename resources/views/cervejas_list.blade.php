@@ -26,6 +26,8 @@
                 <th>Estilo</th>
                 <th>Coloração</th>
                 <th>Copo</th>
+                <th>ativado</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +50,12 @@
                 <td> {{$cerveja->estilo->nome}} </td>
                 <td style="background-color: {{$cerveja->color->Tonalidade}};"> {{$cerveja->color->nome}} </td>
                 <td> {{$cerveja->copo->nome}} </td>
+                <td> <input type="checkbox" value="" id="{{ $cerveja->id }}"
+                            onclick="window.location.href ='{{route('cervejas.ativar', $cerveja->id)}}'" 
+                            style="width:25px; height:25px"> </td>
+        <script>
+            document.getElementById(<?= $cerveja->id ?>).checked = (<?= $cerveja->ativo === 1 ?>);
+        </script>
                 <td>
                 <a href="{{ route('cervejas.show', $cerveja->id) }}" 
               class="btn btn-info btn-sm" role="button">Consultar</a>
