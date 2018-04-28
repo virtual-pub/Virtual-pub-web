@@ -193,7 +193,7 @@ class CervejaController extends Controller
         $estilos = Estilo::orderBy('nome')->get();
         $colors = Color::orderBy('nome')->get();
 
-        return view('cerveja_foto', compact('reg', 'copos', 'estilos', 'colors'));
+        return view('cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
     }
 
     public function storefoto(Request $request) {
@@ -205,7 +205,7 @@ class CervejaController extends Controller
 
         if (isset($dados['foto'])) {
             $fotoId = $id . '.jpg';
-            $request->foto->move(public_path('cervejas-img'), $fotoId);
+            $request->foto->move(public_path('fotos'), $fotoId);
         }
 
         return redirect()->route('cervejas.index')

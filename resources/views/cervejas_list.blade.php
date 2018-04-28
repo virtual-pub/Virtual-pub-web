@@ -16,6 +16,7 @@
         <thead>
             <tr>
                 <th>Cód.</th>
+                <th>img</th>
                 <th>nome</th>
                 <th>IBU</th>
                 <th>ABV</th>
@@ -28,8 +29,16 @@
         </thead>
         <tbody>
             @foreach ($cervejas as $cerveja)
+            @php
+                if (file_exists(public_path('fotos/'.$cerveja->id.'.jpg'))) {
+                    $foto = '../fotos/'.$cerveja->id.'.jpg';
+                } else {
+                    $foto = '../images/avatar-placeholder.svg';
+            }
+            @endphp
             <tr>
                 <td> {{$cerveja->id}} </td>
+                <td><img src="{{$foto}}" alt="{{$cerveja->nome}}" style="width:20%"></td>
                 <td> {{$cerveja->nome}} </td>
                 <td> {{$cerveja->IBU}} </td>
                 <td> {{$cerveja->ABV}} </td>
@@ -42,7 +51,7 @@
                 <a href="{{ route('cervejas.show', $cerveja->id) }}" 
               class="btn btn-success btn-sm" role="button">Consultar</a>
                 <a href="{{ route('cervejas.edit', $cerveja->id) }}" class='btn btn-info btn-sm' role='button'> Alterar </a>
-
+                <a href="{{ route('cervejas.foto', $cerveja->id) }}" class='btn btn-success' role='button'> Foto </a>
                 <form style="display: inline-block"
                   method="post"
                   action="{{route('cervejas.destroy', $cerveja->id)}}"
