@@ -184,7 +184,8 @@ class CervejaController extends Controller
     }
 
     public function foto($id) {
-    
+        // se não estiver autenticado, redireciona para login
+        
         // obtém os dados do registro a ser exibido
         $reg = Cerveja::find($id);
 

@@ -4,19 +4,34 @@
 
 
 <div class='col-sm-11'>
-    <h2> Cadastro de Fotos das Cervejas </h2>
+ 
+    <h2> inserir foto de Cervejas </h2>
+
 </div>
 <div class='col-sm-1'>
     <a href='{{route('cervejas.index')}}' class='btn btn-primary' 
        role='button'> Voltar </a>
 </div>
 
-<form method="post" action="{{route('cervejas.storefoto')}}" 
-      enctype="multipart/form-data">
-   {{ csrf_field() }}
-   <input type="hidden" name="id" value="{{$reg->id}}">
-   
-   <div class="form-group">
+@if ($errors->any())
+<div class="col-sm-12">
+    <div class="alert alert-danger">
+        <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+        </ul>
+    </div>
+</div>
+@endif    
+
+
+
+<div class='col-sm-12'>
+    <form method="post" action="{{route('cervejas.store.foto')}}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input type="hidden" name="id" value="{{$reg->id}}">
+        <div class="form-group">
                 <label for="nome">Nome da Ceveja:</label>
                 <input type="text" class="form-control" id="nome" 
                        name="nome" 
@@ -90,9 +105,12 @@
                    value="{{$reg->EBC or old('EBC')}}"
                    required>
         </div>
+
         <button type="submit" class="btn btn-primary">Enviar</button>
-    </div>
-   <div class="col-sm-3" style="text-align: center">
+
+        
+
+<div class="col-sm-3" style="text-align: center">
 @php
 if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
    $foto = '../fotos/'.$reg->id.'.jpg';
@@ -100,7 +118,7 @@ if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
    $foto = '../images/avatar-placeholder.svg';
 }
 @endphp
-{!!"<img src='$foto' id='imagem' height='150' width='200' alt='Foto'>"!!}
+{!!"<img src=$foto id='imagem' height='150' width='200' alt='Foto'>"!!}
 <p>
 <div class="form-group">
     <label for="foto"> Foto </label>
@@ -128,7 +146,8 @@ function previewFile() {
         preview.src = "";
     }    
 }
-    
+   
 </script>
+
 
 @endsection

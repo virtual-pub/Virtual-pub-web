@@ -4,9 +4,10 @@
 <div class='col-sm-12'>
     <div class='row'>
     <a href="{{ route('cervejas.create') }}" 
-         class="btn btn-info" role="button">
+         class="btn btn-primary btn-lg" role="button">
            Novo</a>
     </div>
+    <br>
     @if (session('status'))
     <div class="alert alert-success">
       {{ session('status') }}
@@ -49,9 +50,9 @@
                 <td> {{$cerveja->copo->nome}} </td>
                 <td>
                 <a href="{{ route('cervejas.show', $cerveja->id) }}" 
-              class="btn btn-success btn-sm" role="button">Consultar</a>
-                <a href="{{ route('cervejas.edit', $cerveja->id) }}" class='btn btn-info btn-sm' role='button'> Alterar </a>
-                <a href="{{ route('cervejas.foto', $cerveja->id) }}" class='btn btn-success' role='button'> Foto </a>
+              class="btn btn-info btn-sm" role="button">Consultar</a>
+                <a href="{{ route('cervejas.edit', $cerveja->id) }}" class='btn btn-warning btn-sm' role='button'> Alterar </a>
+                <a href="{{ route('cervejas.foto', $cerveja->id) }}" class='btn btn-success btn-sm' role='button'> Foto </a>
                 <form style="display: inline-block"
                   method="post"
                   action="{{route('cervejas.destroy', $cerveja->id)}}"
@@ -59,7 +60,7 @@
                 {{ method_field('delete') }}
                 {{ csrf_field() }}
                 <button type="submit"
-                        class="btn btn-danger"> Excluir </button>
+                        class="btn btn-danger btn-lg"> Excluir </button>
             </form>              
             </tr>
             @endforeach

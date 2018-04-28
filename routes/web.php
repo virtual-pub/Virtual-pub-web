@@ -31,4 +31,4 @@ Route::get('api/cervejas', 'CervejaController@webServiceAll');
 Route::get('cervejafoto/{id}', 'CervejaController@foto')
         ->name('cervejas.foto');
 Route::post('cervejasfotostore', 'CervejaController@storefoto')
-        ->name('cervejas.storefoto');
+        ->name('cervejas.store.foto');
