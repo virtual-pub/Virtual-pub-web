@@ -231,7 +231,7 @@ class CervejaController extends Controller
     public function search() {
         // se não estiver autenticado, redireciona para login
         
-        $carros = Cerveja::paginate(3);
+        $cervejas = Cerveja::paginate(3);
         return view('cervejas_pesq', compact('cervejas'));
     }
 
