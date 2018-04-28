@@ -151,6 +151,21 @@ class CervejaController extends Controller
         }
     }
 
+    public function ativar($id) {
+
+        $reg = Cerveja::find($id);
+
+        $reg->ativo = ($reg->ativo == 0) ? 1 : 0;
+        $estado = ($reg->ativo == 1) ? 'Ativado' : 'Desativado';
+
+        $reg->save();
+
+        if ($reg) {
+            return redirect()->route('cervejas.index')
+                            ->with('status', $reg->nome . ' ' . $estado . '!');
+        }
+    }
+
     public function webServiceId($id = null) {
         //indica o tipo de retorno do metodo
         header("content-type: application/json; charset=utf-8");
