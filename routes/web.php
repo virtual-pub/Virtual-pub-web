@@ -19,10 +19,21 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//admin
+Route::prefix('admin')->group(function() {
+        Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+        Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+        Route::get('/', 'AdminController@index')->name('admin.dashboard');
+});
+
+
 // Social Auth
-Route::get('auth/social', 'Auth\SocialAuthController@show')->name('social.login');
-Route::get('oauth/{driver}', 'Auth\SocialAuthController@redirectToProvider')->name('social.oauth');
-Route::get('oauth/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
+Route::prefix('oauth')->group(function() {
+        Route::get('/social', 'Auth\SocialAuthController@show')->name('social.login');
+        Route::get('/{driver}', 'Auth\SocialAuthController@redirectToProvider')->name('social.oauth');
+        Route::get('/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
+});
+
 
 Route::resource('cervejas', 'CervejaController');
 Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
