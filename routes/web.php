@@ -39,6 +39,9 @@ Route::resource('cervejas', 'CervejaController');
 Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
 Route::get('api/cervejas', 'CervejaController@webServiceAll');
 
+Route::get('cervejasgraf', 'CervejaController@grafCervejaEstilo')
+        ->name('cervejas.graf');
+
 Route::get('ativar/{id}', 'CervejaController@ativar')
         ->name('cervejas.ativar');
 

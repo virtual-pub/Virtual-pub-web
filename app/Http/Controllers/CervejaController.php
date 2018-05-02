@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Cerveja;
 use App\Estilo;
 use App\Copo;
@@ -17,7 +19,10 @@ class CervejaController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
+
         $cervejas = Cerveja::paginate(3);
         return view('cervejas_list', compact('cervejas'));
     }
@@ -29,6 +34,10 @@ class CervejaController extends Controller
      */
     public function create()
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
+
         $acao = 1;
         $copos = Copo::orderBy('nome')->get();
         $estilos = Estilo::orderBy('nome')->get();
@@ -94,6 +103,9 @@ class CervejaController extends Controller
      */
     public function edit($id)
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
         // obtém os dados do registro a ser editado 
         $reg = Cerveja::find($id);
 
@@ -152,6 +164,9 @@ class CervejaController extends Controller
     }
 
     public function ativar($id) {
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
 
         $reg = Cerveja::find($id);
 
@@ -200,7 +215,9 @@ class CervejaController extends Controller
 
     public function foto($id) {
         // se não estiver autenticado, redireciona para login
-        
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
         // obtém os dados do registro a ser exibido
         $reg = Cerveja::find($id);
 
@@ -230,7 +247,10 @@ class CervejaController extends Controller
 
     public function search() {
         // se não estiver autenticado, redireciona para login
-        
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
+        }
+
         $cervejas = Cerveja::paginate(3);
         return view('cervejas_pesq', compact('cervejas'));
     }
@@ -253,6 +273,16 @@ class CervejaController extends Controller
         $cervejas = Cerveja::where($cond)
                         ->orderBy('nome')->paginate(3);
         return view('cervejas_pesq', compact('cervejas'));
+    }
+
+    public function grafCervejaEstilo(){
+        $cervejas = DB::table('cervejas')
+                ->join('estilos', 'cervejas.estilo_id', '=','estilos.id')
+                ->select('estilos.nome as estilo', DB::raw('count(*) as num'))
+                ->groupBy('estilos.nome')
+                ->get();
+
+        return view('cervejas_graf', compact('cervejas'));
     }
 
  
