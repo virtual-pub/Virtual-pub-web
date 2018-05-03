@@ -54,3 +54,6 @@ Route::get('cervejafoto/{id}', 'CervejaController@foto')
         ->name('cervejas.foto');
 Route::post('cervejasfotostore', 'CervejaController@storefoto')
         ->name('cervejas.store.foto');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

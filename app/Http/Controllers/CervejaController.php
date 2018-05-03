@@ -24,7 +24,7 @@ class CervejaController extends Controller
         }
 
         $cervejas = Cerveja::paginate(3);
-        return view('cervejas_list', compact('cervejas'));
+        return view('admin.cervejas_list', compact('cervejas'));
     }
 
     /**
@@ -43,7 +43,7 @@ class CervejaController extends Controller
         $estilos = Estilo::orderBy('nome')->get();
         $colors = Color::orderBy('nome')->get();
 
-        return view('cervejas_form', compact('acao', 'copos','estilos','colors'));
+        return view('admin.cervejas_form', compact('acao', 'copos','estilos','colors'));
     }
 
     /**
@@ -91,7 +91,7 @@ class CervejaController extends Controller
         // indica ao form que será visualizado
         $acao = 3;
   
-        return view('cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        return view('admin.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
 
     }
 
@@ -117,7 +117,7 @@ class CervejaController extends Controller
         // indica ao form que será alteração
         $acao = 2;
 
-        return view('cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        return view('admin.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
     }
 
     /**

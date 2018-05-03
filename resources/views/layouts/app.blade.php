@@ -12,30 +12,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <style>
-    
-    .navbar-brand>img {
-   max-height: 100%;
-   height: 100%;
-   width: auto;
-   margin: 0 auto;
-   
-
-
-   /* probably not needed anymore, but doesn't hurt */
-   -o-object-fit: contain;
-   object-fit: contain; 
-    }
-    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a {
-        color: #FFF800;
-    }
-
-    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -49,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('images/logo.svg') }}" alt="" srcset="">
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
@@ -63,12 +43,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('social.login') }}">Login</a></li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <img src="{{ auth()->user()->avatar }}" alt="" width="30" class="img-circle">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
