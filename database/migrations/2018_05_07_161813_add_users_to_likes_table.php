@@ -15,9 +15,13 @@ class AddUsersToLikesTable extends Migration
     {
         Schema::table('likes', function (Blueprint $table) {
             $table->Integer('user_id')->unsigned();
+            $table->Integer('post_id')->unsigned();
 
             $table->foreign('user_id')
                     ->references('id')->on('users')
+                    ->onDelete('restrict');
+            $table->foreign('post_id')
+                    ->references('id')->on('posts')
                     ->onDelete('restrict');
         });
     }
