@@ -111,7 +111,7 @@ return [
         'MAIN NAVIGATION',
         [
             'text'        => 'Cervejas',
-            'url'         => 'cervejas',
+            'url'         => 'admin/cervejas',
             'icon'        => 'beer',
             
         ],

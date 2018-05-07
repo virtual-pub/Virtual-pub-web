@@ -17,9 +17,9 @@ class CreateCervejasTable extends Migration
             $table->increments('id');
             $table->string('nome',150);
             $table->smallInteger('IBU');
-            $table->smallInteger('ABV');
-            $table->smallInteger('SRM');
-            $table->smallInteger('EBC');
+            $table->float('ABV', 9, 2);
+            $table->float('SRM', 9, 2);
+            $table->float('EBC', 9, 2);
             $table->timestamps();
         });
     }

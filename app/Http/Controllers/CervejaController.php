@@ -41,7 +41,8 @@ class CervejaController extends Controller
         $acao = 1;
         $copos = Copo::orderBy('nome')->get();
         $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('nome')->get();
+        $colors = Color::orderBy('id', 'asc')->get();
+
 
         return view('admin.cervejas_form', compact('acao', 'copos','estilos','colors'));
     }
@@ -86,7 +87,7 @@ class CervejaController extends Controller
         // obtém as marcas para exibir no form de consulta
         $copos = Copo::orderBy('nome')->get();
         $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('nome')->get();
+        $colors = Color::orderBy('id', 'asc')->get();
   
         // indica ao form que será visualizado
         $acao = 3;
@@ -226,7 +227,7 @@ class CervejaController extends Controller
         $estilos = Estilo::orderBy('nome')->get();
         $colors = Color::orderBy('nome')->get();
 
-        return view('cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
+        return view('admin.cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
     }
 
     public function storefoto(Request $request) {
@@ -252,7 +253,7 @@ class CervejaController extends Controller
         }
 
         $cervejas = Cerveja::paginate(3);
-        return view('cervejas_pesq', compact('cervejas'));
+        return view('admin.cervejas_list', compact('cervejas'));
     }
 
     public function filtro(Request $request) {
@@ -272,7 +273,7 @@ class CervejaController extends Controller
 
         $cervejas = Cerveja::where($cond)
                         ->orderBy('nome')->paginate(3);
-        return view('cervejas_pesq', compact('cervejas'));
+        return view('admin.cervejas_list', compact('cervejas'));
     }
 
     public function grafCervejaEstilo(){
@@ -282,7 +283,7 @@ class CervejaController extends Controller
                 ->groupBy('estilos.nome')
                 ->get();
 
-        return view('cervejas_graf', compact('cervejas'));
+        return view('admin.cervejas_graf', compact('cervejas'));
     }
 
  

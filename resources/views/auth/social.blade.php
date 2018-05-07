@@ -1,47 +1,36 @@
-@extends('layouts.app')
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                @if ($errors->has('msg'))
-                    <div class="alert alert-warning">
-                        {{ $errors->first('msg') }}
-                        <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                    </div>
-                @endif
+@extends('adminlte::master')
 
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center">Social Login </div>
+@section('adminlte_css')
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
+    @yield('css')
+@stop
 
-                    <div class="panel-body">
+@section('body_class', 'login-page')
 
-                        <p class="lead text-center">Authenticate using your social network account from one of following providers</p>
-
-                        <a href="{{ route('social.oauth', 'facebook') }}" class="btn btn-primary btn-block">
-                            Login with Facebook
-                        </a>
-
-                        <a href="{{ route('social.oauth', 'twitter') }}" class="btn btn-info btn-block">
-                            Login with Twitter
-                        </a>
-
-                        <a href="{{ route('social.oauth', 'google') }}" class="btn btn-danger btn-block">
-                            Login with Google
-                        </a>
-
-                        <a href="{{ route('social.oauth', 'github') }}" class="btn btn-default btn-block">
-                            Login with Github
-                        </a>
-
-                        <hr>
-
-                        <a href="{{ route('login') }}" class="btn btn-default btn-block">
-                            Login with Email
-                        </a>
-                    </div>
-                </div>
-            </div>
+@section('body')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
+            <a href="{{ route('social.oauth', 'facebook') }}" class="btn btn-block btn-social btn-facebook">
+                <span class="fa fa-facebook"></span>
+                Login with Facebook
+            </a>
+           
+            <a href="{{ route('social.oauth', 'google') }}" class="btn btn-block btn-social btn-google">
+                <span class="fa fa-google"></span>
+                Login with Google
+            </a>
+            <hr>
+            <a href="{{ route('login') }}" class="btn btn-block btn-social btn-default">
+                <span class="fa fa-envelope"></span>
+                Login with Email
+            </a>
         </div>
     </div>
-@endsection
+@stop

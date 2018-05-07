@@ -24,6 +24,24 @@ Route::prefix('admin')->group(function() {
         Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
         Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
         Route::get('/', 'AdminController@index')->name('admin.dashboard');
+       
+});
+
+// Cervejas
+Route::resource('admin/cervejas', 'CervejaController');
+Route::prefix('admin/cervejas')->group(function() {
+        Route::get('/relatorio', 'CervejaController@grafCervejaEstilo')->name('cervejas.graf');
+        Route::get('/ativar/{id}', 'CervejaController@ativar')->name('cervejas.ativar');
+        Route::get('/pesquisa', 'CervejaController@search')->name('cervejas.search');
+        Route::post('/filtro', 'CervejaController@filtro')->name('cervejas.filtro');
+        Route::get('/foto/{id}', 'CervejaController@foto')->name('cervejas.foto');
+        Route::post('/fotostore', 'CervejaController@storefoto')->name('cervejas.store.foto');
+});
+
+// Estilos
+Route::resource('config/estilos', 'EstiloController');
+Route::prefix('config/estilos')->group(function() {
+        
 });
 
 
@@ -34,26 +52,5 @@ Route::prefix('oauth')->group(function() {
         Route::get('/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 });
 
-
-Route::resource('cervejas', 'CervejaController');
 Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
 Route::get('api/cervejas', 'CervejaController@webServiceAll');
-
-Route::get('cervejasgraf', 'CervejaController@grafCervejaEstilo')
-        ->name('cervejas.graf');
-
-Route::get('ativar/{id}', 'CervejaController@ativar')
-        ->name('cervejas.ativar');
-
-Route::get('cervejaspesq', 'CervejaController@search')
-        ->name('cervejas.search');
-Route::post('cervejasfiltro', 'CervejaController@filtro')
-        ->name('cervejas.filtro');
-
-Route::get('cervejafoto/{id}', 'CervejaController@foto')
-        ->name('cervejas.foto');
-Route::post('cervejasfotostore', 'CervejaController@storefoto')
-        ->name('cervejas.store.foto');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

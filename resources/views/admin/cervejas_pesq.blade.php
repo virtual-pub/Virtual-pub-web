@@ -1,48 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class='col-sm-12'>
-    <div class='col-sm-11'>
-        <h2> Pesquisa de Cervejas </h2>
-    </div>
-    <div class='col-sm-1'>
-        <br>
-        <a href='{{route('cervejas.search')}}' class='btn btn-primary' 
-           role='button'> Ver Todos </a>
-    </div>
 
-    <form method="post" action="{{route('cervejas.filtro')}}">
-        {{ csrf_field() }}
-
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="nome"> Nome da Cerveja </label>
-                <input type="text" id="nome" name="nome" class="form-control">
-            </div>
-        </div>
-
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label for="IBU"> IBU Máximo </label>
-                <input type="text" id="IBU" name="IBU" class="form-control">
-            </div>
-        </div>
-
-        <div class="col-sm-1">
-            <div class="form-group">
-                <label> &nbsp; </label>
-                <button type="submit" class="btn btn-primary">Pesquisar</button>
-            </div>
-        </div>
-    </form>
-
-    @if (count($cervejas)==0)
-    <div class="col-sm-12">
-        <div class="alert alert-success">
-            Não há cervejas com o filtro definido
-        </div>
-    </div>
-    @endif
 
     <table class="table table-hover">
         <thead>

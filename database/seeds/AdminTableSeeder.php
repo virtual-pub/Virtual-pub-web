@@ -16,7 +16,7 @@ class AdminTableSeeder extends Seeder
   
         Admin::create( [
             'email' => 'vbacch@gmail.com' ,
-            'password' => Hash::make( 'V!n!c1u$' ) ,
+            'password' => Hash::make( '03021994' ) ,
             'name' => 'Vinicius' ,
         ] );
     }

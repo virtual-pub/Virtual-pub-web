@@ -14,6 +14,8 @@ class EstilosTableSeeder extends Seeder
     {
         DB::table('estilos')->insert(['nome' => 'American Light Lager']);
         DB::table('estilos')->insert(['nome' => 'American Lager']);
+        DB::table('estilos')->insert(['nome' => 'American Pale Ale']);
+        DB::table('estilos')->insert(['nome' => 'American Indian Pale Ale']);
         DB::table('estilos')->insert(['nome' => 'Cream Ale']);
         DB::table('estilos')->insert(['nome' => 'American Wheat Beer']);
         DB::table('estilos')->insert(['nome' => 'International Pale Lager']);
@@ -27,6 +29,7 @@ class EstilosTableSeeder extends Seeder
         DB::table('estilos')->insert(['nome' => 'Festbier']);
         DB::table('estilos')->insert(['nome' => 'Helles Bock']);
         DB::table('estilos')->insert(['nome' => 'German Leichtbier']);
+        DB::table('estilos')->insert(['nome' => 'Weissbier']);
 
         
            
