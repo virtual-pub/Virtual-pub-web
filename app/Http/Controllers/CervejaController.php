@@ -23,8 +23,13 @@ class CervejaController extends Controller
             return redirect('/');
         }
 
-        $cervejas = Cerveja::paginate(3);
-        return view('admin.cervejas_list', compact('cervejas'));
+        $cervejas = Cerveja::all();
+        $grafCervejasEstilos = DB::table('cervejas')
+                ->join('estilos', 'cervejas.estilo_id', '=','estilos.id')
+                ->select('estilos.nome as estilo', DB::raw('count(*) as num'))
+                ->groupBy('estilos.nome')
+                ->get();
+        return view('admin.cervejas_list', compact('cervejas', 'grafCervejasEstilos'));
     }
 
     /**
@@ -209,9 +214,9 @@ class CervejaController extends Controller
             }
         }
         //converte array para o formato JSON
-        echo "<pre>";
+ 
         echo json_encode($retorno, JSON_PRETTY_PRINT);
-        echo "</pre>";
+     
     }
 
     public function foto($id) {
@@ -246,45 +251,6 @@ class CervejaController extends Controller
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
     }
 
-    public function search() {
-        // se não estiver autenticado, redireciona para login
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
-
-        $cervejas = Cerveja::paginate(3);
-        return view('admin.cervejas_list', compact('cervejas'));
-    }
-
-    public function filtro(Request $request) {
-        // obtém dados do form de pesquisa
-        $nome = $request->nome;
-        $IBU = $request->IBU;
-
-        $cond = array();
-
-        if (!empty($nome)) {
-            array_push($cond, array('nome', 'like', '%' . $nome . '%'));
-        }
-
-        if (!empty($IBU)) {
-            array_push($cond, array('IBU', '<=', $IBU));
-        }
-
-        $cervejas = Cerveja::where($cond)
-                        ->orderBy('nome')->paginate(3);
-        return view('admin.cervejas_list', compact('cervejas'));
-    }
-
-    public function grafCervejaEstilo(){
-        $cervejas = DB::table('cervejas')
-                ->join('estilos', 'cervejas.estilo_id', '=','estilos.id')
-                ->select('estilos.nome as estilo', DB::raw('count(*) as num'))
-                ->groupBy('estilos.nome')
-                ->get();
-
-        return view('admin.cervejas_graf', compact('cervejas'));
-    }
 
  
     

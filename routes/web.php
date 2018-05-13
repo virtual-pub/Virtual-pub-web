@@ -19,31 +19,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//admin
-Route::prefix('admin')->group(function() {
-        Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-        Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-        Route::get('/', 'AdminController@index')->name('admin.dashboard');
-       
-});
 
-// Cervejas
+        Route::group(['prefix'=>'cervejas'], function() {
+                
+                Route::get('ativar/{id}', 'CervejaController@ativar')->name('cervejas.ativar');
+                Route::get('foto/{id}', 'CervejaController@foto') ->name('cervejas.foto');
+                Route::post('foto/store', 'CervejaController@storefoto')->name('cervejas.store.foto');
+                
+        });
 Route::resource('admin/cervejas', 'CervejaController');
-Route::prefix('admin/cervejas')->group(function() {
-        Route::get('/relatorio', 'CervejaController@grafCervejaEstilo')->name('cervejas.graf');
-        Route::get('/ativar/{id}', 'CervejaController@ativar')->name('cervejas.ativar');
-        Route::get('/pesquisa', 'CervejaController@search')->name('cervejas.search');
-        Route::post('/filtro', 'CervejaController@filtro')->name('cervejas.filtro');
-        Route::get('/foto/{id}', 'CervejaController@foto')->name('cervejas.foto');
-        Route::post('/fotostore', 'CervejaController@storefoto')->name('cervejas.store.foto');
-});
-
-// Estilos
-Route::resource('config/estilos', 'EstiloController');
-Route::prefix('config/estilos')->group(function() {
-        
-});
-
 
 // Social Auth
 Route::prefix('oauth')->group(function() {
@@ -52,5 +36,16 @@ Route::prefix('oauth')->group(function() {
         Route::get('/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 });
 
-Route::get('api/cervejas/{id?}', 'CervejaController@webServiceId');
-Route::get('api/cervejas', 'CervejaController@webServiceAll');
+
+
+
+        
+
+
+
+
+
+
+
+
+

@@ -115,6 +115,12 @@ return [
             'icon'        => 'beer',
             
         ],
+        [
+            'text'        => 'Grafico',
+            'url'         => 'admin/cervejas/teste',
+            'icon'        => 'beer',
+            
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',

@@ -3,9 +3,8 @@
     color: #fff !important;
 }
 .cor{
-    width: 20px; 
-    height:20px; 
-    border-radius: 50%;
-    border: 1.5px solid #000;
+    width: 25px; 
+    height:25px; 
+    box-shadow: 3px 3px 5px #ccc;
     margin-right: 10px;
 }
