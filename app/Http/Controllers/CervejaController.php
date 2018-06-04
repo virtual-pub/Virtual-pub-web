@@ -19,9 +19,7 @@ class CervejaController extends Controller
      */
     public function index()
     {
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+        
 
         $cervejas = Cerveja::all();
         $grafCervejasEstilos = DB::table('cervejas')
@@ -39,9 +37,7 @@ class CervejaController extends Controller
      */
     public function create()
     {
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+       
 
         $acao = 1;
         $copos = Copo::orderBy('nome')->get();
@@ -109,9 +105,7 @@ class CervejaController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+        
         // obtém os dados do registro a ser editado 
         $reg = Cerveja::find($id);
 
@@ -170,9 +164,7 @@ class CervejaController extends Controller
     }
 
     public function ativar($id) {
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+        
 
         $reg = Cerveja::find($id);
 
@@ -221,9 +213,7 @@ class CervejaController extends Controller
 
     public function foto($id) {
         // se não estiver autenticado, redireciona para login
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+       
         // obtém os dados do registro a ser exibido
         $reg = Cerveja::find($id);
 

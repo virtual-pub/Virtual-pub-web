@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('provider', 20)->nullable();
             $table->string('provider_id')->nullable();
             $table->string('access_token')->nullable();
+            $table->boolean('isMantenedor')->default(0);
+            $table->boolean('isUser')->default(1);
+            $table->boolean('isFabricante')->default(0);
+
 
             $table->rememberToken();
             $table->timestamps();

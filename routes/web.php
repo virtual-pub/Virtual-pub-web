@@ -28,6 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
                 
         });
 Route::resource('admin/cervejas', 'CervejaController');
+Route::get('api/cerveja/{id}', 'CervejaController@webServiceId');
 
 // Social Auth
 Route::prefix('oauth')->group(function() {

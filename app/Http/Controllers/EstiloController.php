@@ -16,9 +16,7 @@ class EstiloController extends Controller
      */
     public function index()
     {
-        if (!Auth::guard('admin')->check()) {
-            return redirect('/');
-        }
+        
 
         $estilos = Estilo::paginate(3);
         return view('admin.estilos_list', compact('estilos'));
