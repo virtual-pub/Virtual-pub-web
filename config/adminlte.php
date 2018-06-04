@@ -108,18 +108,21 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        [
+            'header'=>'MAIN NAVIGATION',
+            'can'         => 'isMantenedor',
+        ],
         [
             'text'        => 'Cervejas',
-            'url'         => 'admin/cervejas',
+            'url'         => 'mantenedor/cervejas',
             'icon'        => 'beer',
-            
+            'can'         => 'isMantenedor',
         ],
         [
             'text'        => 'Grafico',
             'url'         => 'admin/cervejas/teste',
             'icon'        => 'beer',
-            
+            'can'         => 'isMantenedor',
         ],
         'ACCOUNT SETTINGS',
         [

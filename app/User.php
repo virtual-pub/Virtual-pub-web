@@ -26,8 +26,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'isMantenedor', 'isUser', 'isFabricante',
     ];
+
+    public function isMantenedor()
+    {
+        return $this->isMantenedor;
+    }
+    public function isFabricante()
+    {
+        return $this->isFabricante;
+    }
+    public function isUser()
+    {
+        return $this->isUser;
+    }
 
     public function getAvatarAttribute($val)
     {

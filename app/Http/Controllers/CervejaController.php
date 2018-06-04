@@ -9,6 +9,7 @@ use App\Cerveja;
 use App\Estilo;
 use App\Copo;
 use App\Color;
+use Gate;
 
 class CervejaController extends Controller
 {
@@ -19,15 +20,13 @@ class CervejaController extends Controller
      */
     public function index()
     {
-        
+        if(Auth::check() && Gate::allows('isMantenedor')){
+            $cervejas = Cerveja::all();
+            return view('mantenedor.cervejas_list', compact('cervejas'));
+        }
+        return redirect('/');
 
-        $cervejas = Cerveja::all();
-        $grafCervejasEstilos = DB::table('cervejas')
-                ->join('estilos', 'cervejas.estilo_id', '=','estilos.id')
-                ->select('estilos.nome as estilo', DB::raw('count(*) as num'))
-                ->groupBy('estilos.nome')
-                ->get();
-        return view('admin.cervejas_list', compact('cervejas', 'grafCervejasEstilos'));
+        
     }
 
     /**
@@ -37,7 +36,7 @@ class CervejaController extends Controller
      */
     public function create()
     {
-       
+        if(Auth::check() && Gate::allows('isMantenedor')){
 
         $acao = 1;
         $copos = Copo::orderBy('nome')->get();
@@ -45,7 +44,8 @@ class CervejaController extends Controller
         $colors = Color::orderBy('id', 'asc')->get();
 
 
-        return view('admin.cervejas_form', compact('acao', 'copos','estilos','colors'));
+        return view('mantenedor.cervejas_form', compact('acao', 'copos','estilos','colors'));
+        }
     }
 
     /**
@@ -83,6 +83,7 @@ class CervejaController extends Controller
      */
     public function show($id)
     {
+        if(Auth::check() && Gate::allows('isMantenedor')){
         $reg = Cerveja::find($id);
 
         // obtém as marcas para exibir no form de consulta
@@ -93,7 +94,8 @@ class CervejaController extends Controller
         // indica ao form que será visualizado
         $acao = 3;
   
-        return view('admin.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        return view('mantenedor.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        }
 
     }
 
@@ -105,6 +107,7 @@ class CervejaController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::check() && Gate::allows('isMantenedor')){
         
         // obtém os dados do registro a ser editado 
         $reg = Cerveja::find($id);
@@ -117,7 +120,8 @@ class CervejaController extends Controller
         // indica ao form que será alteração
         $acao = 2;
 
-        return view('admin.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        return view('mantenedor.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        }
     }
 
     /**
@@ -213,16 +217,18 @@ class CervejaController extends Controller
 
     public function foto($id) {
         // se não estiver autenticado, redireciona para login
-       
-        // obtém os dados do registro a ser exibido
-        $reg = Cerveja::find($id);
+        if(Auth::check() && Gate::allows('isMantenedor')){
 
-        // obtém as marcas para exibir no form de cadastro
-        $copos = Copo::orderBy('nome')->get();
-        $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('nome')->get();
-
-        return view('admin.cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
+            // obtém os dados do registro a ser exibido
+            $reg = Cerveja::find($id);
+            
+            // obtém as marcas para exibir no form de cadastro
+            $copos = Copo::orderBy('nome')->get();
+            $estilos = Estilo::orderBy('nome')->get();
+            $colors = Color::orderBy('nome')->get();
+            
+            return view('mantenedor.cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
+        }
     }
 
     public function storefoto(Request $request) {
@@ -241,7 +247,5 @@ class CervejaController extends Controller
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
     }
 
-
- 
     
 }
