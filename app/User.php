@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -27,26 +29,66 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token', 'isMantenedor', 'isUser', 'isFabricante',
-    ];
+    ]; 
 
+    /**
+     * 
+     * 
+     * 
+     */
     public function isMantenedor()
     {
         return $this->isMantenedor;
     }
+
+    /**
+     * 
+     * 
+     * 
+     */
     public function isFabricante()
     {
         return $this->isFabricante;
     }
+
+    /**
+     * 
+     * 
+     * 
+     */
     public function isUser()
     {
         return $this->isUser;
     }
 
+    /**
+     * 
+     * 
+     * 
+     */
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-'. Auth::user()->id);
+    }
+
+    /**
+     * 
+     * 
+     * 
+     */
     public function getAvatarAttribute($val)
     {
         return is_null($val) ? asset('images/avatar-placeholder.svg') : $val;
     }
 
+    /**
+     * 
+     * 
+     * 
+     */
+    public function post() {
+        return $this->belongsTo('App\Post');
+    }
 
 
    

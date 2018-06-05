@@ -28,6 +28,7 @@ Route::group(['prefix'=>'cervejas'], function() {
 Route::get('api/cerveja/{id}', 'CervejaController@webServiceId');
 
 Route::resource('mantenedor/cervejas', 'CervejaController');
+Route::get('user/{id}/posts', 'UserController@postsUser');
         
 
 // Social Auth

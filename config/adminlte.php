@@ -109,7 +109,7 @@ return [
 
     'menu' => [
         [
-            'header'=>'MAIN NAVIGATION',
+            'header'      => 'Manager',
             'can'         => 'isMantenedor',
         ],
         [
@@ -123,6 +123,22 @@ return [
             'url'         => 'admin/cervejas/teste',
             'icon'        => 'beer',
             'can'         => 'isMantenedor',
+        ],
+        [
+            'header'      => 'Sua Rede',
+            'can'         => 'isUser',
+        ],
+        [
+            'text'        => 'feed',
+            'url'         => 'user/feed',
+            'icon'        => 'feed',
+            'can'         => 'isUser',
+        ],
+        [
+            'text'        => 'Amigos',
+            'url'         => 'user/feed',
+            'icon'        => 'feed',
+            'can'         => 'isUser',
         ],
         'ACCOUNT SETTINGS',
         [
