@@ -2,19 +2,35 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            
-            <h1></h1>
+        <div class="col-md-3">
+            <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="{{$user->avatar}}" alt="User profile picture">
 
-            @foreach($post as $post)
-            <div class="panel panel-default">
-                <div class="panel-heading"> publicou</div>
+              <h3 class="profile-username text-center">{{$user->name}}</h3>
 
-                <div class="panel-body">
-                    {{$post->description}}
-                </div>
+              <p class="text-muted text-center">Software Engineer</p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>Followers</b> <a class="pull-right">1,322</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Following</b> <a class="pull-right">543</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Friends</b> <a class="pull-right">13,287</a>
+                </li>
+              </ul>
+              @if(Auth::user()->id != $user->id)
+              <a href="{{ route('user.follow', $user->id) }}" class="btn btn-primary btn-block"><b>Follow</b></a>
+              @endif
             </div>
-            @endforeach
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
         </div>
     </div>
 </div>

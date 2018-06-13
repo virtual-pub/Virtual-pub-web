@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUsersToLikesTable extends Migration
+class AddFabricanteToCervejasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class AddUsersToLikesTable extends Migration
      */
     public function up()
     {
-        Schema::table('likes', function (Blueprint $table) {
-            $table->Integer('user_id')->unsigned();
-            $table->Integer('post_id')->unsigned();
+        Schema::table('cerveja', function (Blueprint $table) {
+            $table->smallInteger('fabricante_id')->unsigned();
 
-            $table->foreign('user_id')
+            $table->foreign('fabricante_id')
                     ->references('id')->on('users')
-                    ->onDelete('restrict');
-            $table->foreign('post_id')
-                    ->references('id')->on('posts')
                     ->onDelete('restrict');
         });
     }
@@ -33,7 +29,7 @@ class AddUsersToLikesTable extends Migration
      */
     public function down()
     {
-        Schema::table('likes', function (Blueprint $table) {
+        Schema::table('cerveja', function (Blueprint $table) {
             //
         });
     }

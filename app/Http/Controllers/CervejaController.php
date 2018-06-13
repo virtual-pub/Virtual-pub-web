@@ -20,13 +20,18 @@ class CervejaController extends Controller
      */
     public function index()
     {
-        if(Auth::check() && Gate::allows('isMantenedor')){
-            $cervejas = Cerveja::all();
-            return view('mantenedor.cervejas_list', compact('cervejas'));
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $cervejas = Cerveja::all();
+                return view('cervejas.cervejas_list', compact('cervejas'));
+            }else if(Gate::allows('isFabricante')){
+                $cervejas = Cerveja::where('fabricante_id', Auth::user()->id);
+                return view('cervejas.cervejas_list', compact('cervejas'));
+            }
         }
+        
         return redirect('/');
 
-        
     }
 
     /**
@@ -36,16 +41,25 @@ class CervejaController extends Controller
      */
     public function create()
     {
-        if(Auth::check() && Gate::allows('isMantenedor')){
-
-        $acao = 1;
-        $copos = Copo::orderBy('nome')->get();
-        $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('id', 'asc')->get();
-
-
-        return view('mantenedor.cervejas_form', compact('acao', 'copos','estilos','colors'));
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $acao = 1;
+                $copos = Copo::orderBy('nome')->get();
+                $estilos = Estilo::orderBy('nome')->get();
+                $colors = Color::orderBy('id', 'asc')->get();
+                return view('cervejas.cervejas_form', compact('acao', 'copos','estilos','colors'));
+            } else if(Gate::allows('isFabricante')){
+                $acao = 1;
+                $copos = Copo::orderBy('nome')->get();
+                $estilos = Estilo::orderBy('nome')->get();
+                $colors = Color::orderBy('id', 'asc')->get();
+                return view('cervejas.cervejas_form', compact('acao', 'copos','estilos','colors'));
+            }
+        }else {
+            return redirect('/');
         }
+        
+        
     }
 
     /**
@@ -83,7 +97,6 @@ class CervejaController extends Controller
      */
     public function show($id)
     {
-        if(Auth::check() && Gate::allows('isMantenedor')){
         $reg = Cerveja::find($id);
 
         // obtém as marcas para exibir no form de consulta
@@ -94,8 +107,8 @@ class CervejaController extends Controller
         // indica ao form que será visualizado
         $acao = 3;
   
-        return view('mantenedor.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
-        }
+        return view('cervejas.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        
 
     }
 
@@ -107,20 +120,17 @@ class CervejaController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::check() && Gate::allows('isMantenedor')){
-        
-        // obtém os dados do registro a ser editado 
-        $reg = Cerveja::find($id);
-
-        // obtém as marcas para exibir no form de cadastro
-        $copos = Copo::orderBy('nome')->get();
-        $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('nome')->get();
-
-        // indica ao form que será alteração
-        $acao = 2;
-
-        return view('mantenedor.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Cerveja::find($id);
+                $copos = Copo::orderBy('nome')->get();
+                $estilos = Estilo::orderBy('nome')->get();
+                $colors = Color::orderBy('nome')->get();
+                $acao = 2;
+                return view('cervejas.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors'));
+            }
+        }else {
+            return redirect('/');
         }
     }
 
@@ -217,17 +227,16 @@ class CervejaController extends Controller
 
     public function foto($id) {
         // se não estiver autenticado, redireciona para login
-        if(Auth::check() && Gate::allows('isMantenedor')){
-
-            // obtém os dados do registro a ser exibido
-            $reg = Cerveja::find($id);
-            
-            // obtém as marcas para exibir no form de cadastro
-            $copos = Copo::orderBy('nome')->get();
-            $estilos = Estilo::orderBy('nome')->get();
-            $colors = Color::orderBy('nome')->get();
-            
-            return view('mantenedor.cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Cerveja::find($id);
+                $copos = Copo::orderBy('nome')->get();
+                $estilos = Estilo::orderBy('nome')->get();
+                $colors = Color::orderBy('nome')->get();
+                return view('cervejas.cervejas_foto', compact('reg', 'copos', 'estilos', 'colors'));
+            }
+        }else {
+            return redirect('/');
         }
     }
 

@@ -49,9 +49,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-
-        return view('user.profile', compact('user'));
+    
     }
 
     /**
@@ -88,10 +86,7 @@ class UserController extends Controller
         //
     }
 
-    public function postsUser(){
+    
+ 
 
-        $post = Post::where('user_id', User::id())->orderBy('created_at', 'desc')->get();
-
-        return view('user.profile', compact('post', 'user'));
-    }
 }

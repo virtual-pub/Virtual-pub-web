@@ -27,8 +27,8 @@ Route::group(['prefix'=>'cervejas'], function() {
 });
 Route::get('api/cerveja/{id}', 'CervejaController@webServiceId');
 
-Route::resource('mantenedor/cervejas', 'CervejaController');
-Route::get('user/{id}/posts', 'UserController@postsUser');
+Route::resource('cervejas', 'CervejaController');
+Route::get('user/{id}', 'UserController@show')->name('user.show');
         
 
 // Social Auth
@@ -37,6 +37,7 @@ Route::prefix('oauth')->group(function() {
         Route::get('/{driver}', 'Auth\SocialAuthController@redirectToProvider')->name('social.oauth');
         Route::get('/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 });
+
 
 
 
