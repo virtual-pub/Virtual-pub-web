@@ -10,7 +10,7 @@
     <div class="col-md-3">
         
         <!-- Profile Image -->
-        <div class="box box-primary">
+        <div class="box box-warning">
             <div class="box-body box-profile">
             @php
                 if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
@@ -21,7 +21,7 @@
             @endphp
         <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
         
-        <h3 class="profile-username text-center">{{$reg->name}}</h3>
+            <h3 class="profile-username text-center" style="color: {{$reg->color->Tonalidade}}">{{$reg->nome}}</h3>
         
         <p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p>
         
@@ -30,12 +30,29 @@
                 <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
             </li>
             <li class="list-group-item">
-                <b>Following</b> <a class="pull-right">543</a>
+                <b>Unidade Internacional de Amargor</b> <a class="pull-right">{{$reg->IBU}}</a>
             </li>
-          <li class="list-group-item">
-              <b>Friends</b> <a class="pull-right">13,287</a>
+            <li class="list-group-item">
+                <b>Copo Ideal</b> <a class="pull-right">{{$reg->copo->nome}}</a>
             </li>
         </ul>
+        <p class="text-muted text-center">Coloração</p>
+        <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+                <b>Escala EBC (Convenção de Cervejeiros da Europa)</b> <a class="pull-right">{{$reg->EBC}}</a>
+            </li>
+            <li class="list-group-item">
+                <b>Escala SRM (Metodo padrão de Referencia)</b> <a class="pull-right">{{$reg->SRM}}</a>
+            </li>
+            <li class="list-group-item">
+                <b>Tonalidade</b><a class="pull-right">{{$reg->color->nome}}</a>
+            </li>
+            <li class="list-group-item">
+                
+            <div class="text-center" style="height: 60px; background-color: {{$reg->color->Tonalidade}}; color: white;"></div>
+            </li>
+        </ul>
+       
         
         <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
     </div>

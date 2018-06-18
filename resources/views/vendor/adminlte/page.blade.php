@@ -139,6 +139,9 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    @can('isUser')
+                    <li><a href="#" class="bg-green"><i class="fa fa-star"></i> <span>Você é um fabricante?</span></a></li>
+                    @endcan
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -177,8 +180,7 @@
             <div class="pull-right hidden-xs">
               <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-            reserved.
+            <strong>Visite o GITHUB do projeto <a href="https://github.com/virtual-pub/Virtual-pub-web/" target="_blank">Virtual-Pub</a>.</strong>
           </footer>
 @stop
 
