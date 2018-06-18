@@ -71,6 +71,17 @@
                 @endforeach    
             </select>
         </div>
+        <div class="form-group col-sm-6">
+            <label for="fabricante_id">fabricante:</label>
+            <select class="form-control" id="fabricante_id" name="fabricante_id">
+                @foreach ($fabricantes as $fabricante)    
+                <option value="{{$fabricante->id}}" 
+                        @if ((isset($reg) && $reg->fabricante_id==$fabricante->id) 
+                        or old('fabricante_id') == $fabricante->id) selected @endif>
+                        {{$fabricante->fabricante_name}}</option>
+                @endforeach    
+            </select>
+        </div>
         
         
         <div class="form-group col-sm-3">

@@ -3,7 +3,12 @@
 @section('title', 'Virtual Pub ADMIN')
 
 @section('content_header')
+    @can('isMantenedor')
     <h2> Area do administrador </h2>
+    @endcan
+    @can('isFabricante')
+    <h2>Sua Lista de Cervejas Cadastradas</h2>
+    @endcan
     <div class="row">
         <div class="col-xl-12 col-sm-6 col-md-3">
             <div class="info-box">
@@ -36,19 +41,23 @@
         </div>
 
         @endif
-   
-    
-    <div class="row col-sm-12">
-        <div class="box" style="min-height: 400px;">
-            <div class="box-header">
-                <div class="box-title"></div>
-                <div class="box-tools">
-                   
-                </div>
-         
-            </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+        
+   <div class="row">
+        <div class='col-sm-1'>
+            <a href='{{route('cervejas.create')}}' class='btn btn-primary' 
+               role='button'> Novo </a>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Hover Data Table</h3>
+              </div>
+              <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Cód.</th>
@@ -61,6 +70,7 @@
                             <th>Estilo</th>
                             <th>Coloração</th>
                             <th>Copo</th>
+                            <th>Fabricante</th>
                             <th>ativado</th>
                             <th>Ações</th>
                         </tr>
@@ -88,6 +98,7 @@
                             @stop
                             <td><div class="pull-left cor" style="background-color: {{$cerveja->color->Tonalidade}}"></div><p>{{$cerveja->color->nome}}</p></td>
                             <td> {{$cerveja->copo->nome}} </td>
+                            <td> {{$cerveja->fabricante->fabricante_name}} </td>
                             <td> <input type="checkbox" value="" id="{{ $cerveja->id }}"onclick="window.location.href ='{{route('cervejas.ativar', $cerveja->id)}}'" style="width:25px; height:25px"> </td>
                             <script>
                                 document.getElementById(<?= $cerveja->id ?>).checked = (<?= $cerveja->ativo === 1 ?>);
@@ -115,12 +126,24 @@
                         @endforeach
                     </tbody>
                 </table>
+              </div>
             </div>
-            
+          </div>
         </div>
-        
-    
-    </div>  
+    </section> 
 @stop
 
-
+@section('js')
+<script>
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : false,
+      'autoWidth'   : true
+    })
+  })
+</script>
+@stop

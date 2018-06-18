@@ -2,7 +2,12 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @can('isUser')
+        <div class="col-md-6">
+        @endcan
+        @can('isMantenedor')
         <div class="col-md-8 col-md-offset-2">
+        @endcan
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -11,7 +16,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        @can('isUser')
+        <div class="col-md-3 col-md-offset-1">
             <!-- USERS LIST -->
             <div class="box box-danger">
               <div class="box-header with-border">
@@ -81,7 +87,8 @@
           </div>
           <!-- /.col -->
         </div>
+        @endcan
         <!-- /.row -->
     </div>
 </div>
-@endsection
+@stop

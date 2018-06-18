@@ -13,8 +13,8 @@ class AddFabricanteToCervejasTable extends Migration
      */
     public function up()
     {
-        Schema::table('cerveja', function (Blueprint $table) {
-            $table->smallInteger('fabricante_id')->unsigned();
+        Schema::table('cervejas', function (Blueprint $table) {
+            $table->Integer('fabricante_id')->unsigned();
 
             $table->foreign('fabricante_id')
                     ->references('id')->on('users')
@@ -29,7 +29,7 @@ class AddFabricanteToCervejasTable extends Migration
      */
     public function down()
     {
-        Schema::table('cerveja', function (Blueprint $table) {
+        Schema::table('cervejas', function (Blueprint $table) {
             //
         });
     }

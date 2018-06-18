@@ -17,7 +17,7 @@ class CreateColorsTable extends Migration
             $table->smallIncrements('id');
             $table->string('nome', 50);
             $table->string('Tonalidade', 50);
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

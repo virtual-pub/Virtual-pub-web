@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Estilo;
+use Gate;
 
 class EstiloController extends Controller
 {
@@ -16,10 +17,16 @@ class EstiloController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $estilos = Estilo::all();
+                return view('cervejas.estilos_list', compact('estilos'));
+            }else{
+                return redirect('/');
+            }
+        }
         
-
-        $estilos = Estilo::paginate(3);
-        return view('admin.estilos_list', compact('estilos'));
+        return redirect('/');
     }
 
     /**
@@ -29,14 +36,17 @@ class EstiloController extends Controller
      */
     public function create()
     {
-        if (!Auth::guard('admin')->check()) {
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $acao = 1;
+                return view('cervejas.estilos_form', compact('acao'));
+            } else if(Gate::allows('isFabricante')){
+                $acao = 1;
+                return view('cervejas.estilos_form', compact('acao'));
+            }
+        }else {
             return redirect('/');
         }
-
-        $acao = 1;
-        
-
-        return view('admin.estilos_form', compact('acao'));
     }
 
     /**
@@ -54,7 +64,7 @@ class EstiloController extends Controller
         $dados = $request->all();
 
         // insere os dados na tabela
-        $cerveja = Estilo::create($dados);
+        $estilo = Estilo::create($dados);
 
         if ($estilo) {
             return redirect()->route('estilos.index')
@@ -75,7 +85,7 @@ class EstiloController extends Controller
         // indica ao form que será visualizado
         $acao = 3;
   
-        return view('admin.estilos_form', compact('reg', 'acao'));
+        return view('cerveja.estilos_form', compact('reg', 'acao'));
     }
 
     /**
@@ -86,17 +96,15 @@ class EstiloController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth::guard('admin')->check()) {
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Estilo::find($id);
+                $acao = 2;
+                return view('cervejas.estilos_form', compact('reg', 'acao'));
+            }
+        }else {
             return redirect('/');
         }
-        // obtém os dados do registro a ser editado 
-        $reg = Estilo::find($id);
-
-        
-        // indica ao form que será alteração
-        $acao = 2;
-
-        return view('admin.estilos_form', compact('reg', 'acao'));
     }
 
     /**

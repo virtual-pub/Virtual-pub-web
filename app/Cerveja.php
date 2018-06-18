@@ -11,7 +11,7 @@ class Cerveja extends Model
      *
      * @var array
      */
-    protected $fillable = array('nome', 'IBU', 'ABV', 'SRM', 'EBC', 'estilo_id', 'color_id', 'copo_id');
+    protected $fillable = array('nome', 'IBU', 'ABV', 'SRM', 'EBC', 'estilo_id', 'color_id', 'copo_id', 'fabricante_id');
 
     /**
      * 
@@ -38,6 +38,14 @@ class Cerveja extends Model
      */
     public function color() {
         return $this->belongsTo('App\Color');
+    }
+    /**
+     * 
+     * 
+     * 
+     */
+    public function fabricante() {
+        return $this->belongsTo('App\User');
     }
 
 }

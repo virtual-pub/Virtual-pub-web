@@ -3,7 +3,7 @@
 @section('title', 'Virtual Pub ADMIN')
 
 @section('content_header')
-<h2> inserir foto de Cervejas </h2>
+<h2> inserir foto para {{$reg->nome}} </h2>
 @stop
 
 @section('content')
@@ -31,13 +31,13 @@
 <div class='col-sm-12'>
     <form method="post" action="{{route('cervejas.store.foto')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
-         
+        <input type="hidden" name="id" value="{{$reg->id}}">
         <div class="col-sm-3" style="text-align: center">
             @php
             if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
-                $foto = '../fotos/'.$reg->id.'.jpg';
+                $foto = '/fotos/'.$reg->id.'.jpg';
             } else {
-                $foto = '../images/avatar-placeholder.svg';
+                $foto = '/images/avatar-placeholder.svg';
             }
             @endphp
             {!!"<img src=$foto id='imagem' height='150' width='200' alt='Foto'>"!!}

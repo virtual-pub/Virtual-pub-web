@@ -109,99 +109,134 @@ return [
 
     'menu' => [
         [
-            'header'      => 'Manager',
+            'header'      => 'Dados do sistema',
             'can'         => 'isMantenedor',
         ],
         [
-            'text'        => 'Cervejas',
-            'url'         => 'mantenedor/cervejas',
+            'text'        => 'Configurações de Cervejas',
             'icon'        => 'beer',
+            'icon_color'  => 'orange',
             'can'         => 'isMantenedor',
+            'submenu' => [
+                [
+                    'text'        => 'Lista de Cervejas',
+                    'url'         => 'cervejas',
+                    'icon_color'  => 'yellow',
+                    'can'         => 'isMantenedor',
+                ],
+                [
+                    'text'        => 'Lista de Estilos',
+                    'url'         => 'estilos',
+                    'icon_color'  => 'green',
+                    'can'         => 'isMantenedor',
+                ],
+                [
+                    'text'        => 'Colorações',
+                    'url'         => 'cervejas/colors',
+                    'icon_color'  => 'blue',
+                    'can'         => 'isMantenedor',
+                ],
+                [
+                    'text'        => 'Lista de copos',
+                    'url'         => 'cervejas/copos',
+                    'icon_color'  => 'purple',
+                    'can'         => 'isMantenedor',
+                ],
+            ],
         ],
         [
-            'text'        => 'Grafico',
-            'url'         => 'admin/cervejas/teste',
-            'icon'        => 'beer',
+            'text'        => 'Lista de Usuários',
+            'icon'        => 'users',
+            'icon_color'  => 'aqua',
             'can'         => 'isMantenedor',
+            'submenu' => [
+                [
+                    'text'        => 'Mantenedores',
+                    'url'         => 'mantenedores',
+                    'icon_color'  => 'yellow',
+                    'can'         => 'isMantenedor',
+                ],
+                [
+                    'text'        => 'Fabricantes',
+                    'url'         => 'fabricantes',
+                    'icon_color'  => 'green',
+                    'can'         => 'isMantenedor',
+                ],
+                [
+                    'text'        => 'Usuarios Padrão',
+                    'url'         => 'users',
+                    'icon_color'  => 'blue',
+                    'can'         => 'isMantenedor',
+                ],
+            ],
         ],
+       
         [
-            'header'      => 'Sua Rede',
+            'header'      => 'SUA REDE',
             'can'         => 'isUser',
         ],
         [
             'text'        => 'feed',
             'url'         => 'user/feed',
             'icon'        => 'feed',
+            'icon_color'  => 'aqua',
             'can'         => 'isUser',
         ],
         [
             'text'        => 'Amigos',
-            'url'         => 'user/feed',
-            'icon'        => 'feed',
+            'url'         => 'user/friends',
+            'icon'        => 'users',
+            'icon_color'  => 'purple',
             'can'         => 'isUser',
         ],
-        'ACCOUNT SETTINGS',
         [
-            'text' => 'Profile',
+            'text'        => 'Buscar Cervejas',
+            'url'         => 'cervejas',
+            'icon'        => 'search',
+            'icon_color'  => 'red',
+            'can'         => 'isUser',
+        ],
+        'CONTA',
+        [
+            'text' => 'Seu Perfil',
             'url'  => 'admin/settings',
             'icon' => 'user',
+            'icon_color'  => 'green',
         ],
         [
-            'text' => 'Change Password',
+            'text' => 'Cervejas Favoritas',
             'url'  => 'admin/settings',
-            'icon' => 'lock',
+            'icon' => 'beer',
+            'icon_color'  => 'yellow',
         ],
         [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
+            'text' => 'Configurações para Fabricante',
+            'url'  => 'admin/settings',
+            'icon' => 'user',
+            'icon_color'  => 'red',
+            'can' => 'isFabricante',
+        ],
+        [
+            'text' => 'Cervejas Cadastradas',
+            'url'  => 'admin/settings',
+            'icon' => 'beer',
+            'icon_color'  => 'yellow',
+            'can' => 'isFabricante',
             'submenu' => [
                 [
-                    'text' => 'Level One',
-                    'url'  => '#',
+                    'text'        => 'sua Lista',
+                    'url'         => 'cervejas',
+                    'icon_color'  => 'yellow',
                 ],
                 [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
+                    'text'        => 'Relatórios',
+                    'url'         => 'cervejas/grafs',
+                    'icon' => 'bar-chart',
+                    'icon_color'  => 'blue',
                 ],
             ],
         ],
-        'LABELS',
-        [
-            'text'       => 'Important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
-        ],
+        
     ],
 
     /*
