@@ -29,6 +29,12 @@ Route::group(['prefix'=>'cervejas'], function() {
 Route::get('api/cerveja/{id}', 'CervejaController@webServiceId');
 Route::resource('estilos', 'EstiloController');
 
+Route::resource('posts', 'PostController');
+Route::group(['prefix'=>'posts'], function() {
+        Route::get('foto/{id}', 'PostController@foto') ->name('posts.foto');
+        Route::post('foto/store', 'PostController@storefoto')->name('posts.store.foto');
+});
+
 
 Route::get('user/{id}', 'UserController@show')->name('user.show');
 

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Post;
+use App\User;
+use Gate;
 
 class PostController extends Controller
 {
@@ -16,7 +18,21 @@ class PostController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $posts = Post::all();
+                return view('posts.posts_list', compact('posts'));
+            }else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
+                $id = Auth::user()->id;
+                $posts = Post::where('user_id', $id)->get();
+                return view('posts.posts_list', compact('posts'));
+            }else{
+                return redirect('/');
+            }
+        }
         
+        return redirect('/');
+
     }
 
     /**
@@ -26,7 +42,21 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $acao = 1;
+                $user = User::orderBy('name')->get();
+                return view('posts.posts_form', compact('acao', 'user'));
+            } else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
+                $acao = 1;
+                $user = Auth::user()->nome;
+                return view('posts.posts_form', compact('acao', 'user'));
+            }else{
+                return redirect('/');
+            }
+        }else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -37,7 +67,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'description' => 'required'
+        ]);
+        // recupera todos os campos do formulário
+        $dados = $request->all();
+
+        // insere os dados na tabela
+        $post = Post::create($dados);
+
+        if ($post) {
+            return redirect()->route('posts.index')
+                            ->with('status', $request->id . ' Incluído!');
+        }
     }
 
     /**
@@ -60,7 +102,23 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Post::find($id);
+                $user = User::orderBy('name')->get();
+                $acao = 2;
+                return view('posts.posts_form', compact('reg', 'acao', 'user'));
+            }else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
+                $reg = Post::where('user_id', Auth::user()->id)->find($id);
+                $user = Auth::user()->nome;
+                $acao = 2;
+                return view('posts.posts_form', compact('reg', 'acao', 'user'));
+            }else{
+                return redirect('/');
+            }
+        }else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -72,7 +130,20 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'description' => 'required|unique:'.$id,
+            
+        ]);
+        $reg = Post::find($id);
+
+        $dados = $request->all();
+
+        $alt = $reg->update($dados);
+
+        if ($alt) {
+            return redirect()->route('posts.index')
+                            ->with('status', $request->id . ' Alterado!');
+        }
     }
 
     /**
@@ -83,6 +154,41 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if ($post->delete()) {
+            return redirect()->route('posts.index')
+                            ->with('status', $post->id . ' Excluído!');
+        }
+    }
+
+    public function foto($id) {
+        // se não estiver autenticado, redireciona para login
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Post::find($id);
+                return view('posts.posts_foto', compact('reg'));
+            }else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
+                $reg = Post::where('user_id', Auth::user()->id)->find($id);
+                return view('posts.posts_foto', compact('reg'));
+            }
+        }else {
+            return redirect('/');
+        }
+    }
+
+    public function storefoto(Request $request) {
+
+        // recupera todos os campos do formulário
+        $dados = $request->all();
+
+        $id = $dados['id'];
+
+        if (isset($dados['foto'])) {
+            $fotoId = $id . '.jpg';
+            $request->foto->move(public_path('postimages'), $fotoId);
+        }
+
+        return redirect()->route('posts.index')
+                        ->with('status', $request->id . ' com Foto Cadastrada!');
     }
 }

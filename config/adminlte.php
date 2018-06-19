@@ -196,6 +196,12 @@ return [
             'icon_color'  => 'red',
             'can'         => 'isUser',
         ],
+        [
+            'text'        => 'posts',
+            'url'         => 'posts',
+            'icon'        => 'search',
+            'icon_color'  => 'red',
+        ],
         'CONTA',
         [
             'text' => 'Seu Perfil',
