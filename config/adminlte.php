@@ -132,13 +132,13 @@ return [
                 ],
                 [
                     'text'        => 'Colorações',
-                    'url'         => 'cervejas/colors',
+                    'url'         => 'colors',
                     'icon_color'  => 'blue',
                     'can'         => 'isMantenedor',
                 ],
                 [
                     'text'        => 'Lista de copos',
-                    'url'         => 'cervejas/copos',
+                    'url'         => 'copos',
                     'icon_color'  => 'purple',
                     'can'         => 'isMantenedor',
                 ],

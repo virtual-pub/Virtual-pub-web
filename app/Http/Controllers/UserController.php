@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
-use App\Post;
 
 class UserController extends Controller
 {
@@ -17,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = Users::paginate(5);
     }
 
     /**
@@ -86,6 +85,51 @@ class UserController extends Controller
         //
     }
 
+    public function isMantenedor($id) {
+        
+
+        $reg = User::find($id);
+
+        $reg->isMantenedor = ($reg->isMantenedor == 0) ? 1 : 0;
+        $estado = ($reg->isMantenedor == 1) ? 'é mantenedor' : 'não é mantenedor';
+
+        $reg->save();
+
+        if ($reg) {
+            return redirect()->route('user.index')
+                            ->with('status', $reg->name . ' ' . $estado . '!');
+        }
+    }
+    public function isFabricante($id) {
+        
+
+        $reg = User::find($id);
+
+        $reg->isFabricante = ($reg->isFabricante == 0) ? 1 : 0;
+        $estado = ($reg->isFabricante == 1) ? 'é Fabricante' : 'não é Fabricante';
+
+        $reg->save();
+
+        if ($reg) {
+            return redirect()->route('user.index')
+                            ->with('status', $reg->name . ' ' . $estado . '!');
+        }
+    }
+    public function isUser($id) {
+        
+
+        $reg = User::find($id);
+
+        $reg->isUser = ($reg->isUser == 0) ? 1 : 0;
+        $estado = ($reg->isUser == 1) ? 'é Usuário' : 'não é Usuário';
+
+        $reg->save();
+
+        if ($reg) {
+            return redirect()->route('user.index')
+                            ->with('status', $reg->name . ' ' . $estado . '!');
+        }
+    }
     
  
 

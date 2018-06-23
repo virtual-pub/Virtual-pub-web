@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('cervejas/api/{id}', 'CervejaController@webServiceId');
 
 Route::resource('cervejas', 'CervejaController');
 Route::group(['prefix'=>'cervejas'], function() {
@@ -26,8 +27,12 @@ Route::group(['prefix'=>'cervejas'], function() {
         Route::get('foto/{id}', 'CervejaController@foto') ->name('cervejas.foto');
         Route::post('foto/store', 'CervejaController@storefoto')->name('cervejas.store.foto');
 });
-Route::get('api/cerveja/{id}', 'CervejaController@webServiceId');
-Route::resource('estilos', 'EstiloController');
+
+Route::resource('copos', 'CopoController');
+Route::group(['prefix'=>'copos'], function() {
+        Route::get('foto/{id}', 'CopoController@foto') ->name('copos.foto');
+        Route::post('foto/store', 'CopoController@storefoto')->name('copos.store.foto');
+});
 
 Route::resource('posts', 'PostController');
 Route::group(['prefix'=>'posts'], function() {
@@ -35,6 +40,8 @@ Route::group(['prefix'=>'posts'], function() {
         Route::post('foto/store', 'PostController@storefoto')->name('posts.store.foto');
 });
 
+Route::resource('estilos', 'EstiloController');
+Route::resource('colors', 'ColorController');
 
 Route::get('user/{id}', 'UserController@show')->name('user.show');
 

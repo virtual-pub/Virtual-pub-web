@@ -17,10 +17,11 @@ class CervejasTableSeeder extends Seeder
             'ABV' => '5.3',
             'SRM' => '4.0',
             'EBC' => '8.0',
+            'descricao' => 'teste descrição 1',
             'copo_id' => 2,
             'estilo_id' => 3,
             'color_id' => 4,
-            'fabricante_id' => 2,
+            'fabricante_id' => 1,
             'created_at' => date('Y-m-d h:i:s'),
             'updated_at' => date('Y-m-d h:i:s')
             ]);
@@ -31,10 +32,11 @@ class CervejasTableSeeder extends Seeder
             'ABV' => '4.8',
             'SRM' => '3.5',
             'EBC' => '7.5',
+            'descricao' => 'teste descrição 2',
             'copo_id' => 2,
             'estilo_id' => 2,
             'color_id' => 3,
-            'fabricante_id' => 2,
+            'fabricante_id' => 1,
             'created_at' => date('Y-m-d h:i:s'),
             'updated_at' => date('Y-m-d h:i:s')
             ]);
@@ -45,10 +47,11 @@ class CervejasTableSeeder extends Seeder
             'ABV' => '5.1',
             'SRM' => '3.3',
             'EBC' => '6.5',
+            'descricao' => 'teste descrição 3',
             'copo_id' => 2,
             'estilo_id' => 18,
             'color_id' => 3,
-            'fabricante_id' => 2,
+            'fabricante_id' => 1,
             'created_at' => date('Y-m-d h:i:s'),
             'updated_at' => date('Y-m-d h:i:s')
             ]);

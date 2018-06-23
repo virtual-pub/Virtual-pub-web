@@ -11,7 +11,7 @@ class Cerveja extends Model
      *
      * @var array
      */
-    protected $fillable = array('nome', 'IBU', 'ABV', 'SRM', 'EBC', 'estilo_id', 'color_id', 'copo_id', 'fabricante_id');
+    protected $fillable = array('nome', 'IBU', 'ABV', 'SRM', 'EBC', 'descricao', 'estilo_id', 'color_id', 'copo_id', 'fabricante_id');
 
     /**
      * 

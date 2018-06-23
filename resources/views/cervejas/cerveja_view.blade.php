@@ -7,10 +7,9 @@
 @stop
 @section('content')
 <div class="row">
-    <div class="col-md-3">
-        
+    <div class="col-md-3">   
         <!-- Profile Image -->
-        <div class="box box-warning">
+        <div class="box box-default">
             <div class="box-body box-profile">
             @php
                 if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
@@ -19,51 +18,59 @@
                     $foto = '../images/avatar-placeholder.svg';
                 }
             @endphp
-        <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
+                <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
         
-            <h3 class="profile-username text-center" style="color: {{$reg->color->Tonalidade}}">{{$reg->nome}}</h3>
+                <h3 class="profile-username text-center">{{$reg->nome}}</h3>
         
-        <p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p>
+                <p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p>
         
-        <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-                <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
-            </li>
-            <li class="list-group-item">
-                <b>Unidade Internacional de Amargor</b> <a class="pull-right">{{$reg->IBU}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Copo Ideal</b> <a class="pull-right">{{$reg->copo->nome}}</a>
-            </li>
-        </ul>
-        <p class="text-muted text-center">Coloração</p>
-        <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-                <b>Escala EBC (Convenção de Cervejeiros da Europa)</b> <a class="pull-right">{{$reg->EBC}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Escala SRM (Metodo padrão de Referencia)</b> <a class="pull-right">{{$reg->SRM}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Tonalidade</b><a class="pull-right">{{$reg->color->nome}}</a>
-            </li>
-            <li class="list-group-item">
-                
-            <div class="text-center" style="height: 60px; background-color: {{$reg->color->Tonalidade}}; color: white;"></div>
-            </li>
-        </ul>
-       
-        
-        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Unidade Internacional de Amargor</b> <a class="pull-right">{{$reg->IBU}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Copo Ideal</b> <a class="pull-right">{{$reg->copo->nome}}</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+            </div>
+        </div>
     </div>
-    <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-    
-    <div class="col-sm-3">
-        
-        <img />
-    </div>
+    <div class="col-md-9">
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header" style="background-color: {{$reg->color->hex}}">
+            <h3 class="widget-user-username">Coloração</h3>
+            <h5 class="widget-user-desc">{{$reg->color->nome}}</h5>
+          </div>
+          
+          <div class="box-footer">
+            <div class="row">
+              <div class="col-sm-6 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{$reg->EBC}}</h5>
+                  <span class="description-text">Escala EBC (Convenção de Cervejeiros da Europa)</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{$reg->SRM}}</h5>
+                  <span class="description-text">Escala SRM (Metodo padrão de Referencia)</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+        <!-- /.widget-user -->
+      </div>
     
 </div>
     @stop

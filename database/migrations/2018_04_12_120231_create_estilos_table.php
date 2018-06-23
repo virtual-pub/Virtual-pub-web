@@ -16,6 +16,7 @@ class CreateEstilosTable extends Migration
         Schema::create('estilos', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('nome',40);
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }

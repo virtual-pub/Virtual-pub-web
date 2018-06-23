@@ -23,11 +23,11 @@ class CervejaController extends Controller
     {
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
-                $cervejas = Cerveja::all();
+                $cervejas = Cerveja::paginate(5);
                 return view('cervejas.cervejas_list', compact('cervejas'));
             }else if(Gate::allows('isFabricante')){
                 $id = Auth::user()->id;
-                $cervejas = Cerveja::where('fabricante_id', $id)->get();
+                $cervejas = Cerveja::where('fabricante_id', $id)->paginate(1)->get();
                 return view('cervejas.cervejas_list', compact('cervejas'));
             }else{
                 return redirect('/');
@@ -58,7 +58,8 @@ class CervejaController extends Controller
                 $copos = Copo::orderBy('nome')->get();
                 $estilos = Estilo::orderBy('nome')->get();
                 $colors = Color::orderBy('id', 'asc')->get();
-                return view('cervejas.cervejas_form', compact('acao', 'copos','estilos','colors'));
+                $fabricante = Auth::user()->id;
+                return view('cervejas.cervejas_form', compact('acao', 'copos','estilos','colors', 'fabricante'));
             }else{
                 return redirect('/');
             }
@@ -82,7 +83,8 @@ class CervejaController extends Controller
             'IBU' => 'required|numeric|min:0|max:60',
             'ABV' => 'required|numeric|min:0|max:60',
             'EBC' => 'required|numeric|min:0|max:90',
-            'SRM' => 'required'
+            'SRM' => 'required',
+            'descricao' => 'required'
         ]);
         // recupera todos os campos do formulário
         $dados = $request->all();
@@ -105,6 +107,9 @@ class CervejaController extends Controller
     public function show($id)
     {
         $reg = Cerveja::find($id);
+        if($reg->ativo == 0){
+                return redirect('/');
+        }
 
         // obtém as marcas para exibir no form de consulta
         $copos = Copo::orderBy('nome')->get();
@@ -139,9 +144,9 @@ class CervejaController extends Controller
                 $copos = Copo::orderBy('nome')->get();
                 $estilos = Estilo::orderBy('nome')->get();
                 $colors = Color::orderBy('nome')->get();
-                $fabricantes = User::orderBy('fabricante_name')->get();
+                $fabricante = Auth::user();
                 $acao = 2;
-                return view('cervejas.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors', 'fabricantes'));
+                return view('cervejas.cervejas_form', compact('reg', 'acao', 'copos', 'estilos', 'colors', 'fabricante'));
             }else{
                 return redirect('/');
             }
@@ -164,7 +169,9 @@ class CervejaController extends Controller
             'IBU' => 'required|numeric|min:0|max:60',
             'ABV' => 'required|numeric|min:0|max:60',
             'EBC' => 'required|numeric|min:0|max:90',
-            'SRM' => 'required'
+            'SRM' => 'required',
+            'descricao' => 'required'
+
         ]);
         $reg = Cerveja::find($id);
 
@@ -222,14 +229,20 @@ class CervejaController extends Controller
             //se encontrou
             if (isset($reg)) {
                 $retorno = array(
+                    "id" => $reg->id,
                     "nome" => $reg->nome,
                     "IBU" => $reg->IBU,
                     "ABV" => $reg->ABV,
                     "SRM" => $reg->SRM,
                     "EBC" => $reg->EBC,
-                    "copo_id" => $reg->copo_id,
-                    "estilo_id" => $reg->estilo_id,
-                    "color_id" => $reg->color_id);
+                    "descricao" => $reg->descricao,
+                    "copo" => $reg->copo->nome,
+                    "copo_descricao" => $reg->copo->descricao,
+                    "estilo" => $reg->estilo->nome,
+                    "estilo_descricao" => $reg->estilo->descricao,
+                    "cor" => $reg->color->nome,
+                    "cor_hex" => $reg->color->hex,
+                    "fabricante" => $reg->fabricante->fabricante_name);
             } else {
                 $retorno = array(
                     "situacao" => "inexistente");

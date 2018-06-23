@@ -16,10 +16,11 @@ class CreateCervejasTable extends Migration
         Schema::create('cervejas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome',150);
-            $table->smallInteger('IBU');
-            $table->float('ABV', 9, 2);
-            $table->float('SRM', 9, 2);
-            $table->float('EBC', 9, 2);
+            $table->smallInteger('IBU')->nullable();
+            $table->float('ABV', 9, 2)->nullable();
+            $table->float('SRM', 9, 2)->nullable();
+            $table->float('EBC', 9, 2)->nullable();
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }

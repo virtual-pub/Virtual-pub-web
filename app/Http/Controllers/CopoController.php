@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Estilo;
+use App\Copo;
 use Gate;
 
-class EstiloController extends Controller
+class CopoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class EstiloController extends Controller
     {
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
-                $estilos = Estilo::paginate(5);
-                return view('cervejas.estilos_list', compact('estilos'));
+                $copos = Copo::paginate(5);
+                return view('cervejas.copos_list', compact('copos'));
             }else{
                 return redirect('/');
             }
@@ -39,10 +39,10 @@ class EstiloController extends Controller
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
                 $acao = 1;
-                return view('cervejas.estilos_form', compact('acao'));
+                return view('cervejas.copos_form', compact('acao'));
             } else if(Gate::allows('isFabricante')){
                 $acao = 1;
-                return view('cervejas.estilos_form', compact('acao'));
+                return view('cervejas.copos_form', compact('acao'));
             }
         }else {
             return redirect('/');
@@ -58,17 +58,17 @@ class EstiloController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nome' => 'required|unique:estilos|min:3|max:100',
+            'nome' => 'required|unique:copos|min:3|max:100',
             'descricao' => 'required'
         ]);
         // recupera todos os campos do formulário
         $dados = $request->all();
 
         // insere os dados na tabela
-        $estilo = Estilo::create($dados);
+        $copo = Copo::create($dados);
 
-        if ($estilo) {
-            return redirect()->route('estilos.index')
+        if ($copo) {
+            return redirect()->route('copos.index')
                             ->with('status', $request->nome . ' Incluído!');
         }
     }
@@ -81,12 +81,12 @@ class EstiloController extends Controller
      */
     public function show($id)
     {
-        $reg = Estilo::find($id);
+        $reg = Copo::find($id);
   
         // indica ao form que será visualizado
         $acao = 3;
   
-        return view('cerveja.estilos_form', compact('reg', 'acao'));
+        return view('cerveja.copos_form', compact('reg', 'acao'));
     }
 
     /**
@@ -99,9 +99,9 @@ class EstiloController extends Controller
     {
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
-                $reg = Estilo::find($id);
+                $reg = Copo::find($id);
                 $acao = 2;
-                return view('cervejas.estilos_form', compact('reg', 'acao'));
+                return view('cervejas.copos_form', compact('reg', 'acao'));
             }
         }else {
             return redirect('/');
@@ -118,16 +118,16 @@ class EstiloController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nome' => 'required|unique:estilos,nome,'.$id.'|min:3|max:100'
+            'nome' => 'required|unique:copos,nome,'.$id.'|min:3|max:100'
         ]);
-        $reg = Estilo::find($id);
+        $reg = Copo::find($id);
 
         $dados = $request->all();
 
         $alt = $reg->update($dados);
 
         if ($alt) {
-            return redirect()->route('estilos.index')
+            return redirect()->route('copos.index')
                             ->with('status', $request->nome . ' Alterado!');
         }
     }
@@ -140,10 +140,40 @@ class EstiloController extends Controller
      */
     public function destroy($id)
     {
-        $estilo = Estilo::find($id);
-        if ($estilo->delete()) {
-            return redirect()->route('estilos.index')
-                            ->with('status', $estilo->nome . ' Excluído!');
+        $copo = Copo::find($id);
+        if ($copo->delete()) {
+            return redirect()->route('copos.index')
+                            ->with('status', $copo->nome . ' Excluído!');
         }
+    }
+
+    public function foto($id) {
+        // se não estiver autenticado, redireciona para login
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = Copo::find($id);;
+                return view('cervejas.copos_foto', compact('reg'));
+            }else{
+                return redirect('/');
+            }
+        }else {
+            return redirect('/');
+        }
+    }
+
+    public function storefoto(Request $request) {
+
+        // recupera todos os campos do formulário
+        $dados = $request->all();
+
+        $id = $dados['id'];
+
+        if (isset($dados['foto'])) {
+            $fotoId = $id . '.jpg';
+            $request->foto->move(public_path('coposimg'), $fotoId);
+        }
+
+        return redirect()->route('copos.index')
+                        ->with('status', $request->nome . ' com Foto Cadastrada!');
     }
 }

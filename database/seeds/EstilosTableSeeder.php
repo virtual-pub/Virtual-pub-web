@@ -48,7 +48,6 @@ class EstilosTableSeeder extends Seeder
         'updated_at' => date('Y-m-d h:i:s')]);
         DB::table('estilos')->insert(['nome' => 'Weissbier', 'created_at' => date('Y-m-d h:i:s'),
         'updated_at' => date('Y-m-d h:i:s')]);
-
         
            
     }
