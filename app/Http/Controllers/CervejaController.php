@@ -236,6 +236,7 @@ class CervejaController extends Controller
                     "SRM" => $reg->SRM,
                     "EBC" => $reg->EBC,
                     "descricao" => $reg->descricao,
+                    "copo_id" =>$reg->copo->id,
                     "copo" => $reg->copo->nome,
                     "copo_descricao" => $reg->copo->descricao,
                     "estilo" => $reg->estilo->nome,
