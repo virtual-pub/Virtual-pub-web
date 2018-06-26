@@ -113,6 +113,8 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+                <div class="box-footer">
                     <div class="pull-right">{{ $cervejas->links() }}</div> 
                 </div>
             </div>

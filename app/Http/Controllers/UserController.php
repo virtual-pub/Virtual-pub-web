@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Post;
+use App\Cerveja;
+use Gate;
 
 class UserController extends Controller
 {
@@ -16,7 +19,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = Users::paginate(5);
+        if(Auth::check()){
+            $id = Auth::user()->id;
+            if(Gate::allows('isMantenedor')){
+                $users = User::paginate(3);
+                return view('users.users_list', compact('users'));
+            }else{
+                return redirect()->route('users.show', $id);
+            }
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
@@ -48,7 +61,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    
+        if (Auth::check()) {
+            # code...
+            $reg = User::find($id);
+            $posts = Post::where('user_id', $id)->get();
+            $cervejas = Cerveja::where('fabricante_id', $id)->get();
+            return view('users.profile', compact('reg', 'posts', 'cervejas'));
+        }
     }
 
     /**
@@ -59,7 +78,17 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::check()){
+            $reg = User::find($id);
+            if($reg->id == Auth::user()->id){
+            $acao = 2;
+            return view('users.users_form', compact('reg', 'acao'));
+            }else {
+                return redirect('/');
+            }
+        }else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -71,7 +100,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Gate::allows('isFabricante')){
+            $this->validate($request, [
+                'name' => 'required',
+                'sobre' => 'required',
+                'fabricante_name' => 'required',
+                'website' => 'required'
+            ]);
+        }else{
+            $this->validate($request, [
+                'name' => 'required',
+                'sobre' => 'required'
+            ]);
+        }
+        
+        $reg = User::find($id);
+
+        $dados = $request->all();
+
+        $alt = $reg->update($dados);
+
+        if ($alt) {
+            return redirect()->route('users.show', $reg->id);
+        }
     }
 
     /**
@@ -87,49 +138,80 @@ class UserController extends Controller
 
     public function isMantenedor($id) {
         
+        if(Auth::check()){
+            $reg = User::find($id);
 
-        $reg = User::find($id);
+            $reg->isMantenedor = ($reg->isMantenedor == 0) ? 1 : 0;
+            $estado = ($reg->isMantenedor == 1) ? 'é mantenedor' : 'não é mantenedor';
 
-        $reg->isMantenedor = ($reg->isMantenedor == 0) ? 1 : 0;
-        $estado = ($reg->isMantenedor == 1) ? 'é mantenedor' : 'não é mantenedor';
+            $reg->save();
 
-        $reg->save();
-
-        if ($reg) {
-            return redirect()->route('user.index')
-                            ->with('status', $reg->name . ' ' . $estado . '!');
+            if ($reg) {
+                return redirect()->route('users.index')
+                                ->with('status', $reg->name . ' ' . $estado . '!');
+            }
+        }else {
+            return redirect('/');
         }
     }
     public function isFabricante($id) {
-        
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = User::find($id);
 
-        $reg = User::find($id);
+                $reg->isFabricante = ($reg->isFabricante == 0) ? 1 : 0;
+                $estado = ($reg->isFabricante == 1) ? 'é Fabricante' : 'não é Fabricante';
 
-        $reg->isFabricante = ($reg->isFabricante == 0) ? 1 : 0;
-        $estado = ($reg->isFabricante == 1) ? 'é Fabricante' : 'não é Fabricante';
+                $reg->save();
 
-        $reg->save();
+                if ($reg) {
+                    return redirect()->route('users.index')
+                                    ->with('status', $reg->name . ' ' . $estado . '!');
+                }
+            }else if(Gate::allows('isUser')){
+                $user = Auth::user();
+                $reg = User::find($id);
+                if ($user->id == $reg->id ) {
+                    $reg->isFabricante = ($reg->isFabricante == 0) ? 1 : 0;
+    
+                    $reg->save();
 
-        if ($reg) {
-            return redirect()->route('user.index')
-                            ->with('status', $reg->name . ' ' . $estado . '!');
+                    if ($reg) {
+                        return redirect()->route('users.edit', $reg->id);
+                    }
+                }else {
+                    return redirect('/');
+                }
+            }else {
+                return redirect('/');
+            }
+        }else {
+            return redirect('/');
         }
     }
     public function isUser($id) {
-        
+        if(Auth::check()){
+            if(Gate::allows('isMantenedor')){
+                $reg = User::find($id);
 
-        $reg = User::find($id);
+                $reg->isUser = ($reg->isUser == 0) ? 1 : 0;
+                $estado = ($reg->isUser == 1) ? 'é Usuário' : 'não é Usuário';
 
-        $reg->isUser = ($reg->isUser == 0) ? 1 : 0;
-        $estado = ($reg->isUser == 1) ? 'é Usuário' : 'não é Usuário';
+                $reg->save();
 
-        $reg->save();
-
-        if ($reg) {
-            return redirect()->route('user.index')
-                            ->with('status', $reg->name . ' ' . $estado . '!');
+                if ($reg) {
+                    return redirect()->route('users.index')
+                                    ->with('status', $reg->name . ' ' . $estado . '!');
+                }
+            }else {
+                return redirect('/');
+            }  
+        }else {
+            return redirect('/');
         }
     }
+
+    
     
  
 

@@ -146,29 +146,17 @@ return [
         ],
         [
             'text'        => 'Lista de Usuários',
+            'url'         => 'users/',
             'icon'        => 'users',
             'icon_color'  => 'aqua',
             'can'         => 'isMantenedor',
-            'submenu' => [
-                [
-                    'text'        => 'Mantenedores',
-                    'url'         => 'mantenedores',
-                    'icon_color'  => 'yellow',
-                    'can'         => 'isMantenedor',
-                ],
-                [
-                    'text'        => 'Fabricantes',
-                    'url'         => 'fabricantes',
-                    'icon_color'  => 'green',
-                    'can'         => 'isMantenedor',
-                ],
-                [
-                    'text'        => 'Usuarios Padrão',
-                    'url'         => 'users',
-                    'icon_color'  => 'blue',
-                    'can'         => 'isMantenedor',
-                ],
-            ],
+        ],
+        [
+            'text'        => 'Lista de posts',
+            'url'         => 'posts/',
+            'icon'        => 'users',
+            'icon_color'  => 'green',
+            'can'         => 'isMantenedor',
         ],
        
         [
@@ -176,55 +164,17 @@ return [
             'can'         => 'isUser',
         ],
         [
-            'text'        => 'feed',
-            'url'         => 'user/feed',
+            'text'        => 'seus posts',
+            'url'         => 'posts/',
             'icon'        => 'feed',
             'icon_color'  => 'aqua',
-            'can'         => 'isUser',
+            'cannot'         => 'isMantenedor',
         ],
-        [
-            'text'        => 'Amigos',
-            'url'         => 'user/friends',
-            'icon'        => 'users',
-            'icon_color'  => 'purple',
-            'can'         => 'isUser',
-        ],
-        [
-            'text'        => 'Buscar Cervejas',
-            'url'         => 'cervejas',
-            'icon'        => 'search',
-            'icon_color'  => 'red',
-            'can'         => 'isUser',
-        ],
-        [
-            'text'        => 'posts',
-            'url'         => 'posts',
-            'icon'        => 'search',
-            'icon_color'  => 'red',
-        ],
+        
         'CONTA',
-        [
-            'text' => 'Seu Perfil',
-            'url'  => 'admin/settings',
-            'icon' => 'user',
-            'icon_color'  => 'green',
-        ],
-        [
-            'text' => 'Cervejas Favoritas',
-            'url'  => 'admin/settings',
-            'icon' => 'beer',
-            'icon_color'  => 'yellow',
-        ],
-        [
-            'text' => 'Configurações para Fabricante',
-            'url'  => 'admin/settings',
-            'icon' => 'user',
-            'icon_color'  => 'red',
-            'can' => 'isFabricante',
-        ],
+        
         [
             'text' => 'Cervejas Cadastradas',
-            'url'  => 'admin/settings',
             'icon' => 'beer',
             'icon_color'  => 'yellow',
             'can' => 'isFabricante',
@@ -234,12 +184,7 @@ return [
                     'url'         => 'cervejas',
                     'icon_color'  => 'yellow',
                 ],
-                [
-                    'text'        => 'Relatórios',
-                    'url'         => 'cervejas/grafs',
-                    'icon' => 'bar-chart',
-                    'icon_color'  => 'blue',
-                ],
+                
             ],
         ],
         

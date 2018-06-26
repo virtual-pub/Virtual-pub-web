@@ -5,65 +5,88 @@
 @section('content_header')
 
 @stop
+
 @section('content')
-<div class="row">
-    <div class="col-md-3">
-        
-        <!-- Profile Image -->
-        <div class="box box-warning">
-            <div class="box-body box-profile">
-            @php
-                if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
-                    $foto = '../fotos/'.$reg->id.'.jpg';
-                } else {
-                    $foto = '../images/avatar-placeholder.svg';
-                }
-            @endphp
-        <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
-        
-            <h3 class="profile-username text-center" style="color: {{$reg->color->Tonalidade}}">{{$reg->nome}}</h3>
-        
-        <p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p>
-        
-        <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-                <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
-            </li>
-            <li class="list-group-item">
-                <b>Unidade Internacional de Amargor</b> <a class="pull-right">{{$reg->IBU}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Copo Ideal</b> <a class="pull-right">{{$reg->copo->nome}}</a>
-            </li>
-        </ul>
-        <p class="text-muted text-center">Coloração</p>
-        <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-                <b>Escala EBC (Convenção de Cervejeiros da Europa)</b> <a class="pull-right">{{$reg->EBC}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Escala SRM (Metodo padrão de Referencia)</b> <a class="pull-right">{{$reg->SRM}}</a>
-            </li>
-            <li class="list-group-item">
-                <b>Tonalidade</b><a class="pull-right">{{$reg->color->nome}}</a>
-            </li>
-            <li class="list-group-item">
-                
-            <div class="text-center" style="height: 60px; background-color: {{$reg->color->Tonalidade}}; color: white;"></div>
-            </li>
-        </ul>
-       
-        
-        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+    <div class="row">
+            <div class="col-md-6">
+                    <!-- Box Comment -->
+                    <div class="box box-widget">
+                      <div class="box-header with-border">
+                        <div class="user-block">
+                          <img class="img-circle" src="{{$reg->user->avatar}}" alt="User Image">
+                          <span class="username"><a href="#">{{$reg->user->name}}</a></span>
+                          <span class="description">Publicado dia {{date_format($reg->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                        </div>
+                        <!-- /.user-block -->
+                        <div class="box-tools">
+                          <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                            <i class="fa fa-circle-o"></i></button>
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /.box-tools -->
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                            @php
+                            if (file_exists(public_path('postimages/'.$reg->id.'.jpg'))) {
+                                $foto = '../postimages/'.$reg->id.'.jpg';
+                                echo "<center><img class='img-responsive pad' src='$foto' alt='Photo'></center>";
+                            } else {
+                                echo "";
+                            }
+                        @endphp
+          
+                        <p>{{$reg->description}}</p>
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                        <span class="pull-right text-muted">127 curtidas - 2 comentarios</span>
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer box-comments">
+                        <div class="box-comment">
+                          <!-- User image -->
+                          <img class="img-circle img-sm" src="{{$reg->avatar}}" alt="User Image">
+          
+                          <div class="comment-text">
+                                <span class="username">
+                                  {{$reg->nome}}
+                                  <span class="text-muted pull-right">{{date_format($reg->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                                </span><!-- /.username -->
+                            Exemplo de comentario.
+                          </div>
+                          <!-- /.comment-text -->
+                        </div>
+                        <!-- /.box-comment -->
+                        <div class="box-comment">
+                          <!-- User image -->
+                          <img class="img-circle img-sm" src="{{$reg->avatar}}" alt="User Image">
+          
+                          <div class="comment-text">
+                                <span class="username">
+                                  {{$reg->nome}}
+                                  <span class="text-muted pull-right"{{date_format($reg->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                                </span><!-- /.username -->
+                                Exemplo de comentario 2.
+                          </div>
+                          <!-- /.comment-text -->
+                        </div>
+                        <!-- /.box-comment -->
+                      </div>
+                      <!-- /.box-footer -->
+                      <div class="box-footer">
+                        <form action="#" method="post">
+                          <img class="img-responsive img-circle img-sm" src="{{$reg->user->avatar}}" alt="Alt Text">
+                          <!-- .img-push is used to add margin to elements next to floating images -->
+                          <div class="img-push">
+                            <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+                          </div>
+                        </form>
+                      </div>
+                      <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+                  </div>
     </div>
-    <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-    
-    <div class="col-sm-3">
-        
-        <img />
-    </div>
-    
-</div>
-    @stop
+@stop

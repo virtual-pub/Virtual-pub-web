@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use app\User;
+use app\Post;
 
 class HomeController extends Controller
 {
@@ -24,7 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('home', compact('users'));
+        if (Auth::check()) {
+
+            $reg = Auth::user();
+
+
+            return view('home', compact('reg'));
+        } else {
+            return redirect('/');
+        }
     }
 }

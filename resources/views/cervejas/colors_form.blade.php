@@ -33,8 +33,8 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
+            <div class="box box-primary">
+                <div class="box-header with-border">
                 @if ($acao == 1)
                 <h3> Inclusão de cor </h3>
                 @elseif ($acao == 2) 

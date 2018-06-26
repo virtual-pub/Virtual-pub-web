@@ -20,11 +20,11 @@ class PostController extends Controller
     {
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
-                $posts = Post::all();
+                $posts = Post::paginate(5);
                 return view('posts.posts_list', compact('posts'));
             }else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
                 $id = Auth::user()->id;
-                $posts = Post::where('user_id', $id)->get();
+                $posts = Post::where('user_id', $id)->paginate(5);
                 return view('posts.posts_list', compact('posts'));
             }else{
                 return redirect('/');
@@ -43,17 +43,9 @@ class PostController extends Controller
     public function create()
     {
         if(Auth::check()){
-            if(Gate::allows('isMantenedor')){
                 $acao = 1;
-                $user = User::orderBy('name')->get();
+                $user = Auth::user();
                 return view('posts.posts_form', compact('acao', 'user'));
-            } else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
-                $acao = 1;
-                $user = Auth::user()->nome;
-                return view('posts.posts_form', compact('acao', 'user'));
-            }else{
-                return redirect('/');
-            }
         }else {
             return redirect('/');
         }
@@ -68,7 +60,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'description' => 'required'
+            'description' => 'required',
+            'user_id' => 'required'
         ]);
         // recupera todos os campos do formulário
         $dados = $request->all();
@@ -90,7 +83,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        if(Auth::check()){
+            $reg = Post::find($id);
+            return view('posts/post_view', compact('reg'));
+        }else{
+            return redirect('/');
+        }
     }
 
 
@@ -103,19 +101,10 @@ class PostController extends Controller
     public function edit($id)
     {
         if(Auth::check()){
-            if(Gate::allows('isMantenedor')){
-                $reg = Post::find($id);
-                $user = User::orderBy('name')->get();
                 $acao = 2;
-                return view('posts.posts_form', compact('reg', 'acao', 'user'));
-            }else if(Gate::allows('isFabricante') || Gate::allows('isUser')){
-                $reg = Post::where('user_id', Auth::user()->id)->find($id);
-                $user = Auth::user()->nome;
-                $acao = 2;
-                return view('posts.posts_form', compact('reg', 'acao', 'user'));
-            }else{
-                return redirect('/');
-            }
+                $user = Auth::user();
+                $reg = Post::where('user_id', $user->id)->find($id);
+                return view('posts.posts_form', compact('reg','user', 'acao'));
         }else {
             return redirect('/');
         }
@@ -131,7 +120,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'description' => 'required|unique:'.$id,
+            'description' => 'required'
             
         ]);
         $reg = Post::find($id);

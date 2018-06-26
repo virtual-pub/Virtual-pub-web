@@ -77,27 +77,15 @@
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
+                
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
+                <center>
+                  <a href="{{ route('users.show', Auth::user()->id) }}" class="btn btn-default btn-flat">Perfil</a>
+                </center>
+                
               </li>
             </ul>
           </li>
@@ -140,8 +128,13 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                     @can('isUser')
-                    <li><a href="#" class="bg-green"><i class="fa fa-star"></i> <span>Você é um fabricante?</span></a></li>
+                        @if(!Auth::user()->isFabricante)
+                        <li><a href="{{route('users.isFabricante', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta de fabricante</span></a></li>
+                        @else
+                        <li><a href="{{route('users.isFabricante', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta padrão</span></a></li>
+                        @endif
                     @endcan
+                    <li><a href="{{route('users.edit',Auth::user()->id)}}"><i class="fa fa-gears"></i><span>configurações de conta</span></a></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

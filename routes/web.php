@@ -43,8 +43,13 @@ Route::group(['prefix'=>'posts'], function() {
 Route::resource('estilos', 'EstiloController');
 Route::resource('colors', 'ColorController');
 
-Route::get('user/{id}', 'UserController@show')->name('user.show');
 
+Route::resource('users', 'userController');
+Route::group(['prefix'=>'users'], function() {
+Route::get('isMantenedor/{id}', 'UserController@isMantenedor')->name('users.isMantenedor');
+Route::get('isFabricante/{id}', 'UserController@isFabricante')->name('users.isFabricante');
+Route::get('isUser/{id}', 'UserController@isUser')->name('users.isUser');
+});
 // Social Auth
 Route::prefix('oauth')->group(function() {
         Route::get('/social', 'Auth\SocialAuthController@show')->name('social.login');
