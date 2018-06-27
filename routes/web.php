@@ -45,7 +45,7 @@ Route::resource('estilos', 'EstiloController');
 Route::resource('colors', 'ColorController');
 
 
-Route::resource('users', 'userController');
+Route::resource('users', 'UserController');
 Route::group(['prefix'=>'users'], function() {
 Route::get('isMantenedor/{id}', 'UserController@isMantenedor')->name('users.isMantenedor');
 Route::get('isFabricante/{id}', 'UserController@isFabricante')->name('users.isFabricante');
