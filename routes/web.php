@@ -23,7 +23,6 @@ Route::get('cervejas/api/{id}', 'CervejaController@webServiceId');
 
 Route::resource('cervejas', 'CervejaController');
 Route::group(['prefix'=>'cervejas'], function() {
-        Route::get('lista', 'CervejaController@lista')->name('cervejas.lista');
         Route::get('ativar/{id}', 'CervejaController@ativar')->name('cervejas.ativar');
         Route::get('foto/{id}', 'CervejaController@foto') ->name('cervejas.foto');
         Route::post('foto/store', 'CervejaController@storefoto')->name('cervejas.store.foto');
