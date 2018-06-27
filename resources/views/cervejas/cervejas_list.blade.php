@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | Cervejas')
 
 @section('content_header')
 
@@ -37,11 +37,13 @@
                     @can('isFabricante')
                     <h3 class="box-title">Sua Lista de Cervejas Cadastradas</h3>
                     @endcan
+                    @cannot('isUser')
                     <div class="box-tools">
                         <div class="btn-group">
                             <a href='{{route('cervejas.create')}}' class='btn btn-primary' role='button'> Novo </a>
                         </div>
                     </div>
+                    @endcannot
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
@@ -58,7 +60,9 @@
                                 <th>Coloração</th>
                                 <th>Copo</th>
                                 <th>Fabricante</th>
+                                @cannot('isUser')
                                 <th>ativado</th>
+                                @endcannot
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -68,7 +72,7 @@
                                 if (file_exists(public_path('fotos/'.$cerveja->id.'.jpg'))) {
                                     $foto = '../fotos/'.$cerveja->id.'.jpg';
                                 } else {
-                                    $foto = '../images/avatar-placeholder.svg';
+                                    $foto = '../images/beer-placeholder.svg';
                             }
                             @endphp
                             <tr>
@@ -86,10 +90,12 @@
                                 <td><div class="pull-left cor" style="background-color: {{$cerveja->color->hex}}"></div><p>{{$cerveja->color->nome}}</p></td>
                                 <td> {{$cerveja->copo->nome}} </td>
                                 <td> {{$cerveja->fabricante->fabricante_name}} </td>
+                                @cannot('isUser')
                                 <td> <input type="checkbox" value="" id="{{ $cerveja->id }}"onclick="window.location.href ='{{route('cervejas.ativar', $cerveja->id)}}'" style="width:25px; height:25px"> </td>
                                 <script>
                                     document.getElementById(<?= $cerveja->id ?>).checked = (<?= $cerveja->ativo === 1 ?>);
                                 </script>
+                                @endcannot
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,17 +103,22 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a href="{{ route('cervejas.show', $cerveja->id) }}">Consultar</a></li>
+                                            @cannot('isUser')
                                             <li><a href="{{ route('cervejas.edit', $cerveja->id) }}"> Alterar </a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="{{ route('cervejas.foto', $cerveja->id) }}"> Alterar Foto </a></li>
+                                            @endcannot
                                         </ul>
                                     </div>
+                                    @cannot('isUser')
                                     <form style="display: inline-block"method="post" action="{{route('cervejas.destroy', $cerveja->id)}}" onsubmit="return confirm('Confirma Exclusão?')">
                                         {{ method_field('delete') }}
                                         {{ csrf_field() }}
                                         <button type="submit"class="btn btn-danger centered"> Excluir </button>
                                     </form>
-                                </td>             
+                                    @endcannot
+                                </td>
+                                         
                             </tr>
 
                             @endforeach

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | Copos')
 
 @section('content_header')
     
@@ -43,7 +43,7 @@
                                     if (file_exists(public_path('coposimg/'.$copo->id.'.jpg'))) {
                                         $foto = '../coposimg/'.$copo->id.'.jpg';
                                     } else {
-                                        $foto = '../images/avatar-placeholder.svg';
+                                        $foto = '../images/glass-placeholder.svg';
                                 }
                                 @endphp
                                 <tr>

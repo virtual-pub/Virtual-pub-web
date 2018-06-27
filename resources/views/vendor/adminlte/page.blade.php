@@ -171,7 +171,7 @@
     <!-- ./wrapper -->
     <footer class="main-footer">
             <div class="pull-right hidden-xs">
-              <b>Version</b> 2.4.0
+            
             </div>
             <strong>Visite o GITHUB do projeto <a href="https://github.com/virtual-pub/Virtual-pub-web/" target="_blank">Virtual-Pub</a>.</strong>
           </footer>

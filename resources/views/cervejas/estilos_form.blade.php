@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | formulário de estilos')
 
 @section('content_header')
 <div class="row">

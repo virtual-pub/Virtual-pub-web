@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | Foto Publicação')
 
 @section('content_header')
 <h2> publicar foto</h2>

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub')
+@section('title', 'Virtual-Pub | '.$reg->nome)
 
 @section('content_header')
 
@@ -14,7 +14,7 @@
         if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
         $foto = '../fotos/'.$reg->id.'.jpg';
         } else {
-        $foto = '../images/avatar-placeholder.svg';
+        $foto = '../images/beer-placeholder.svg';
         }
         @endphp
         <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
@@ -95,8 +95,8 @@
       <div class="box-body">
         <b>{{$reg->copo->nome}}</b>
         @php
-        if (file_exists(public_path('coposimg/'.$reg->id.'.jpg'))) {
-            $fotocopo = '../coposimg/'.$reg->id.'.jpg';
+        if (file_exists(public_path('coposimg/'.$reg->copo->id.'.jpg'))) {
+            $fotocopo = '../coposimg/'.$reg->copo->id.'.jpg';
             echo "<center><img class='img-responsive pad' src='$fotocopo' alt='Photo'></center>";
         } else {
             echo "";

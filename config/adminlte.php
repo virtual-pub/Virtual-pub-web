@@ -109,6 +109,12 @@ return [
 
     'menu' => [
         [
+            'text'        => 'Lista de Cervejas',
+            'url'         => 'cervejas/lista',
+            'icon_color'  => 'yellow',
+            'cannot'         => 'isMantenedor',
+        ],
+        [
             'header'      => 'Dados do sistema',
             'can'         => 'isMantenedor',
         ],

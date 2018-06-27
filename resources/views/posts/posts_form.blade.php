@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | formulário de Publicação')
 
 @section('content_header')
 <div class='col-sm-11'>

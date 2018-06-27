@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub ADMIN')
+@section('title', 'Virtual-Pub | Foto Cerveja')
 
 @section('content_header')
 <h2> inserir foto para {{$reg->nome}} </h2>
@@ -37,7 +37,7 @@
             if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
                 $foto = '/fotos/'.$reg->id.'.jpg';
             } else {
-                $foto = '/images/avatar-placeholder.svg';
+                $foto = '/images/beer-placeholder.svg';
             }
             @endphp
             {!!"<img src=$foto id='imagem' height='150' width='200' alt='Foto'>"!!}

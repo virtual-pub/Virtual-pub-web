@@ -46,7 +46,7 @@
                                 <th>email</th>
                                 <th>mantenedor</th>
                                 <th>fabricante</th>
-                                <th>user</th>
+                                <th>padrão</th>
                                 <th>visualizar</th>
                               
                             </tr>
@@ -57,9 +57,15 @@
                                 <td> {{$user->id}} </td>
                                 <td> {{$user->name}} </td>
                                 <td> {{$user->email}} </td>
+                                @if($user->id == 1)
+                                <td> <input type="checkbox" {{ $user->isMantenedor() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isMantenedor', $user->id)}}'" style="width:25px; height:25px" disabled> </td>
+                                <td> <input type="checkbox" {{ $user->isFabricante() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isFabricante', $user->id)}}'" style="width:25px; height:25px"> </td>
+                                <td> <input type="checkbox" {{ $user->isUser() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isUser', $user->id)}}'" style="width:25px; height:25px"> </td>
+                                @else
                                 <td> <input type="checkbox" {{ $user->isMantenedor() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isMantenedor', $user->id)}}'" style="width:25px; height:25px"> </td>
                                 <td> <input type="checkbox" {{ $user->isFabricante() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isFabricante', $user->id)}}'" style="width:25px; height:25px"> </td>
                                 <td> <input type="checkbox" {{ $user->isUser() ? 'checked' : '' }} id="{{ $user->id }}" onclick="window.location.href ='{{route('users.isUser', $user->id)}}'" style="width:25px; height:25px"> </td>
+                                @endif
                                 <td><a href='{{route('users.show', $user->id)}}' class='btn btn-primary' role='button'> perfil </a></td>
                             </tr>
                             @endforeach

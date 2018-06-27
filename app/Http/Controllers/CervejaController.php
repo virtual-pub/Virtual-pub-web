@@ -29,6 +29,9 @@ class CervejaController extends Controller
                 $id = Auth::user()->id;
                 $cervejas = Cerveja::where('fabricante_id', $id)->paginate(5);
                 return view('cervejas.cervejas_list', compact('cervejas'));
+            }else if(Gate::allows('isUser')){
+                $cervejas = Cerveja::where('ativo', 1)->paginate(2);
+                return view('cervejas.cervejas_list', compact('cervejas'));
             }else{
                 return redirect('/');
             }
@@ -107,7 +110,7 @@ class CervejaController extends Controller
     public function show($id)
     {
         $reg = Cerveja::find($id);
-        if($reg->ativo == 0){
+        if(!$reg->ativo){
                 return redirect('/');
         }
 

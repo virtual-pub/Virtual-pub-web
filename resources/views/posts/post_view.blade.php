@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Virtual Pub')
+@section('title', 'Virtual-Pub | Publicação de '.$reg->user->name)
 
 @section('content_header')
 
@@ -39,9 +39,9 @@
                         @endphp
           
                         <p>{{$reg->description}}</p>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                        <span class="pull-right text-muted">127 curtidas - 2 comentarios</span>
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar</button>
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>brindar</button>
+                        <span class="pull-right text-muted">0 brindes - 2 comentarios</span>
                       </div>
                       <!-- /.box-body -->
                       <div class="box-footer box-comments">
@@ -80,7 +80,7 @@
                           <img class="img-responsive img-circle img-sm" src="{{$reg->user->avatar}}" alt="Alt Text">
                           <!-- .img-push is used to add margin to elements next to floating images -->
                           <div class="img-push">
-                            <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+                            <input type="text" class="form-control input-sm" placeholder="Press enter to post comment" disabled>
                           </div>
                         </form>
                       </div>

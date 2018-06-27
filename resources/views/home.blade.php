@@ -2,21 +2,11 @@
 @section('content')
 <div class="container">
     <div class="row">
-        @can('isUser')
-        <div class="col-md-6">
-        @endcan
-        @can('isMantenedor')
         <div class="col-md-8 col-md-offset-2">
-        @endcan
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
+            <div class="panel-body">
+                <img src=" {{ asset('images/logo.svg') }}" alt="logo" class="img-responsive" style="filter: invert(1);">
             </div>
         </div>
-        
     </div>
 </div>
 @stop

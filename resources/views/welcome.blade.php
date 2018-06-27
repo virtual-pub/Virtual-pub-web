@@ -16,7 +16,7 @@
     <style>
         html,
         body {
-            background-color: #f0f0f0;
+            background-color: #f39c12;
             color: #ffffff;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
@@ -51,7 +51,7 @@
         }
 
         .links>a {
-            color: #636b6f;
+            color: #000;
             padding: 0 25px;
             font-size: 12px;
             font-weight: 600;
@@ -65,9 +65,8 @@
         }
 
         .menu-logo {
-            filter: contrast(0);
             margin-top:30px;
-            fill: #fff !important;
+            fill: #000 !important;
 
         }
 
@@ -80,11 +79,6 @@
             background-color: transparent;
         }
         
-        .bg-purple {
-            background-color: #8B17CE;
-            color: 
-
-        }
     </style>
 </head>
 
@@ -92,45 +86,45 @@
     <div class="section">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
-            <div class="top-right links">
+            <div class="top-right links" >
                 @if (Auth::check())
-                <a href="{{ url('/home') }}">Dashboard</a>
+                <a href="{{ url('/home') }}">home</a>
                 @else
                 <a href="{{ route('social.login') }}">Login</a>
-                <a href="{{ url('/register') }}">Register</a>
+                <a href="{{ url('/register') }}">Registrar</a>
                 @endif
             </div>
             @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img src=" {{ asset('images/logo.svg') }}" width="200px" alt="" class="img-responsive menu-logo">
+                    <img src=" {{ asset('images/logo.svg') }}" width="200px" alt="" class="img-responsive menu-logo" style="margin-top: 50px;">
                 </div>
 
 
             </div>
         </div>
-        <div class="jumbotron" style="background-color: #3097D1; margin: 0;">
-            <div class="container-fluid bg-primary">
+        <div class="jumbotron" style="background-color: black; margin: 0;">
+            <div class="container-fluid">
                 <div class="col-sm-6">
                     <br><br><br><br><br><br>
                     <h1>Leitor de Rotulo</h1>
                     <p>Obtenha informações tudo sobre a cerveja com o Leitor de rotulos do Virtual-Pub</p>   
                 </div>
                 <div class="col-sm-6">
-                    <img class="pull-right" src="{{ asset('images/logoread.svg') }}" alt="" srcset="">
+                    <img class="img-responsive pull-right" src="{{ asset('images/logoread.svg') }}" alt="" srcset="">
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-purple">
-            <div class="row text-center bg-purple">
+        <div class="container-fluid" style="background-color: #f39c12">
+            <div class="row text-center" style="background-color: #f39c12">
                 <div class="col-sm-12 col-md-4">
                     <div class="thumbnail thumbreset">
                         <img src="{{ asset('images/momentos.svg') }}" alt="teste" srcset="">
                     </div>
                     <div class="caption">
                         <h3>Momentos</h3>
-                        <p>Compartilhe momentos com seus amigos</p>
+                        <b>Compartilhe momentos com seus amigos</b>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
@@ -139,7 +133,7 @@
                     </div>
                     <div class="caption">
                         <h3>Brinde</h3>
-                        <p>Faça um Brinde aos momentos</p>
+                        <b>Faça um Brinde aos momentos</b>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
@@ -148,11 +142,12 @@
                     </div>
                     <div class="caption">
                         <h3>Avalie Cervejas</h3>
-                        <p> Faça avaliações daas cervejas artesanais</p>
+                        <b> Faça avaliações das cervejas artesanais</b>
                     </div>
                 </div>
+                <br>
                 <p class="meta">
-                    Virtal-Pub | Rede social de Cervejas artesanais
+                    &nbsp;
                 </p>
                 <div class="links">
                     <a href="https://github.com/virtual-pub/Virtual-pub-web/" target="_blank">Visite o Github do projeto</a>
