@@ -110,7 +110,7 @@ return [
     'menu' => [
         [
             'text'        => 'Lista de Cervejas',
-            'url'         => 'cervejas/lista',
+            'url'         => 'cervejas',
             'icon_color'  => 'yellow',
             'cannot'         => 'isMantenedor',
         ],
