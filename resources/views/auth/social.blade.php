@@ -17,19 +17,14 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
-            <a href="{{ route('social.oauth', 'facebook') }}" class="btn btn-block btn-social btn-facebook">
-                <span class="fa fa-facebook"></span>
-                Login with Facebook
-            </a>
-           
             <a href="{{ route('social.oauth', 'google') }}" class="btn btn-block btn-social btn-google">
                 <span class="fa fa-google"></span>
-                Login with Google
+                Login com Google
             </a>
             <hr>
             <a href="{{ route('login') }}" class="btn btn-block btn-social btn-default">
                 <span class="fa fa-envelope"></span>
-                Login with Email
+                Login com Email
             </a>
         </div>
     </div>
