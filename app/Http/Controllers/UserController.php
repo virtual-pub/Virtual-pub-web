@@ -173,7 +173,7 @@ class UserController extends Controller
                 $reg = User::find($id);
                 if ($user->id == $reg->id ) {
                     $reg->isFabricante = ($reg->isFabricante == 0) ? 1 : 0;
-    
+                    $reg->isUser = ($reg->isUser == 1) ? 0 : 1;
                     $reg->save();
 
                     if ($reg) {
