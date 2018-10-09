@@ -57,7 +57,13 @@ Route::prefix('oauth')->group(function() {
         Route::get('/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
 });
 
+Route::get('users/{id}', 'UserController@show')->name('profile.show');
 
+Route::get('/post', 'PostController@indexP');
+Route::post('/like','PostController@postLikePost')->name('like');
+
+Route::post('users/{profileId}/follow', 'UserController@followUser')->name('user.follow');
+Route::post('/{profileId}/unfollow', 'UserController@unFollowUser')->name('user.unfollow');
 
 
 

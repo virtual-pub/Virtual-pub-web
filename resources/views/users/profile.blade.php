@@ -21,6 +21,11 @@
               </div>
               <div class="widget-user-image">
                 <img class="img-circle" src="{{$reg->avatar}}" alt="User Avatar">
+                <form style="display: inline-block"method="post" action="{{route('user.follow', $reg->id)}}" onsubmit="return confirm('Confirma follow?')">   
+                  {{ csrf_field() }}
+                  <button type="submit"class="btn btn-danger centered"> follow </button>
+              </form>
+               
               </div>
               <div class="box-footer">
                 <div class="row">
@@ -79,15 +84,15 @@
           </div>
     </div>
     <div class="row">
-        @foreach($posts as $p)
-        <div class="col-md-9">
+        @foreach($posts as $post)
+        <div class="col-md-9 blog-post" >
           <!-- Box Comment -->
-          <div class="box box-widget">
+          <div class="box box-widget post" data-postid="{{ $post->id }}">
             <div class="box-header with-border">
               <div class="user-block">
                 <img class="img-circle" src="{{$reg->avatar}}" alt="User Image">
                 <span class="username"><a href="#">{{$reg->name}}</a></span>
-                <span class="description">Publicado dia {{date_format($p->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                <span class="description">Publicado dia {{date_format($post->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
               </div>
               <!-- /.user-block -->
               <div class="box-tools">
@@ -102,16 +107,18 @@
             <!-- /.box-header -->
             <div class="box-body">
                   @php
-                  if (file_exists(public_path('postimages/'.$p->id.'.jpg'))) {
-                      $fotopost = '../postimages/'.$p->id.'.jpg';
+                  if (file_exists(public_path('postimages/'.$post->id.'.jpg'))) {
+                      $fotopost = '../postimages/'.$post->id.'.jpg';
                       echo "<center><img class='img-responsive pad' src='$fotopost' alt='Photo'></center>";
                   } else {
                       echo "";
                   }
               @endphp
-              <p>{{$p->description}}</p>
-              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
-              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+              <p>{{$post->description}}</p>
+              <div class="interaction">
+                <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a> |
+                <a href="#" class="btn btn-xs btn-danger like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 0 ? 'não curtiu' : 'não curtir' : 'não curtir'  }}</a>
+              </div>
               <span class="pull-right text-muted">127 curtidas - 2 comentários</span>
             </div>
             <!-- /.box-body -->
@@ -122,7 +129,7 @@
                 <div class="comment-text">
                       <span class="username">
                         {{$reg->nome}}
-                        <span class="text-muted pull-right">{{date_format($p->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                        <span class="text-muted pull-right">{{date_format($post->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
                       </span><!-- /.username -->
                   Exemplo de comentário.
                 </div>
@@ -135,7 +142,7 @@
                 <div class="comment-text">
                       <span class="username">
                         {{$reg->nome}}
-                        <span class="text-muted pull-right">{{date_format($p->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
+                        <span class="text-muted pull-right">{{date_format($post->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
                       </span><!-- /.username -->
                   Exemplo de comentário 2.
                 </div>
@@ -199,4 +206,13 @@
 <script>
     $("#my-toggle-button").controlSidebar(options);
 </script>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ <script src="{{ asset('/js/like.js') }}"></script>
+ <script>
+   var token = '{{ Session::token() }}';
+   var urlLike = '{{ route('like') }}';
+ </script>
 @stop

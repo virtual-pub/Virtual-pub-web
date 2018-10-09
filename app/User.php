@@ -88,8 +88,29 @@ class User extends Authenticatable
      */
     public function post() 
     {
-        return $this->belongsTo('App\Post');
+        return $this->hasMany('App\Post');
     }
+
+    public function likes(){
+        return $this->hasMany('App\Like');
+    }
+
+   /**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function followers()
+{
+    return $this->belongsToMany(User::class, 'amizades', 'seguidor_id', 'user_id')->withTimestamps();
+}
+
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function followings()
+{
+    return $this->belongsToMany(User::class, 'amizades', 'user_id', 'seguidor_id')->withTimestamps();
+}
+
 
 
 
