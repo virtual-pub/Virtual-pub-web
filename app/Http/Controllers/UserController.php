@@ -212,39 +212,33 @@ class UserController extends Controller
     }
 
    /**
- * Follow the user.
- *
- * @param $profileId
- *
- */
-public function followUser(int $profileId)
-{
-  $reg = User::find($profileId);
-  if(! $reg) {
-    
-     return redirect()->back()->with('error', 'User does not exist.'); 
- }
+    * Follow the user.
+    *
+    * @param $profileId
+    *
+    */
+    public function followUser(int $profileId){
+        $reg = User::find($profileId);
+        if(! $reg) {
+        return redirect()->back()->with('error', 'User does not exist.'); 
+        }
+        $reg->followers()->attach(auth()->user()->id);
+        return redirect()->back()->with('success', 'Successfully followed the user.');
+    }
 
-$reg->followers()->attach(auth()->user()->id);
-return redirect()->back()->with('success', 'Successfully followed the user.');
-}
-
- /**
- * Follow the user.
- *
- * @param $profileId
- *
- */
-public function unFollowUser(int $profileId)
-{
-  $user = User::find($profileId);
-  if(! $user) {
-    
-     return redirect()->back()->with('error', 'User does not exist.'); 
- }
-$user->followers()->detach(auth()->user()->id);
-return redirect()->back()->with('success', 'Successfully unfollowed the user.');
-} 
+    /**
+    * Follow the user.
+    *
+    * @param $profileId
+    *
+    */
+    public function unFollowUser(int $profileId){
+        $user = User::find($profileId);
+        if(! $user) {
+            return redirect()->back()->with('error', 'User does not exist.'); 
+        }
+        $user->followers()->detach(auth()->user()->id);
+        return redirect()->back()->with('success', 'Successfully unfollowed the user.');
+    } 
  
-
 }
