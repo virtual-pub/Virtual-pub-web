@@ -47,5 +47,8 @@ class Cerveja extends Model
     public function fabricante() {
         return $this->belongsTo('App\User');
     }
+    public function Favoritadas(){
+        return $this->belongsToMany(Cerveja::class, 'cervejas_favoritas', 'cerveja_id', 'user_id')->withTimestamps();
+    }
 
 }

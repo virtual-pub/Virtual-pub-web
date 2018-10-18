@@ -8,30 +8,47 @@
         <!-- Add the bg color to the header using any of the bg-* classes -->
         @if($reg->isFabricante)
         <div class="widget-user-header bg-yellow-active">
-        @else  
-        <div class="widget-user-header bg-aqua-active">
-        @endif    
-                <h3 class="widget-user-username">@if($reg->isFabricante){{$reg->fabricante_name}}@else{{$reg->name}}@endif</h3>
-                <h5 class="widget-user-desc">@if($reg->isFabricante) Website: 
-                  <a style="color: #fff;" target='_blank'  href='{{$reg->website}}'>
-                  {{$reg->website}}</a>
-                  @else email: {{$reg->email}}
+          @else  
+          <div class="widget-user-header bg-aqua-active">
+            @endif    
+            <h3 class="widget-user-username">@if($reg->isFabricante){{$reg->fabricante_name}}@else{{$reg->name}}@endif</h3>
+            <h5 class="widget-user-desc">@if($reg->isFabricante) Website: 
+                <a style="color: #fff;" target='_blank'  href='{{$reg->website}}'>
+                    {{$reg->website}}</a>
+                    @else email: {{$reg->email}}
+                    @endif
+                  </h5>
+                  @if($reg->isOnline())  
+                  <p><i class="fa fa-circle text-success"></i> Online</p>
+                  @else
+                  <p><i class="fa fa-circle text-danger"></i> offline</p>
                   @endif
-                </h5>
-              </div>
-              <div class="widget-user-image">
-                <img class="img-circle" src="{{$reg->avatar}}" alt="User Avatar">
-                <form style="display: inline-block"method="post" action="{{route('user.follow', $reg->id)}}" onsubmit="return confirm('Confirma follow?')">   
-                  {{ csrf_field() }}
-                  <button type="submit"class="btn btn-danger centered"> follow </button>
-              </form>
-               
-              </div>
-              <div class="box-footer">
+                </div>
+                <div class="widget-user-image">
+                  <img class="img-circle" src="{{$reg->avatar}}" alt="User Avatar">
+                  
+                </div>
+                <div class="box-footer">
+                      <div class="text-center">
+                          @if(Auth::user()->id != $reg->id)
+                      
+                          @if(Auth::user()->followings()->where('seguidor_id', $reg->id)->first())
+                          <form style="display: inline-block"method="post" action="{{route('user.unfollow', $reg->id)}}" onsubmit="return confirm('Quer realmente deixar deseguir este usuário?')">   
+                              {{ csrf_field() }}
+                              <button type="submit"class="btn btn-success centered"> seguindo </button>
+                          </form>
+                          @else
+                            <form style="display: inline-block"method="post" action="{{route('user.follow', $reg->id)}}" onsubmit="return confirm('Deseja seguir este usuário?')">   
+                                {{ csrf_field() }}
+                                <button type="submit"class="btn btn-primary centered"> seguir </button>
+                              </form>
+                              @endif
+                        @endif
+                      </div>
                 <div class="row">
                   <div class="col-sm-4 border-right">
                     <div class="description-block">
-                      <h5 class="description-header">3,200</h5>
+                      <h5 class="description-header">{{$seguindo->count()}}</h5>
                       <span class="description-text">SEGUINDO</span>
                     </div>
                     <!-- /.description-block -->
@@ -39,7 +56,7 @@
                   <!-- /.col -->
                   <div class="col-sm-4 border-right">
                     <div class="description-block">
-                      <h5 class="description-header">13,000</h5>
+                    <h5 class="description-header">{{$seguidores->count()}}</h5>
                       <span class="description-text">SEGUIDORES</span>
                     </div>
                     <!-- /.description-block -->
@@ -116,10 +133,9 @@
               @endphp
               <p>{{$post->description}}</p>
               <div class="interaction">
-                <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a> |
-                <a href="#" class="btn btn-xs btn-danger like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 0 ? 'não curtiu' : 'não curtir' : 'não curtir'  }}</a>
+                <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a>
               </div>
-              <span class="pull-right text-muted">127 curtidas - 2 comentários</span>
+              
             </div>
             <!-- /.box-body -->
             <div class="box-footer box-comments">

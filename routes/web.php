@@ -65,6 +65,13 @@ Route::post('/like','PostController@postLikePost')->name('like');
 Route::post('users/{profileId}/follow', 'UserController@followUser')->name('user.follow');
 Route::post('/{profileId}/unfollow', 'UserController@unFollowUser')->name('user.unfollow');
 
+Route::post('cervejas/{profileId}/favoritar', 'CervejaController@favoritarCerveja')->name('cerveja.favoritar');
+Route::post('/{profileId}/desfazer', 'CervejaController@desfazerFavoritar')->name('cerveja.desfazer');
+
+Route::get('estilo/{id?}', 'CervejaController@categoriaCerveja')->name('search.estilo');
+Route::get('feed', 'PostController@feed')->name('feed');
+Route::get('listaseguidores', 'UserController@listaSeguidores')->name('listaseguidores');
+
 
 
         

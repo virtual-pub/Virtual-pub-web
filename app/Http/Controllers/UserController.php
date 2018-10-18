@@ -66,7 +66,9 @@ class UserController extends Controller
             $reg = User::find($id);
             $posts = Post::where('user_id', $id)->get();
             $cervejas = Cerveja::where('fabricante_id', $id)->get();
-            return view('users.profile', compact('reg', 'posts', 'cervejas'));
+            $seguidores = DB::table('amizades')->where('seguidor_id', $id)->get();
+            $seguindo = DB::table('amizades')->where('user_id', $id)->get();
+            return view('users.profile', compact('reg', 'posts', 'cervejas', 'seguidores', 'seguindo'));
         }
     }
 
@@ -239,6 +241,30 @@ class UserController extends Controller
         }
         $user->followers()->detach(auth()->user()->id);
         return redirect()->back()->with('success', 'Successfully unfollowed the user.');
-    } 
+    }
+    
+    public function listaSeguidores(){
+        $user = Auth::user()->id;
+
+        $seguidores = DB::table('amizades')
+        ->join('users', 'users.id', '=', 'amizades.seguidor_id')
+        ->select('*')
+        ->where('users.id', '=', $user)
+        ->get();
+
+        return dd($posts);
+    }
+    public function listaSeguidos(){
+        $user = Auth::user()->id;
+
+        $seguidos = DB::table('amizades')
+        ->join('users', 'users.id', '=', 'amizades.user_id')
+        ->select('*')
+        ->where('users.id', '=', $user)
+        ->get();
+
+        return dd($posts);
+        
+    }
  
 }

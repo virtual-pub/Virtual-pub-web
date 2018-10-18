@@ -23,15 +23,18 @@ class CervejaController extends Controller
     {
         if(Auth::check()){
             if(Gate::allows('isMantenedor')){
+                $estilos = Estilo::orderBy('nome')->get();
                 $cervejas = Cerveja::paginate(5);
-                return view('cervejas.cervejas_list', compact('cervejas'));
+                return view('cervejas.cervejas_list', compact('cervejas', 'estilos'));
             }else if(Gate::allows('isFabricante')){
                 $id = Auth::user()->id;
                 $cervejas = Cerveja::where('fabricante_id', $id)->paginate(5);
-                return view('cervejas.cervejas_list', compact('cervejas'));
+                $estilos = Estilo::orderBy('nome')->get();
+                return view('cervejas.cervejas_list', compact('cervejas', 'estilos'));
             }else if(Gate::allows('isUser')){
                 $cervejas = Cerveja::where('ativo', 1)->paginate(2);
-                return view('cervejas.cervejas_list', compact('cervejas'));
+                $estilos = Estilo::orderBy('nome')->get();
+                return view('cervejas.cervejas_list', compact('cervejas', 'estilos'));
             }else{
                 return redirect('/');
             }
@@ -298,6 +301,30 @@ class CervejaController extends Controller
 
         return redirect()->route('cervejas.index')
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
+    }
+
+    public function favoritarCerveja(int $profileId){
+        $reg = cerveja::find($profileId);
+        if(! $reg) {
+        return redirect()->back()->with('error', 'User does not exist.'); 
+        }
+        $reg->favoritadas()->attach(auth()->user()->id);
+        return redirect()->back()->with('success', 'Successfully followed the user.');
+    }
+
+    /**
+    * Follow the user.
+    *
+    * @param $profileId
+    *
+    */
+    public function desfazerFavoritar(int $profileId){
+        $reg = Cerveja::find($profileId);
+        if(! $reg) {
+            return redirect()->back()->with('error', 'User does not exist.'); 
+        }
+        $reg->favoritadas()->detach(auth()->user()->id);
+        return redirect()->back()->with('success', 'Successfully unfollowed the user.');
     }
 
     

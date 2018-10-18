@@ -68,7 +68,7 @@ class User extends Authenticatable
      */
     public function isOnline()
     {
-        return Cache::has('user-is-online-'. Auth::user()->id);
+        return Cache::has('user-is-online-'. $this->id);
     }
 
     /**
@@ -109,6 +109,10 @@ public function followers()
 public function followings()
 {
     return $this->belongsToMany(User::class, 'amizades', 'user_id', 'seguidor_id')->withTimestamps();
+}
+
+public function Favoritas(){
+    return $this->belongsToMany(Cerveja::class, 'cervejas_favoritas', 'user_id', 'cerveja_id')->withTimestamps();
 }
 
 

@@ -43,7 +43,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"> <img src=" {{ asset('images/logo.svg') }}" width="200px" alt="" class="img-responsive menu-logo" style="margin-top: 5px"</span>
+                <span class="logo-lg"> <img src=" {{ asset('images/logo.svg') }}" width="200px" alt="" class="img-responsive menu-logo" style="margin-top: 5px"></span>
             </a>
 
             <!-- Header Navbar -->
@@ -82,9 +82,8 @@
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <center>
                   <a href="{{ route('users.show', Auth::user()->id) }}" class="btn btn-default btn-flat">Perfil</a>
-                </center>
+                
                 
               </li>
             </ul>
@@ -126,6 +125,18 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
+                        <!--<li class="treeview">
+                                <a href="#">
+                                  <i class="fa fa-laptop"></i>
+                                  <span>UI Elements</span>
+                                  <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                  </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                        
+                                </ul>
+                              </li>-->
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                     @can('isUser')
                         @if(!Auth::user()->isFabricante)

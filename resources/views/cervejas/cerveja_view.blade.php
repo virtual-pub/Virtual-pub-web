@@ -20,7 +20,8 @@
         <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
         <h3 class="profile-username text-center">{{$reg->nome}}</h3>
         <a href="{{route('users.show', $reg->fabricante->id)}}"><p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p></a>
-        <center><div class="icon text-yellow">
+        <center>
+          <div class="icon text-yellow">
           <h3>
             <i class="fa fa-beer-sm"></i>
             <i class="fa fa-beer"></i>
@@ -28,7 +29,7 @@
             <i class="fa fa-beer"></i>
             <i class="fa fa-beer"></i>
           </h3>
-        </div>
+          </div>
       </center>
       <p>{{$reg->descricao}}</p>
         <ul class="list-group list-group-unbordered">
@@ -46,6 +47,24 @@
           </li>
           <li class="list-group-item">
             <b>Convenção Europeia de Cervejaria (EBC)</b> <a class="pull-right">{{$reg->EBC}}</a>
+          </li>
+          <li class="list-group-item">
+              <div class="text-center">
+                 
+              
+                  @if(Auth::user()->favoritas()->where('cerveja_id', $reg->id)->first())
+                  <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $reg->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
+                      {{ csrf_field() }}
+                      <button type="submit"class="btn btn-success centered"> favoritada </button>
+                  </form>
+                  @else
+                    <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
+                        {{ csrf_field() }}
+                        <button type="submit"class="btn btn-primary centered"> favoritar </button>
+                      </form>
+                      @endif
+                
+              </div>
           </li>
         </ul>
       </div>

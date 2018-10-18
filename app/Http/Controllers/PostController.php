@@ -187,35 +187,48 @@ class PostController extends Controller
           return view('posts.index', ['posts' => $posts]);
     }
 
-    public function postLikePost(Request $request)
-         {
-             $post_id = $request['postId'];
-             $is_like = $request['isLike'] === 'true';
-             $update = false;
-             $post = Post::find($post_id);
-             if (!$post) {
-                 return null;
-             }
-             $user = Auth::user();
-             $like = $user->likes()->where('post_id', $post_id)->first();
-             if ($like) {
-                 $already_like = $like->like;
-                 $update = true;
-                 if ($already_like == $is_like) {
-                     $like->delete();
-                     return null;
-                 }
-             } else {
-                 $like = new Like();
-             }
-             $like->like = $is_like;
-             $like->user_id = $user->id;
-             $like->post_id = $post->id;
-             if ($update) {
-                 $like->update();
-             } else {
-                 $like->save();
-             }
-             return null;
-         }
+    public function postLikePost(Request $request){
+        $post_id = $request['postId'];
+        $is_like = $request['isLike'] === 'true';
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = Auth::user();
+        $like = $user->likes()->where('post_id', $post_id)->first();
+        if ($like) {
+            $already_like = $like->like;
+            $update = true;
+            if ($already_like == $is_like) {
+                $like->delete();
+                return null;
+            }
+        } else {
+            $like = new Like();
+        }
+        $like->like = $is_like;
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        if ($update) {
+            $like->update();
+        } else {
+            $like->save();
+        }
+        return null;
+    }
+
+    public function feed(){
+        $user = Auth::user()->id;
+
+        $posts = DB::table('amizades')
+        ->join('posts', 'posts.user_id', '=', 'amizades.seguidor_id')
+        ->join('users', 'users.id', '=', 'posts.user_id')
+        ->select('posts.id as id', 'posts.user_id as userId', 'posts.description as desc', 'posts.created_at as data', 'users.name as nome', 'users.avatar as userimg')
+        ->where('amizades.user_id', '=', $user)
+        ->orderBy('data', 'desc')
+        ->get();
+
+        return view('feed', compact('posts'));
+    }
 }
