@@ -58,7 +58,7 @@ return [
     |
     */
 
-    'layout' => 'fixed',
+    'layout' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,31 +109,25 @@ return [
 
     'menu' => [
         [
-            'text'        => 'feed',
-            'url'         => 'feed',
-            'icon'         => 'feed',
-            'icon_color'  => 'orange',
-        ],
-        [
-            'text'        => 'categorias',
+            'text'        => 'Categorias',
             'icon'         => 'reorder',
             'icon_color'  => 'red',
             'submenu' => [
                 [
                     'text'        => 'Estilos',
-                    'url'         => 'cervejas',
+                    'url'         => 'categoria/estilo',
                     'icon'         => 'circle-o',
                     'icon_color'  => 'maroon',
                 ],
                 [
                     'text'        => 'Copos',
-                    'url'         => 'estilos',
+                    'url'         => 'categoria/copo',
                     'icon'         => 'circle-o',
                     'icon_color'  => 'teal',
                 ],
                 [
                     'text'        => 'Coloração',
-                    'url'         => 'estilos',
+                    'url'         => 'categoria/cor',
                     'icon'         => 'circle-o',
                     'icon_color'  => 'purple',
                 ],
@@ -141,13 +135,7 @@ return [
 
         ],
         [
-            'text'        => 'Lista de Cervejas',
-            'url'         => 'cervejas',
-            'icon_color'  => 'yellow',
-            'cannot'         => 'isMantenedor',
-        ],
-        [
-            'header'      => 'Dados do sistema',
+            'header'      => 'Dados do Sistema',
             'can'         => 'isMantenedor',
         ],
         [
@@ -175,13 +163,19 @@ return [
                     'can'         => 'isMantenedor',
                 ],
                 [
-                    'text'        => 'Lista de copos',
+                    'text'        => 'Lista de Copos',
                     'url'         => 'copos',
                     'icon_color'  => 'purple',
                     'can'         => 'isMantenedor',
                 ],
             ],
         ],
+        [
+            'text'        => 'Feed',
+            'url'         => 'feed',
+            'icon'         => 'feed',
+            'icon_color'  => 'orange',
+        ],  
         [
             'text'        => 'Lista de Usuários',
             'url'         => 'users/',
@@ -190,7 +184,7 @@ return [
             'can'         => 'isMantenedor',
         ],
         [
-            'text'        => 'Lista de posts',
+            'text'        => 'Lista de Publicações',
             'url'         => 'posts/',
             'icon'        => 'users',
             'icon_color'  => 'green',
@@ -203,26 +197,26 @@ return [
         ],
         [
             'text'        => 'Cervejas Favoritas',
-            'url'         => 'cervejas/favoritas',
+            'url'         => 'cervejas-favoritas',
             'icon'        => 'star',
             'icon_color'  => 'yellow',
         ],
         [
             'text'        => 'Usuários Seguidos',
-            'url'         => 'profile/seguidos',
+            'url'         => 'user-seguidos',
             'icon'        => 'users',
             'icon_color'  => 'red',
             'cannot'         => 'isMantenedor',
         ],
         [
             'text'        => 'Seus Seguidores',
-            'url'         => 'profile/seguidores',
+            'url'         => 'user-seguidores',
             'icon'        => 'users',
             'icon_color'  => 'aqua',
             'cannot'         => 'isMantenedor',
         ],
         [
-            'text'        => 'seus posts',
+            'text'        => 'Suas Publicações',
             'url'         => 'posts/',
             'icon'        => 'edit',
             'icon_color'  => 'aqua',

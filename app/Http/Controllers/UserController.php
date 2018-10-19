@@ -272,5 +272,19 @@ class UserController extends Controller
         return view('busca.user', ['users' => $dados,
                          'palavra' => $request->palavra]);
     }
+    public function seguidores() {
+        
+        $reg = Auth::user();
+        $dados = $reg->followers;
+
+        return view('users.relation', ['users' => $dados]);
+    }
+    public function seguidos() {
+        
+        $reg = Auth::user();
+        $dados = $reg->followings;
+
+        return view('users.relation', ['users' => $dados]);
+    }
  
 }

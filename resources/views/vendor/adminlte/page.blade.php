@@ -128,7 +128,7 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-search text-blue"></i>
-                            <span>pesquisar</span>
+                            <span>Pesquisar</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -137,18 +137,18 @@
                             <form action="{{ route('busca.cerveja') }}" method="POST" class="sidebar-form">
                                 {{ csrf_field() }}
                                 <div class="input-group">
-                                  <input type="text" name="palavra" class="form-control" placeholder="buscar cerveja">
+                                  <input type="text" name="palavra" class="form-control" placeholder="Buscar Cerveja">
                                       <span class="input-group-btn">
                                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                                         </button>
                                       </span>
                                 </div>
                             </form>
-                            <br>        
+                              
                             <form action="{{ route('busca.user') }}" method="POST" class="sidebar-form">
                                 {{ csrf_field() }}
                                 <div class="input-group">
-                                  <input type="text" name="palavra" class="form-control" placeholder="buscar Usuário">
+                                  <input type="text" name="palavra" class="form-control" placeholder="Buscar Usuário">
                                       <span class="input-group-btn">
                                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                                         </button>

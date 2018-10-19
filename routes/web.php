@@ -70,10 +70,18 @@ Route::post('/{profileId}/desfazer', 'CervejaController@desfazerFavoritar')->nam
 
 Route::post('busca/cerveja', 'CervejaController@pesq')->name('busca.cerveja');
 Route::post('busca/users', 'UserController@pesq')->name('busca.user');
-Route::get('favoritas', 'CervejaController@fav');
+Route::get('cervejas-favoritas', 'CervejaController@fav');
 
 Route::get('feed', 'PostController@feed')->name('feed');
-Route::get('listaseguidores', 'UserController@listaSeguidores')->name('listaseguidores');
+Route::get('user-seguidores', 'UserController@seguidores')->name('seguidores');
+Route::get('user-seguidos', 'UserController@seguidos')->name('seguidos');
+
+Route::get('categoria/estilo', 'EstiloController@lista')->name('Lista.estilo');
+Route::get('categoria-estilo/{id?}', 'EstiloController@categoriaEstilo')->name('search.estilo');
+Route::get('categoria/copo', 'CopoController@lista')->name('Lista.copo');
+Route::get('categoria-copo/{id?}', 'CopoController@categoriaCopo')->name('search.copo');
+Route::get('categoria/cor', 'ColorController@lista')->name('Lista.cor');
+Route::get('categoria-cor/{id?}', 'ColorController@categoriaCor')->name('search.cor');
 
 
 

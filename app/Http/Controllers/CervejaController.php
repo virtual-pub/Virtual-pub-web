@@ -338,7 +338,7 @@ class CervejaController extends Controller
         $reg = Auth::user();
         $dados = $reg->favoritas;
 
-        return view('busca.cerveja', ['cervejas' => $dados]);
+        return view('cervejas.cerveja_fav', ['cervejas' => $dados]);
     }
 
     

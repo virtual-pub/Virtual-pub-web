@@ -45,21 +45,15 @@
                         @endphp
           
                         <p>{{$post->desc}}</p>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar</button>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>brindar</button>
-                        <span class="pull-right text-muted">0 brindes - 2 comentarios</span>
+                        <div class="interaction">
+                            <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a>
+                          </div>
                       </div>
                       <!-- /.box-body -->
                      
                       <!-- /.box-footer -->
                       <div class="box-footer">
-                        <form action="#" method="post">
-                          <img class="img-responsive img-circle img-sm" src="{{Auth::user()->avatar}}" alt="Alt Text">
-                          <!-- .img-push is used to add margin to elements next to floating images -->
-                          <div class="img-push">
-                            <input type="text" class="form-control input-sm" placeholder="Press enter to post comment" disabled>
-                          </div>
-                        </form>
+                        
                       </div>
                       <!-- /.box-footer -->
                     </div>
@@ -67,4 +61,18 @@
                   </div>
     </div>
 @endforeach
+@stop
+@section('js')
+<script>
+    $("#my-toggle-button").controlSidebar(options);
+</script>
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ <script src="{{ asset('/js/like.js') }}"></script>
+ <script>
+   var token = '{{ Session::token() }}';
+   var urlLike = '{{ route('like') }}';
+ </script>
 @stop

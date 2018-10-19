@@ -23,7 +23,7 @@
                         <a href='{{route('estilos.create')}}' class='btn btn-primary' 
                         role='button'> Novo </a>
                         </div>
-                </div
+                    </div>
               </div>
               <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">

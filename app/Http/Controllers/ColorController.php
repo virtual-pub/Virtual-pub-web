@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Color;
+use App\Cerveja;
 use Gate;
 
 class ColorController extends Controller
@@ -146,5 +147,13 @@ class ColorController extends Controller
             return redirect()->route('colors.index')
                             ->with('status', $color->nome . ' Excluído!');
         }
+    }
+    public function categoriaCor($id){
+        $dados = Cerveja::where('color_id', $id)->get();
+        return view('busca.cerveja', ['cervejas' => $dados]);
+    }
+    public function lista(){
+        $dados = Color::orderBy('nome')->get();
+        return view('busca.categoria_cor', ['dados' => $dados]);
     }
 }

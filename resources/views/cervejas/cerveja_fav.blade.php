@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'cervejas favoritas')
+@section('title', 'Busca cerveja')
 
 @section('content_header')
 
@@ -10,9 +10,7 @@
 
 @section('content')
 @foreach($cervejas as $reg)
-<div class="col-sm-12">
-  
-  
+<div class="col-sm-12 col-md-4">
     <div class="box box-default">
         <div class="box-body box-profile">
             @php
@@ -42,11 +40,12 @@
               <li class="list-group-item">
                 <b>Convenção Europeia de Cervejaria (EBC)</b> <a class="pull-right">{{$reg->EBC}}</a>
               </li>
-              
+              <li class="list-group-item text-center">
+                <a type="button" href="{{ route('cervejas.show', $reg->id)}}" class="btn btn-success centered">Mais Informações</a>
+              </li>
             </ul>
         </div>
     </div>
-  
 </div>
 @endforeach
 @stop

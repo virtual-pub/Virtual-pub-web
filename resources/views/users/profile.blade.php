@@ -71,7 +71,7 @@
                       <br>
                       <span class="description-text"><a href="#" data-toggle="control-sidebar">VISUALIZAR LISTA</a></span>
                       @else
-                      <h5 class="description-header">35</h5>
+                      <h5 class="description-header">{{$reg->favoritas->count()}}</h5>
                       <span class="description-text">CERVEJAS FAVORITAS</span>
                       @endif
                     </div>
@@ -130,7 +130,7 @@
                   } else {
                       echo "";
                   }
-              @endphp
+                  @endphp
               <p>{{$post->description}}</p>
               <div class="interaction">
                 <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a>
@@ -139,42 +139,13 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer box-comments">
-              <div class="box-comment">
-                <!-- User image -->
-                <img class="img-circle img-sm" src="{{$reg->avatar}}" alt="User Image">
-                <div class="comment-text">
-                      <span class="username">
-                        {{$reg->nome}}
-                        <span class="text-muted pull-right">{{date_format($post->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
-                      </span><!-- /.username -->
-                  Exemplo de comentário.
-                </div>
-                <!-- /.comment-text -->
-              </div>
-              <!-- /.box-comment -->
-              <div class="box-comment">
-                <!-- User image -->
-                <img class="img-circle img-sm" src="{{$reg->avatar}}" alt="User Image">
-                <div class="comment-text">
-                      <span class="username">
-                        {{$reg->nome}}
-                        <span class="text-muted pull-right">{{date_format($post->created_at, 'd/m/Y')}} às {{date_format($reg->created_at, 'H:i')}}</span>
-                      </span><!-- /.username -->
-                  Exemplo de comentário 2.
-                </div>
-                <!-- /.comment-text -->
-              </div>
-              <!-- /.box-comment -->
+              
+                
+              
             </div>
             <!-- /.box-footer -->
             <div class="box-footer">
-              <form action="#" method="post">
-                <img class="img-responsive img-circle img-sm" src="{{$reg->avatar}}" alt="Alt Text">
-                <!-- .img-push is used to add margin to elements next to floating images -->
-                <div class="img-push">
-                  <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                </div>
-              </form>
+             
             </div>
             <!-- /.box-footer -->
           </div>
@@ -217,7 +188,7 @@
   <!-- /.sidebar -->
 </aside>
 
-@endsection
+@stop
 @section('js')
 <script>
     $("#my-toggle-button").controlSidebar(options);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Copo;
+use App\Cerveja;
 use Gate;
 
 class CopoController extends Controller
@@ -175,5 +176,14 @@ class CopoController extends Controller
 
         return redirect()->route('copos.index')
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
+    }
+
+    public function categoriaCopo($id){
+        $dados = Cerveja::where('copo_id', $id)->get();
+        return view('busca.cerveja', ['cervejas' => $dados]);
+    }
+    public function lista(){
+        $dados = Copo::orderBy('nome')->get();
+        return view('busca.categoria_copo', ['dados' => $dados]);
     }
 }

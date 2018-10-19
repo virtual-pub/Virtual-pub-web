@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Estilo;
+use App\Cerveja;
 use Gate;
 
 class EstiloController extends Controller
@@ -143,7 +144,16 @@ class EstiloController extends Controller
         $estilo = Estilo::find($id);
         if ($estilo->delete()) {
             return redirect()->route('estilos.index')
-                            ->with('status', $estilo->nome . ' Excluído!');
+            ->with('status', $estilo->nome . ' Excluído!');
         }
+    }
+    
+    public function categoriaEstilo($id){
+        $dados = Cerveja::where('estilo_id', $id)->get();
+        return view('busca.cerveja', ['cervejas' => $dados]);
+    }
+    public function lista(){
+        $dados = Estilo::orderBy('nome')->get();
+        return view('busca.categoria_estilo', ['dados' => $dados]);
     }
 }
