@@ -327,5 +327,21 @@ class CervejaController extends Controller
         return redirect()->back()->with('success', 'Successfully unfollowed the user.');
     }
 
+    public function pesq(Request $request) {
+        $dados = Cerveja::where('nome', 'like','%'.$request->palavra.'%')->get();
+
+        return view('busca.cerveja', ['cervejas' => $dados,
+                         'palavra' => $request->palavra]);
+    }
+    public function fav() {
+        
+        $reg = Auth::user();
+        $dados = $reg->favoritas;
+
+        return view('busca.cerveja', ['cervejas' => $dados]);
+    }
+
+    
+
     
 }

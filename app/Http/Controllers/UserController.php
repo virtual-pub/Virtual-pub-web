@@ -225,7 +225,7 @@ class UserController extends Controller
         return redirect()->back()->with('error', 'User does not exist.'); 
         }
         $reg->followers()->attach(auth()->user()->id);
-        return redirect()->back()->with('success', 'Successfully followed the user.');
+        return redirect()->back();
     }
 
     /**
@@ -265,6 +265,12 @@ class UserController extends Controller
 
         return dd($posts);
         
+    }
+    public function pesq(Request $request) {
+        $dados = User::where('name', 'like','%'.$request->palavra.'%')->get();
+
+        return view('busca.user', ['users' => $dados,
+                         'palavra' => $request->palavra]);
     }
  
 }

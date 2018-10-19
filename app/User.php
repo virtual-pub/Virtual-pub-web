@@ -111,7 +111,7 @@ public function followings()
     return $this->belongsToMany(User::class, 'amizades', 'user_id', 'seguidor_id')->withTimestamps();
 }
 
-public function Favoritas(){
+public function favoritas(){
     return $this->belongsToMany(Cerveja::class, 'cervejas_favoritas', 'user_id', 'cerveja_id')->withTimestamps();
 }
 

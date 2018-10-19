@@ -109,6 +109,38 @@ return [
 
     'menu' => [
         [
+            'text'        => 'feed',
+            'url'         => 'feed',
+            'icon'         => 'feed',
+            'icon_color'  => 'orange',
+        ],
+        [
+            'text'        => 'categorias',
+            'icon'         => 'reorder',
+            'icon_color'  => 'red',
+            'submenu' => [
+                [
+                    'text'        => 'Estilos',
+                    'url'         => 'cervejas',
+                    'icon'         => 'circle-o',
+                    'icon_color'  => 'maroon',
+                ],
+                [
+                    'text'        => 'Copos',
+                    'url'         => 'estilos',
+                    'icon'         => 'circle-o',
+                    'icon_color'  => 'teal',
+                ],
+                [
+                    'text'        => 'Coloração',
+                    'url'         => 'estilos',
+                    'icon'         => 'circle-o',
+                    'icon_color'  => 'purple',
+                ],
+            ],
+
+        ],
+        [
             'text'        => 'Lista de Cervejas',
             'url'         => 'cervejas',
             'icon_color'  => 'yellow',
@@ -127,7 +159,7 @@ return [
                 [
                     'text'        => 'Lista de Cervejas',
                     'url'         => 'cervejas',
-                    'icon_color'  => 'yellow',
+                    'icon_color'  => 'maroon',
                     'can'         => 'isMantenedor',
                 ],
                 [
@@ -170,9 +202,29 @@ return [
             'can'         => 'isUser',
         ],
         [
+            'text'        => 'Cervejas Favoritas',
+            'url'         => 'cervejas/favoritas',
+            'icon'        => 'star',
+            'icon_color'  => 'yellow',
+        ],
+        [
+            'text'        => 'Usuários Seguidos',
+            'url'         => 'profile/seguidos',
+            'icon'        => 'users',
+            'icon_color'  => 'red',
+            'cannot'         => 'isMantenedor',
+        ],
+        [
+            'text'        => 'Seus Seguidores',
+            'url'         => 'profile/seguidores',
+            'icon'        => 'users',
+            'icon_color'  => 'aqua',
+            'cannot'         => 'isMantenedor',
+        ],
+        [
             'text'        => 'seus posts',
             'url'         => 'posts/',
-            'icon'        => 'feed',
+            'icon'        => 'edit',
             'icon_color'  => 'aqua',
             'cannot'         => 'isMantenedor',
         ],

@@ -125,18 +125,38 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                        <!--<li class="treeview">
-                                <a href="#">
-                                  <i class="fa fa-laptop"></i>
-                                  <span>UI Elements</span>
-                                  <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                  </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                        
-                                </ul>
-                              </li>-->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-search text-blue"></i>
+                            <span>pesquisar</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <form action="{{ route('busca.cerveja') }}" method="POST" class="sidebar-form">
+                                {{ csrf_field() }}
+                                <div class="input-group">
+                                  <input type="text" name="palavra" class="form-control" placeholder="buscar cerveja">
+                                      <span class="input-group-btn">
+                                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                        </button>
+                                      </span>
+                                </div>
+                            </form>
+                            <br>        
+                            <form action="{{ route('busca.user') }}" method="POST" class="sidebar-form">
+                                {{ csrf_field() }}
+                                <div class="input-group">
+                                  <input type="text" name="palavra" class="form-control" placeholder="buscar Usuário">
+                                      <span class="input-group-btn">
+                                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                        </button>
+                                      </span>
+                                </div>
+                            </form>        
+                        </ul>
+                    </li>
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                     @can('isUser')
                         @if(!Auth::user()->isFabricante)

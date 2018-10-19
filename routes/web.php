@@ -68,7 +68,10 @@ Route::post('/{profileId}/unfollow', 'UserController@unFollowUser')->name('user.
 Route::post('cervejas/{profileId}/favoritar', 'CervejaController@favoritarCerveja')->name('cerveja.favoritar');
 Route::post('/{profileId}/desfazer', 'CervejaController@desfazerFavoritar')->name('cerveja.desfazer');
 
-Route::get('estilo/{id?}', 'CervejaController@categoriaCerveja')->name('search.estilo');
+Route::post('busca/cerveja', 'CervejaController@pesq')->name('busca.cerveja');
+Route::post('busca/users', 'UserController@pesq')->name('busca.user');
+Route::get('favoritas', 'CervejaController@fav');
+
 Route::get('feed', 'PostController@feed')->name('feed');
 Route::get('listaseguidores', 'UserController@listaSeguidores')->name('listaseguidores');
 
