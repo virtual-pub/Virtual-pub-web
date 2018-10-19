@@ -205,6 +205,20 @@ class UserController extends Controller
                     return redirect()->route('users.index')
                                     ->with('status', $reg->name . ' ' . $estado . '!');
                 }
+            }else if(Gate::allows('isFabricante')){
+                $user = Auth::user();
+                $reg = User::find($id);
+                if ($user->id == $reg->id ) {
+                    $reg->isFabricante = ($reg->isFabricante == 1) ? 0 : 1;
+                    $reg->isUser = ($reg->isUser == 0) ? 1 : 0;
+                    $reg->save();
+
+                    if ($reg) {
+                        return redirect()->route('users.edit', $reg->id);
+                    }
+                }else {
+                    return redirect('/');
+                }
             }else {
                 return redirect('/');
             }  

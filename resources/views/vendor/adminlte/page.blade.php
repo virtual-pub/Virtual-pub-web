@@ -158,13 +158,13 @@
                         </ul>
                     </li>
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
-                    @can('isUser')
+                    @cannot('isMantenedor')
                         @if(!Auth::user()->isFabricante)
                         <li><a href="{{route('users.isFabricante', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta de fabricante</span></a></li>
                         @else
-                        <li><a href="{{route('users.isFabricante', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta padrão</span></a></li>
+                        <li><a href="{{route('users.isUser', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta padrão</span></a></li>
                         @endif
-                    @endcan
+                    @endcannot
                     <li><a href="{{route('users.edit',Auth::user()->id)}}"><i class="fa fa-gears"></i><span>configurações de conta</span></a></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->

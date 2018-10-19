@@ -15,7 +15,7 @@
     <section class="content">
         <div class="row">
           <div class="col-xs-12">
-            <div class="box">    
+            <div>    
             @foreach ($dados as $d)
                 <a class="btn bg-navy" href="{{route('search.estilo', $d->id)}}"> {{$d->nome}} </a>
                 <br>
