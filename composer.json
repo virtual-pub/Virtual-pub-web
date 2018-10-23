@@ -9,7 +9,8 @@
         "jeroennoten/laravel-adminlte": "^1.23",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.0",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "risul/laravel-like-comment": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
