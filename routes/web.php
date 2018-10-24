@@ -76,12 +76,9 @@ Route::get('feed', 'PostController@feed')->name('feed');
 Route::get('user-seguidores', 'UserController@seguidores')->name('seguidores');
 Route::get('user-seguidos', 'UserController@seguidos')->name('seguidos');
 
-Route::get('categoria/estilo', 'EstiloController@lista')->name('Lista.estilo');
-Route::get('categoria-estilo/{id?}', 'EstiloController@categoriaEstilo')->name('search.estilo');
-Route::get('categoria/copo', 'CopoController@lista')->name('Lista.copo');
-Route::get('categoria-copo/{id?}', 'CopoController@categoriaCopo')->name('search.copo');
-Route::get('categoria/cor', 'ColorController@lista')->name('Lista.cor');
-Route::get('categoria-cor/{id?}', 'ColorController@categoriaCor')->name('search.cor');
+
+
+Route::post('avaliação', 'CervejaController@avaliacao')->name('cerveja.rating');
 
 
 

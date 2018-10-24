@@ -108,32 +108,7 @@ return [
     */
 
     'menu' => [
-        [
-            'text'        => 'Categorias',
-            'icon'         => 'reorder',
-            'icon_color'  => 'red',
-            'submenu' => [
-                [
-                    'text'        => 'Estilos',
-                    'url'         => 'categoria/estilo',
-                    'icon'         => 'circle-o',
-                    'icon_color'  => 'maroon',
-                ],
-                [
-                    'text'        => 'Copos',
-                    'url'         => 'categoria/copo',
-                    'icon'         => 'circle-o',
-                    'icon_color'  => 'teal',
-                ],
-                [
-                    'text'        => 'Coloração',
-                    'url'         => 'categoria/cor',
-                    'icon'         => 'circle-o',
-                    'icon_color'  => 'purple',
-                ],
-            ],
-
-        ],
+      
         [
             'header'      => 'Dados do Sistema',
             'can'         => 'isMantenedor',
@@ -220,7 +195,14 @@ return [
             'url'         => 'posts/',
             'icon'        => 'edit',
             'icon_color'  => 'aqua',
-            'cannot'         => 'isMantenedor',
+            'can'         => 'isUser',
+        ],
+        [
+            'text'        => 'Suas Publicações',
+            'url'         => 'posts/',
+            'icon'        => 'edit',
+            'icon_color'  => 'aqua',
+            'can'         => 'isFabricante',
         ],
         
         'CONTA',

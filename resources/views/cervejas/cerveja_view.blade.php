@@ -8,7 +8,7 @@
 @section('content')
 <div class="row">
   <div class="col-sm-12 col-md-3">
-    <div class="box box-default">
+    <div class="box box-warning">
       <div class="box-body box-profile">
         @php
         if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
@@ -21,16 +21,19 @@
         <h3 class="profile-username text-center">{{$reg->nome}}</h3>
         <a href="{{route('users.show', $reg->fabricante->id)}}"><p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p></a>
         <center>
-          <div class="icon text-yellow">
-          <h3>
-            <i class="fa fa-beer-sm"></i>
-            <i class="fa fa-beer"></i>
-            <i class="fa fa-beer"></i>
-            <i class="fa fa-beer"></i>
-            <i class="fa fa-beer"></i>
-          </h3>
-          </div>
+            <form action="{{ route('cerveja.rating') }}" method="POST">
+                {!! csrf_field() !!}
+            <div class="rating">
+
+                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->userAverageRating }}" data-size="xs">
+                <input type="hidden" name="id" required="" value="{{ $reg->id }}">
+                <br>
+                <button class="btn btn-success">Avaliar</button>
+
+            </div>
+          </form>
       </center>
+      <br>
       <p>{{$reg->descricao}}</p>
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
@@ -61,7 +64,7 @@
                     <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
                         {{ csrf_field() }}
                         <button type="submit"class="btn btn-primary centered"> favoritar </button>
-                      </form>
+                    </form>
                       @endif
                 
               </div>
@@ -125,5 +128,17 @@
       </div>
     </div>
   </div>
+  <div class="col-sm-12">
+      <div class="box-footer">
+          
+        </div>
+  </div>
 </div>
+@stop
+@section('js')
+<script type="text/javascript">
+
+  $("#input-id").rating();
+
+</script>
 @stop

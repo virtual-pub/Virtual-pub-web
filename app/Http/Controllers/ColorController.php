@@ -148,12 +148,5 @@ class ColorController extends Controller
                             ->with('status', $color->nome . ' Excluído!');
         }
     }
-    public function categoriaCor($id){
-        $dados = Cerveja::where('color_id', $id)->get();
-        return view('busca.cerveja', ['cervejas' => $dados]);
-    }
-    public function lista(){
-        $dados = Color::orderBy('nome')->get();
-        return view('busca.categoria_cor', ['dados' => $dados]);
-    }
+    
 }

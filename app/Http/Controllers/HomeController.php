@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use app\User;
-use app\Post;
+use App\User;
+use App\Cerveja;
 
 class HomeController extends Controller
 {
@@ -30,9 +30,12 @@ class HomeController extends Controller
         if (Auth::check()) {
 
             $reg = Auth::user();
+            $cervejas = Cerveja::where('ativo', 1)->inRandomOrder()->limit(3)->get();
+            $users = User::where('isFabricante', 1)->inRandomOrder()->limit(3)->get();
+            
 
 
-            return view('home', compact('reg'));
+            return view('home', compact('reg','cervejas', 'users'));
         } else {
             return redirect('/');
         }

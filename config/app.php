@@ -180,6 +180,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
         risul\LaravelLikeComment\LikeCommentServiceProvider::class,
+        willvincent\Rateable\RateableServiceProvider::class,
 
     ],
 
