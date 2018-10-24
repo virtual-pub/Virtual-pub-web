@@ -132,14 +132,12 @@
                   }
                   @endphp
               <p>{{$post->description}}</p>
-              <div class="interaction">
-                <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'curtiu' : 'curtir' : 'curtir'  }}</a>
-              </div>
               
+              @include('laravelLikeComment::like', ['like_item_id' => $post->id])
             </div>
             <!-- /.box-body -->
             <div class="box-footer box-comments">
-              
+              @include('laravelLikeComment::comment', ['comment_item_id' => $post->id])
                 
               
             </div>
@@ -193,13 +191,5 @@
 <script>
     $("#my-toggle-button").controlSidebar(options);
 </script>
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- <!-- Include all compiled plugins (below), or include individual files as needed -->
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- <script src="{{ asset('/js/like.js') }}"></script>
- <script>
-   var token = '{{ Session::token() }}';
-   var urlLike = '{{ route('like') }}';
- </script>
+
 @stop

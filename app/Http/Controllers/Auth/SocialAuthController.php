@@ -7,6 +7,8 @@ use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Registro;
 
 class SocialAuthController extends Controller
 {
@@ -133,6 +135,11 @@ class SocialAuthController extends Controller
                 // user can use reset password to create a password
                 'password' => ''
             ]);
+
+            Mail::to($providerUser->getEmail())->send(new Registro());
+
+
+            
         }
 
         // login the user

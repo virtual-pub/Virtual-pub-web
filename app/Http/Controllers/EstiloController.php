@@ -148,12 +148,6 @@ class EstiloController extends Controller
         }
     }
     
-    public function categoriaEstilo($id){
-        $dados = Cerveja::where('estilo_id', $id)->get();
-        return view('busca.cerveja', ['cervejas' => $dados]);
-    }
-    public function lista(){
-        $dados = Estilo::orderBy('nome')->get();
-        return view('busca.categoria_estilo', ['dados' => $dados]);
-    }
+    
+    
 }

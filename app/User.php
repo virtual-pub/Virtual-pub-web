@@ -115,6 +115,23 @@ public function favoritas(){
     return $this->belongsToMany(Cerveja::class, 'cervejas_favoritas', 'user_id', 'cerveja_id')->withTimestamps();
 }
 
+/**
+     * Return the user attributes.
+
+     * @return array
+     */
+    public static function getAuthor($id)
+    {
+        $user = self::find($id);
+        return [
+            'id'     => $user->id,
+            'name'   => $user->name,
+            'email'  => $user->email,
+            'url'    => '',  // Optional
+            'avatar' => $user->avatar,  // Default avatar
+        ];
+    }
+
 
 
 

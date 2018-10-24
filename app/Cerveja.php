@@ -2,10 +2,13 @@
 
 namespace App;
 
+use willvincent\Rateable\Rateable;
 use Illuminate\Database\Eloquent\Model;
 
 class Cerveja extends Model
 {
+    use Rateable;
+    
     /**
      * The attributes that are mass assignable.
      *

@@ -229,16 +229,17 @@ class CervejaController extends Controller
 
     public function webServiceId($id = null) {
         //indica o tipo de retorno do metodo
-        header("content-type: application/json; charset=utf-8");
+        //header("content-type: application/json; charset=utf-8");
         if ($id == null) {
             $retorno = array(
                 "situacao" => "erro");
         } else {
             // obtem o registro do id passado
             $reg = Cerveja::find($id);
-
+            
             //se encontrou
             if (isset($reg)) {
+                $r = $reg->averageRating;
                 $retorno = array(
                     "id" => $reg->id,
                     "nome" => $reg->nome,
@@ -254,15 +255,19 @@ class CervejaController extends Controller
                     "estilo_descricao" => $reg->estilo->descricao,
                     "cor" => $reg->color->nome,
                     "cor_hex" => $reg->color->hex,
-                    "fabricante" => $reg->fabricante->fabricante_name);
-            } else {
-                $retorno = array(
-                    "situacao" => "inexistente");
-            }
-        }
-        //converte array para o formato JSON
+                    "fabricante" => $reg->fabricante->fabricante_name,
+                    "avaliacao" => bcadd($r,'0',1),
+                    "favoritada" => $reg->favoritadas()->count());
+                } else {
+                    $retorno = array(
+                        "situacao" => "inexistente");
+                    }
+                }
+                //converte array para o formato JSON
+                return dd($retorno);
  
-        echo json_encode($retorno, JSON_PRETTY_PRINT);
+        //echo json_encode($retorno, JSON_PRETTY_PRINT);
+        
      
     }
 
@@ -333,12 +338,37 @@ class CervejaController extends Controller
         return view('busca.cerveja', ['cervejas' => $dados,
                          'palavra' => $request->palavra]);
     }
+    
     public function fav() {
         
         $reg = Auth::user();
         $dados = $reg->favoritas;
 
         return view('cervejas.cerveja_fav', ['cervejas' => $dados]);
+    }
+
+    public function avaliacao(Request $request)
+
+    {
+        
+
+        $this->validate($request, ['rate' => 'required']);
+
+        $reg = Cerveja::find($request->id);
+
+        $rating = new \willvincent\Rateable\Rating;
+        $rating->rating = $request->rate;
+        $rating->user_id = Auth::user()->id;
+
+        if($reg->ratings()->where('user_id', Auth::user()->id)->first()){
+
+            $reg->ratings()->delete($rating);
+        }
+
+        $reg->ratings()->save($rating);
+
+        return redirect()->back();
+
     }
 
     
