@@ -371,6 +371,45 @@ class CervejaController extends Controller
 
     }
 
+    public function estiloShow(){
+        $estilos = Estilo::orderBy('nome')->get();
+        $dados = Cerveja::get();
+        return view('busca.estilo', ['cervejas' => $dados, 'estilos' => $estilos]);
+    }
+
+    public function estiloPesq(Request $request) {
+        $estilos = Estilo::orderBy('nome')->get();
+        $dados = Cerveja::where('estilo_id', $request->id)->get();
+
+        return view('busca.estilo', ['estilos' => $estilos,'cervejas' => $dados,
+                         'id' => $request->id]);
+    }
+    public function corShow(){
+        $cores = Color::orderBy('nome')->get();
+        $dados = Cerveja::get();
+        return view('busca.cor', ['cervejas' => $dados, 'cores' => $cores]);
+    }
+
+    public function corPesq(Request $request) {
+        $cores = Color::orderBy('nome')->get();
+        $dados = Cerveja::where('color_id', $request->id)->get();
+
+        return view('busca.cor', ['cores' => $cores,'cervejas' => $dados,
+                         'id' => $request->id]);
+    }
+    public function copoShow(){
+        $copos = Copo::orderBy('nome')->get();
+        $dados = Cerveja::get();
+        return view('busca.copo', ['cervejas' => $dados, 'copos' => $copos]);
+    }
+
+    public function copoPesq(Request $request) {
+        $copos = Copo::orderBy('nome')->get();
+        $dados = Cerveja::where('copo_id', $request->id)->get();
+
+        return view('busca.copo', ['copos' => $copos,'cervejas' => $dados,
+                         'id' => $request->id]);
+    }
     
 
     

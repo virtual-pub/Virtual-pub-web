@@ -128,7 +128,8 @@ public function favoritas(){
             'name'   => $user->name,
             'email'  => $user->email,
             'url'    => '',  // Optional
-            'avatar' => $user->avatar,  // Default avatar
+            'avatar' => 'gravatar',  // Default avatar
+            'admin' => $user->isMantenedor(),
         ];
     }
 

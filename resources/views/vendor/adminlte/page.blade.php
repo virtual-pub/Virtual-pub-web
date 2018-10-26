@@ -154,12 +154,16 @@
                                         </button>
                                       </span>
                                 </div>
-                            </form>        
+                            </form>
+
+                            <li><a href="{{route('estilo.view')}}"><i class="fa fa-circle-o text-purple"></i> <span>Estilo</span></a></li>
+                            <li><a href="{{route('cor.view')}}"><i class="fa fa-circle-o text-teal"></i> <span>Cor</span></a></li>
+                            <li><a href="{{route('copo.view')}}"><i class="fa fa-circle-o text-green"></i> <span>Copo</span></a></li>
                         </ul>
                     </li>
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                     @cannot('isMantenedor')
-                        @if(!Auth::user()->isFabricante)
+                    @if(!Auth::user()->isFabricante)
                         <li><a href="{{route('users.isFabricante', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta de fabricante</span></a></li>
                         @else
                         <li><a href="{{route('users.isUser', Auth::user()->id)}}" class="bg-green"><i class="fa fa-star"></i> <span>Alterar para conta padrão</span></a></li>
