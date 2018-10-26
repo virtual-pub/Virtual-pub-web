@@ -76,6 +76,14 @@ Route::get('feed', 'PostController@feed')->name('feed');
 Route::get('user-seguidores', 'UserController@seguidores')->name('seguidores');
 Route::get('user-seguidos', 'UserController@seguidos')->name('seguidos');
 
+Route::get('busca/estilo', 'CervejaController@estiloShow')->name('estilo.view');
+Route::post('busca/estilo/{id?}', 'CervejaController@estiloPesq')->name('estilo.filtro');
+Route::get('busca/copo', 'CervejaController@copoShow')->name('copo.view');
+Route::post('busca/copo/{id?}', 'CervejaController@copoPesq')->name('copo.filtro');
+Route::get('busca/cor', 'CervejaController@corShow')->name('cor.view');
+Route::post('busca/cor/{id?}', 'CervejaController@corPesq')->name('cor.filtro');
+
+
 
 
 Route::post('avaliação', 'CervejaController@avaliacao')->name('cerveja.rating');
