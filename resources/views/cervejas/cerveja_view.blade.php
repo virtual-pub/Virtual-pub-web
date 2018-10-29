@@ -25,13 +25,21 @@
                 {!! csrf_field() !!}
             <div class="rating">
 
-                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->userAverageRating }}" data-size="xs">
+                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->averageRating }}" data-size="xs">
                 <input type="hidden" name="id" required="" value="{{ $reg->id }}">
+                @if($reg->ratings->count() == 0)
+                <p>Nenhum usuário avaliou a cerveja</p>
+                @elseif($reg->ratings->count() == 1)
+                <p><a>{{$reg->ratings->count()}}</a> usuário avaliou essa cerveja</p>
+                @else
+                <p><a>{{$reg->ratings->count()}}</a> usuários avaliaram essa cerveja</p>
+                @endif
                 <br>
                 <button class="btn btn-success">Avaliar</button>
 
             </div>
           </form>
+
       </center>
       <br>
       <p>{{$reg->descricao}}</p>
