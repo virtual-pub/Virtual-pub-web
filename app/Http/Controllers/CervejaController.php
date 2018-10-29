@@ -363,6 +363,8 @@ class CervejaController extends Controller
         if($reg->ratings()->where('user_id', Auth::user()->id)->first()){
 
             $reg->ratings()->delete($rating);
+            $reg->ratings()->save($rating);
+            
         }
 
         $reg->ratings()->save($rating);
