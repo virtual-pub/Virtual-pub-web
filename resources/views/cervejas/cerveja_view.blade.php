@@ -39,11 +39,28 @@
 
             </div>
           </form>
-
+          
       </center>
       <br>
-      <p>{{$reg->descricao}}</p>
-        <ul class="list-group list-group-unbordered">
+      <ul class="list-group list-group-unbordered">
+          <li class="list-group-item text-center">
+              @if(Auth::user()->favoritas()->where('cerveja_id', $reg->id)->first())
+              <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $reg->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
+                  {{ csrf_field() }}
+                  <button type="submit"class="btn bg-teal-active centered"> favoritada </button>
+              </form>
+              @else
+                <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
+                    {{ csrf_field() }}
+                    <button type="submit"class="btn bg-navy centered"> favoritar </button>
+                </form>
+              @endif
+              <br>
+              <p>{{count($reg->favoritadas)}}</p>
+          </li>
+          <li class="list-group-item">
+            <p>{{$reg->descricao}}</p> 
+          </li>
           <li class="list-group-item">
              <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
           </li>
@@ -63,17 +80,7 @@
               <div class="text-center">
                  
               
-                  @if(Auth::user()->favoritas()->where('cerveja_id', $reg->id)->first())
-                  <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $reg->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
-                      {{ csrf_field() }}
-                      <button type="submit"class="btn btn-success centered"> favoritada </button>
-                  </form>
-                  @else
-                    <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
-                        {{ csrf_field() }}
-                        <button type="submit"class="btn btn-primary centered"> favoritar </button>
-                    </form>
-                      @endif
+          
                 
               </div>
           </li>
@@ -135,11 +142,6 @@
         <p>{{$reg->copo->descricao}}</p>
       </div>
     </div>
-  </div>
-  <div class="col-sm-12">
-      <div class="box-footer">
-          
-        </div>
   </div>
 </div>
 @stop
