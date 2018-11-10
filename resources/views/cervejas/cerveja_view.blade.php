@@ -25,7 +25,7 @@
                 {!! csrf_field() !!}
             <div class="rating">
 
-                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->averageRating }}" data-size="xs">
+                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->averageRating() }}" data-size="xs">
                 <input type="hidden" name="id" required="" value="{{ $reg->id }}">
                 @if($reg->ratings->count() == 0)
                 <p>Nenhum usuário avaliou a cerveja</p>
@@ -56,7 +56,13 @@
                 </form>
               @endif
               <br>
-              <p>{{count($reg->favoritadas)}}</p>
+              @if(count($reg->favoritadas) == 0)
+              <p>Nenhum usuário favoritou essa cerveja</p>
+              @elseif(count($reg->favoritadas) == 1)
+              <p><a>{{count($reg->favoritadas)}}</a> usuário favoritou essa cerveja</p>
+              @else
+              <p><a>{{count($reg->favoritadas)}}</a> usuários favoritaram essa cerveja</p>
+              @endif
           </li>
           <li class="list-group-item">
             <p>{{$reg->descricao}}</p> 

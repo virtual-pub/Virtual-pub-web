@@ -8,75 +8,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-yellow">
-          <div class="inner">
-            <h3>{{count($reg->favoritas())}}</h3>
-
-            <p>Cervejas Favoritas</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-star-o"></i>
-          </div>
-          <a href="{{route('cervejas.favoritas')}}" class="small-box-footer">
-            Ver Lista <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-        <h3>Usuários Recomendados</h3>
-            @foreach($users as $u)
-            <div class="col-md-4">
-                <!-- Widget: user widget style 1 -->
-              <div class="box box-widget widget-user">
-                  <!-- Add the bg color to the header using any of the bg-* classes -->
-                  @if($u->isFabricante)
-                <div class="widget-user-header bg-yellow-active">
-                  @else  
-                <div class="widget-user-header bg-aqua-active">
-                  @endif    
-                  <h3 class="widget-user-username">@if($u->isFabricante){{$u->fabricante_name}}@else{{$u->name}}@endif</h3>
-                      
-                </div>
-                <div class="widget-user-image">
-                  <img class="img-circle" src="{{$u->avatar}}" alt="User Avatar">
-                </div>
-                  
-                <div class="row">
-                  <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                      <h5 class="description-header">{{$u->followings()->count()}}</h5>
-                      <span class="description-text">SEGUINDO</span>
-                    </div>
-                              <!-- /.description-block -->
-                  </div>
-                            <!-- /.col -->
-                  <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                    <h5 class="description-header">{{$u->followers()->count()}}</h5>
-                      <span class="description-text">SEGUIDORES</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                            
-                    
-                            <!-- /.col -->
-                </div>
-                <div class="row">
-                  <div class="description-block text-center">
-                    <a type="button" href="{{ route('profile.show', $u->id)}}" class="btn btn-success centered"> visualizar perfil</a>
-                  </div>
-                          
-                          <!-- /.row -->
-                </div>
-              </div>
-                      <!-- /.widget-user -->
-            </div>
-            @endforeach
-    </div>
+  
+    
     <div class="row">
         <h3>Recomendações de Cerveja</h3>
             @foreach($cervejas as $c)

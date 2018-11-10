@@ -65,12 +65,12 @@ Route::post('/like','PostController@postLikePost')->name('like');
 Route::post('users/{profileId}/follow', 'UserController@followUser')->name('user.follow');
 Route::post('/{profileId}/unfollow', 'UserController@unFollowUser')->name('user.unfollow');
 
-Route::post('cervejas/{profileId}/favoritar', 'CervejaController@favoritarCerveja')->name('cerveja.favoritar');
+Route::post('cervejas/{id}/favoritar', 'CervejaController@favoritarCerveja')->name('cerveja.favoritar');
 Route::post('/{profileId}/desfazer', 'CervejaController@desfazerFavoritar')->name('cerveja.desfazer');
 
 Route::post('busca/cerveja', 'CervejaController@pesq')->name('busca.cerveja');
 Route::post('busca/users', 'UserController@pesq')->name('busca.user');
-Route::get('cervejas-favoritas', 'CervejaController@fav');
+Route::get('cervejas-favoritas', 'CervejaController@fav')->name('cervejas.favoritas');
 
 Route::get('feed', 'PostController@feed')->name('feed');
 Route::get('user-seguidores', 'UserController@seguidores')->name('seguidores');
@@ -85,6 +85,8 @@ Route::post('busca/cor/{id?}', 'CervejaController@corPesq')->name('cor.filtro');
 
 
 
+Route::get('/testeview', 'CervejaController@recomendCerv');
+Route::get('/teste', 'CervejaController@ponderacao');
 
 Route::post('avaliação', 'CervejaController@avaliacao')->name('cerveja.rating');
 

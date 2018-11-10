@@ -10,6 +10,7 @@ use App\Estilo;
 use App\Copo;
 use App\Color;
 use App\User;
+use App\Tags;
 use Gate;
 
 class CervejaController extends Controller
@@ -118,12 +119,9 @@ class CervejaController extends Controller
         }
 
         // obtém as marcas para exibir no form de consulta
-        $copos = Copo::orderBy('nome')->get();
-        $estilos = Estilo::orderBy('nome')->get();
-        $colors = Color::orderBy('id', 'asc')->get();
-        $fabricantes = User::orderBy('fabricante_name')->get();
+       
   
-        return view('cervejas.cerveja_view', compact('reg', 'copos', 'estilos', 'colors', 'fabricantes'));
+        return view('cervejas.cerveja_view', compact('reg'));
         
 
     }
@@ -308,12 +306,34 @@ class CervejaController extends Controller
                         ->with('status', $request->nome . ' com Foto Cadastrada!');
     }
 
-    public function favoritarCerveja(int $profileId){
-        $reg = cerveja::find($profileId);
+    public function favoritarCerveja(int $id){
+        $reg = cerveja::find($id);
         if(! $reg) {
         return redirect()->back()->with('error', 'User does not exist.'); 
         }
         $reg->favoritadas()->attach(auth()->user()->id);
+
+        $user = Auth::user()->id;
+        if($reg->favoritadas()->where('user_id', $user)->first()){
+
+            
+            //Verifica se o usuário já favoritou alguma cerveja desse estilo
+            if(Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->first()){
+                $tag = Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->first();
+                //caso o usuário já tenha favoritado alguma cerveja desse estilo apenas incrementa o valor no banco
+                Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->increment('valor');
+            }else{
+                $tag = new Tags;
+                $tag->user_id = $user;
+                $tag->estilo_id = $reg->estilo->id;
+                $tag->valor = $tag->valor + 1;
+                $tag->save();
+            }
+
+
+
+        }
+        
         return redirect()->back()->with('success', 'Successfully followed the user.');
     }
 
@@ -329,6 +349,16 @@ class CervejaController extends Controller
             return redirect()->back()->with('error', 'User does not exist.'); 
         }
         $reg->favoritadas()->detach(auth()->user()->id);
+        $user = Auth::user()->id;
+        //Caso o usuario desfavorite a cerveja decrementa no banco até o valor chegar a zero sendo o 
+        //valor minimo zero
+        if(Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->first()){
+            $tag = Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->first();
+            if($tag->valor != 0){
+                Tags::where('user_id', $user)->where('estilo_id', $reg->estilo->id)->decrement('valor');
+            }
+            
+        }
         return redirect()->back()->with('success', 'Successfully unfollowed the user.');
     }
 
@@ -345,6 +375,8 @@ class CervejaController extends Controller
         $dados = $reg->favoritas;
 
         return view('cervejas.cerveja_fav', ['cervejas' => $dados]);
+
+
     }
 
     public function avaliacao(Request $request)
@@ -361,13 +393,13 @@ class CervejaController extends Controller
         $rating->user_id = Auth::user()->id;
 
         if($reg->ratings()->where('user_id', Auth::user()->id)->first()){
-
-            $reg->ratings()->delete($rating);
-            $reg->ratings()->save($rating);
             
-        }
-
+            $reg->ratings()->where('user_id', Auth::user()->id)->update(['rating' => $request->rate]);
+             
+            
+        }else{
         $reg->ratings()->save($rating);
+        }
 
         return redirect()->back();
 
@@ -412,7 +444,90 @@ class CervejaController extends Controller
         return view('busca.copo', ['copos' => $copos,'cervejas' => $dados,
                          'id' => $request->id]);
     }
-    
 
+
+        public function ponderacao(){
+            $reg = Auth::user()->id;
+            // selecina os 5 maiores valores de estilo favoritados pelo usúario
+            $elementos = DB::select('SELECT valor, estilo_id FROM tags WHERE user_id = :user_id ORDER BY valor DESC LIMIT 5', ['user_id' => $reg]);
+            // quantidade total de favoritos dados pelo usuário
+            $total = User::find($reg)->favoritas()->count();
+            //declara um vetor de ponderação, que retorna a porcentagem de chance de aparecer um determinado
+            //estilo de cerveja
+            $p = Array(0.0,0.0,0.0,0.0,0.0,0.0);
+            $num = 0;
+             //declara um vetor com os estilos favoritos do usuário
+            $id = Array(0,0,0,0,0);
+
+            //percorre os estilos favoritos
+            foreach ($elementos as $e) {
+                //função de ponderação
+                //o resultado é = ao valor do estilo / pelo valor total
+                $p[$num] = $e->valor / $total;
+                //p[5] quarda a ponderação dos estilos que não pertencem aos 5 de mais valor
+                $p[5] += $e->valor;
+                //atribui o id do estilo ao vetor de id's 
+                $id[$num] = $e->estilo_id;
+                $num++;
+            
+            }
+            //função de complemento
+            //retorna os valores do somatorio que não pertencem aos 5 maiores valores:
+            //o total - o somatorio dos 5 maiores valores
+            $p[5] = $total - $p[5];
+            //função de ponderação
+            $p[5] /= $total;
+
+
+            //sorteio ponderado
+            $r = rand(0,100)/100;
+
+            $sum = 0;
+
+            for($i = 0; $i < 5; $i++){
+                if($r < $p[$i] + $sum){
+                    //retorna o id do estilo a ser mostrado
+                    return $id[$i];
+                    
+                }
+                $sum += $p[$i];
+            }
+            //retornar -1 significa mostrar qualquer estilo
+            return -1;
+        
+        
+        }
+
+        public function recomendCerv(){
+            
+            $id1 = $this->ponderacao();
+            $id2 = $this->ponderacao();
+            $id3 = $this->ponderacao();
+            $estilo = Estilo::all();
+
+            if($id1 == -1){
+                $random = rand($estilo);
+                $id1 = $random;
+            }
+            if($id2 == -1){
+                $random = rand($estilo);
+                $id2 = $random;
+            }
+            if($id3 == -1){
+                $random = rand($estilo);
+                $id3 = $random;
+            }
+        
+
+            $cervejas = Array( 
+                Cerveja::where('ativo', 1)->where('estilo_id', $id1)->inRandomOrder()->first(),
+                Cerveja::where('ativo', 1)->where('estilo_id', $id2)->inRandomOrder()->first(),
+                Cerveja::where('ativo', 1)->where('estilo_id', $id3)->inRandomOrder()->first()
+            );
+            
+            //fazer função para não repetir elementos do vetor
+            return view('testeview', compact('cervejas'));
+        }
+        
+    }
     
-}
