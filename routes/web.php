@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/app',function () {
+        return view('aplicativo');
+})->name('app');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -68,8 +72,8 @@ Route::post('/{profileId}/unfollow', 'UserController@unFollowUser')->name('user.
 Route::post('cervejas/{id}/favoritar', 'CervejaController@favoritarCerveja')->name('cerveja.favoritar');
 Route::post('/{profileId}/desfazer', 'CervejaController@desfazerFavoritar')->name('cerveja.desfazer');
 
-Route::post('busca/cerveja', 'CervejaController@pesq')->name('busca.cerveja');
-Route::post('busca/users', 'UserController@pesq')->name('busca.user');
+Route::any('busca/cerveja', 'CervejaController@pesq')->name('busca.cerveja');
+Route::any('busca/users', 'UserController@pesq')->name('busca.user');
 Route::get('cervejas-favoritas', 'CervejaController@fav')->name('cervejas.favoritas');
 
 Route::get('feed', 'PostController@feed')->name('feed');

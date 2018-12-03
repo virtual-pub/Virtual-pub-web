@@ -32,50 +32,55 @@
         Não há cervejas com os filtros informados...
     </div>
 @endif   
-@foreach($cervejas as $reg)
-<div class="row"> 
-<div class="col-sm-12 col-md-4">
-  <div class="box box-warning">
-      <div class="box-body box-profile">
-          @php
-          if (file_exists(public_path('fotos/'.$reg->id.'.jpg'))) {
-          $foto = '../fotos/'.$reg->id.'.jpg';
-          } else {
-          $foto = '../images/beer-placeholder.svg';
-          }
-          @endphp
-          <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$reg->nome}}">
-          <h3 class="profile-username text-center">{{$reg->nome}}</h3>
-          <a href="{{route('users.show', $reg->fabricante->id)}}"><p class="text-muted text-center">{{$reg->fabricante->fabricante_name}}</p></a>
-          <p>{{$reg->descricao}}</p>
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-                <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{ $reg->averageRating }}" data-size="xs" disabled="">
-            </li>
-            <li class="list-group-item">
-               <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
-            </li>
-            <li class="list-group-item">
-              <b>Unidade Internacional de Amargor</b> <a class="pull-right">{{$reg->IBU}}</a>
-            </li>
-          </ul>
-          <p>Unidades de Referência de Coloração</p>
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-               <b>Método Padrão de Referência</b> <a class="pull-right">{{$reg->SRM}}</a>
-            </li>
-            <li class="list-group-item">
-              <b>Convenção Europeia de Cervejaria (EBC)</b> <a class="pull-right">{{$reg->EBC}}</a>
-            </li>
-            <li class="list-group-item text-center">
-              <a type="button" href="{{ route('cervejas.show', $reg->id)}}" class="btn btn-success centered">Mais Informações</a>
-            </li>
-          </ul>
+@foreach($cervejas as $c)
+      <div class="col-sm-12 col-md-4">
+          <div class="box box-warning">
+              <div class="box-body box-profile">
+                  @php
+                  if (file_exists(public_path('fotos/'.$c->id.'.jpg'))) {
+                  $foto = '../fotos/'.$c->id.'.jpg';
+                  } else {
+                  $foto = '../images/beer-placeholder.svg';
+                  }
+                  @endphp
+                  <img class="profile-user-img img-responsive" src="{{$foto}}" alt="{{$c->nome}}">
+                  <h3 class="profile-username text-center">{{$c->nome}}</h3>
+                  @if($c->fabricante_name != null)
+                  <a href="{{route('users.show', $c->fabricante->id)}}">
+                    <p class="text-muted text-center">{{$c->fabricante->fabricante_name}}</p>
+                  </a>
+                  @else
+                  <p>desconhecido</p>
+                  @endif
+                  <ul class="list-group list-group-unbordered">
+                      <li class="list-group-item">
+                          <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{ $c->averageRating }}" data-size="xs" disabled="">
+                      </li>
+                  
+                  </ul>
+                  <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item text-center">
+                      <a type="button" href="{{ route('cervejas.show', $c->id)}}" class="btn btn-success centered">Mais Informações</a>
+                    </li>
+                    <li class="list-group-item text-center">
+                      @if(Auth::user()->favoritas()->where('cerveja_id', $c->id)->first())
+        <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $c->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
+            {{ csrf_field() }}
+            <button type="submit"class="btn bg-teal-active centered"> favoritada </button>
+        </form>
+        @else
+          <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $c->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
+              {{ csrf_field() }}
+              <button type="submit"class="btn bg-navy centered"> favoritar </button>
+          </form>
+        @endif
+                    </li>
+                  </ul>
+              </div>
+          </div>
       </div>
-  </div>
-</div>
-@endforeach
-</div>
+      @endforeach
+      {{$cervejas->links()}}
 @stop
 @section('js')
 <script type="text/javascript">

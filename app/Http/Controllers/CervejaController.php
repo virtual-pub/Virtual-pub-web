@@ -363,7 +363,8 @@ class CervejaController extends Controller
     }
 
     public function pesq(Request $request) {
-        $dados = Cerveja::where('nome', 'like','%'.$request->palavra.'%')->get();
+
+        $dados = Cerveja::where('nome', 'like','%'.$request->palavra.'%')->paginate(3);
 
         return view('busca.cerveja', ['cervejas' => $dados,
                          'palavra' => $request->palavra]);
@@ -371,10 +372,9 @@ class CervejaController extends Controller
     
     public function fav() {
         
-        $reg = Auth::user();
-        $dados = $reg->favoritas;
+        $reg = Auth::user()->favoritas()->paginate(5);
 
-        return view('cervejas.cerveja_fav', ['cervejas' => $dados]);
+        return view('cervejas.cerveja_fav', ['cervejas' => $reg]);
 
 
     }
@@ -407,13 +407,13 @@ class CervejaController extends Controller
 
     public function estiloShow(){
         $estilos = Estilo::orderBy('nome')->get();
-        $dados = Cerveja::get();
+        $dados = Cerveja::paginate(3);
         return view('busca.estilo', ['cervejas' => $dados, 'estilos' => $estilos]);
     }
 
     public function estiloPesq(Request $request) {
         $estilos = Estilo::orderBy('nome')->get();
-        $dados = Cerveja::where('estilo_id', $request->id)->get();
+        $dados = Cerveja::where('estilo_id', $request->id)->paginate(3);
 
         return view('busca.estilo', ['estilos' => $estilos,'cervejas' => $dados,
                          'id' => $request->id]);
@@ -426,7 +426,7 @@ class CervejaController extends Controller
 
     public function corPesq(Request $request) {
         $cores = Color::orderBy('nome')->get();
-        $dados = Cerveja::where('color_id', $request->id)->get();
+        $dados = Cerveja::where('color_id', $request->id)->paginate(3);
 
         return view('busca.cor', ['cores' => $cores,'cervejas' => $dados,
                          'id' => $request->id]);
@@ -439,7 +439,7 @@ class CervejaController extends Controller
 
     public function copoPesq(Request $request) {
         $copos = Copo::orderBy('nome')->get();
-        $dados = Cerveja::where('copo_id', $request->id)->get();
+        $dados = Cerveja::where('copo_id', $request->id)->paginate(3);
 
         return view('busca.copo', ['copos' => $copos,'cervejas' => $dados,
                          'id' => $request->id]);

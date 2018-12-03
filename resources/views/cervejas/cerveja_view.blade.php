@@ -82,14 +82,6 @@
           <li class="list-group-item">
             <b>Convenção Europeia de Cervejaria (EBC)</b> <a class="pull-right">{{$reg->EBC}}</a>
           </li>
-          <li class="list-group-item">
-              <div class="text-center">
-                 
-              
-          
-                
-              </div>
-          </li>
         </ul>
       </div>
     </div>
