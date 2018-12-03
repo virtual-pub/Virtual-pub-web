@@ -22,7 +22,7 @@ class HomeController extends Controller
     }
 
     public function ponderacao(){
-        if(Auth::user()->favoritas()->first() == 0){
+        if(Auth::user()->favoritas()->count() == 0){
             return -1;
         }
         $reg = Auth::user()->id;
