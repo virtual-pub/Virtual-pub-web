@@ -110,6 +110,7 @@
                     <br><br><br><br><br><br>
                     <h1>Leitor de Rótulo</h1>
                     <p>Obtenha informações tudo sobre a cerveja com o Leitor de rótulos do Virtual-Pub</p>   
+                    <a class="btn btn-success" role="button" href="{{route('app')}}"> Saiba mais </a>   
                 </div>
                 <div class="col-sm-6">
                     <img class="img-responsive pull-right" src="{{ asset('images/logoread.svg') }}" alt="" srcset="">

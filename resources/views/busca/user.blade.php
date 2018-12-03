@@ -62,5 +62,5 @@
           <!-- /.widget-user -->
 </div>
 @endforeach
-</div>
+{{$users->links()}}
 @stop

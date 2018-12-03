@@ -40,4 +40,7 @@ class HomeController extends Controller
             return redirect('/');
         }
     }
+    public function app(){
+        return view('aplicativo');
+    }
 }

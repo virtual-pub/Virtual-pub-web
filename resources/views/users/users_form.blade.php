@@ -41,14 +41,15 @@
             </div>
             
         @if ($acao == 1)
-            <form method="post" action="{{route('users.store')}}">
+            <form method="post" action="{{route('users.store')}}" enctype="multipart/form-data">
         @elseif ($acao == 2) 
-            <form method="post" action="{{route('users.update', $reg->id)}}">
+            <form method="post" action="{{route('users.update', $reg->id)}}" enctype="multipart/form-data">
             {!! method_field('put') !!}
         @endif
             {{ csrf_field() }}
                 <div class="box-body">
 
+                   
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="name">nome:</label>

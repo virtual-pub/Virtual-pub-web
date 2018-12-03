@@ -25,7 +25,7 @@
                 {!! csrf_field() !!}
             <div class="rating">
 
-                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->averageRating }}" data-size="xs">
+                <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $reg->averageRating() }}" data-size="xs">
                 <input type="hidden" name="id" required="" value="{{ $reg->id }}">
                 @if($reg->ratings->count() == 0)
                 <p>Nenhum usuário avaliou a cerveja</p>
@@ -39,11 +39,34 @@
 
             </div>
           </form>
-
+          
       </center>
       <br>
-      <p>{{$reg->descricao}}</p>
-        <ul class="list-group list-group-unbordered">
+      <ul class="list-group list-group-unbordered">
+          <li class="list-group-item text-center">
+              @if(Auth::user()->favoritas()->where('cerveja_id', $reg->id)->first())
+              <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $reg->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
+                  {{ csrf_field() }}
+                  <button type="submit"class="btn bg-teal-active centered"> favoritada </button>
+              </form>
+              @else
+                <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
+                    {{ csrf_field() }}
+                    <button type="submit"class="btn bg-navy centered"> favoritar </button>
+                </form>
+              @endif
+              <br>
+              @if(count($reg->favoritadas) == 0)
+              <p>Nenhum usuário favoritou essa cerveja</p>
+              @elseif(count($reg->favoritadas) == 1)
+              <p><a>{{count($reg->favoritadas)}}</a> usuário favoritou essa cerveja</p>
+              @else
+              <p><a>{{count($reg->favoritadas)}}</a> usuários favoritaram essa cerveja</p>
+              @endif
+          </li>
+          <li class="list-group-item">
+            <p>{{$reg->descricao}}</p> 
+          </li>
           <li class="list-group-item">
              <b>Álcool por Volume</b> <a class="pull-right">{{$reg->ABV}}%</a>
           </li>
@@ -58,24 +81,6 @@
           </li>
           <li class="list-group-item">
             <b>Convenção Europeia de Cervejaria (EBC)</b> <a class="pull-right">{{$reg->EBC}}</a>
-          </li>
-          <li class="list-group-item">
-              <div class="text-center">
-                 
-              
-                  @if(Auth::user()->favoritas()->where('cerveja_id', $reg->id)->first())
-                  <form style="display: inline-block"method="post" action="{{route('cerveja.desfazer', $reg->id)}}" onsubmit="return confirm('Quer realmente desfazer?')">   
-                      {{ csrf_field() }}
-                      <button type="submit"class="btn btn-success centered"> favoritada </button>
-                  </form>
-                  @else
-                    <form style="display: inline-block"method="post" action="{{route('cerveja.favoritar', $reg->id)}}" onsubmit="return confirm('Deseja fazoritar esta cerveja?')">   
-                        {{ csrf_field() }}
-                        <button type="submit"class="btn btn-primary centered"> favoritar </button>
-                    </form>
-                      @endif
-                
-              </div>
           </li>
         </ul>
       </div>
@@ -135,11 +140,6 @@
         <p>{{$reg->copo->descricao}}</p>
       </div>
     </div>
-  </div>
-  <div class="col-sm-12">
-      <div class="box-footer">
-          
-        </div>
   </div>
 </div>
 @stop

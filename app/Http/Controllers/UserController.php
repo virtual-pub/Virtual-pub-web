@@ -117,10 +117,13 @@ class UserController extends Controller
         }
         
         $reg = User::find($id);
+        $user = Auth::user();
 
         $dados = $request->all();
 
         $alt = $reg->update($dados);
+
+        $user->save();
 
         if ($alt) {
             return redirect()->route('users.show', $reg->id);
@@ -299,6 +302,15 @@ class UserController extends Controller
         $dados = $reg->followings;
 
         return view('users.relation', ['users' => $dados]);
+    }
+
+    public function update_avatar(Request $request){
+
+        
+
+        return back()
+            ->with('success','You have successfully upload image.');
+
     }
  
 }
