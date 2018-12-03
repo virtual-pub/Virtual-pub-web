@@ -284,7 +284,7 @@ class UserController extends Controller
         
     }
     public function pesq(Request $request) {
-        $dados = User::where('name', 'like','%'.$request->palavra.'%')->get();
+        $dados = User::where('name', 'like','%'.$request->palavra.'%')->paginate(2);
 
         return view('busca.user', ['users' => $dados,
                          'palavra' => $request->palavra]);
@@ -302,15 +302,6 @@ class UserController extends Controller
         $dados = $reg->followings;
 
         return view('users.relation', ['users' => $dados]);
-    }
-
-    public function update_avatar(Request $request){
-
-        
-
-        return back()
-            ->with('success','You have successfully upload image.');
-
     }
  
 }

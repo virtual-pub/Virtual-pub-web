@@ -447,6 +447,9 @@ class CervejaController extends Controller
 
 
         public function ponderacao(){
+            if(Auth::user()->favoritas()->first() == 0){
+                return -1;
+            }
             $reg = Auth::user()->id;
             // selecina os 5 maiores valores de estilo favoritados pelo usúario
             $elementos = DB::select('SELECT valor, estilo_id FROM tags WHERE user_id = :user_id ORDER BY valor DESC LIMIT 5', ['user_id' => $reg]);
@@ -503,27 +506,34 @@ class CervejaController extends Controller
             $id1 = $this->ponderacao();
             $id2 = $this->ponderacao();
             $id3 = $this->ponderacao();
-            $estilo = Estilo::all();
+            $estilo = Estilo::all()->count();
 
             if($id1 == -1){
-                $random = rand($estilo);
-                $id1 = $random;
+                do{
+                    $random = rand(1, $estilo);
+                    $id1 = $random;
+                }while(Cerveja::where('estilo_id', $id1)->exists() == false);
             }
             if($id2 == -1){
-                $random = rand($estilo);
+                do{
+                $random = rand(1, $estilo);
                 $id2 = $random;
+                }while(Cerveja::where('estilo_id', $id2)->exists() == false);
             }
             if($id3 == -1){
-                $random = rand($estilo);
+            do{
+                $random = rand(1, $estilo);
                 $id3 = $random;
+                }while(Cerveja::where('estilo_id', $id3)->exists() == false);
             }
-        
-
+            
             $cervejas = Array( 
                 Cerveja::where('ativo', 1)->where('estilo_id', $id1)->inRandomOrder()->first(),
                 Cerveja::where('ativo', 1)->where('estilo_id', $id2)->inRandomOrder()->first(),
                 Cerveja::where('ativo', 1)->where('estilo_id', $id3)->inRandomOrder()->first()
             );
+            
+
             
             //fazer função para não repetir elementos do vetor
             return view('testeview', compact('cervejas'));

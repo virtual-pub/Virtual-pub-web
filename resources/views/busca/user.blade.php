@@ -15,27 +15,27 @@
 
 @section('content')
 <div class="row">
-@foreach($users as $reg)
-<div class="col-sm 12 col-md-3">
+  @foreach($users as $reg)
+  <div class="col-sm 12 col-md-3">
     <!-- Widget: user widget style 1 -->
-  <div class="box box-widget widget-user">
+    <div class="box box-widget widget-user">
       <!-- Add the bg color to the header using any of the bg-* classes -->
       @if($reg->isFabricante)
-    <div class="widget-user-header bg-yellow-active">
+      <div class="widget-user-header bg-yellow-active">
       @else  
-    <div class="widget-user-header bg-aqua-active">
+      <div class="widget-user-header bg-aqua-active">
       @endif    
       <h3 class="widget-user-username">@if($reg->isFabricante){{$reg->fabricante_name}}@else{{$reg->name}}@endif</h3>    
-    </div>
-    <div class="widget-user-image">
-      <img class="img-circle" src="{{$reg->avatar}}" alt="User Avatar">
-    </div>
+      </div>
+      <div class="widget-user-image">
+        <img class="img-circle" src="{{$reg->avatar}}" alt="User Avatar">
+      </div>
       
-    <div class="row">
-      <div class="col-sm-6 border-right">
-        <div class="description-block">
-          <h5 class="description-header">{{$reg->followings()->count()}}</h5>
-          <span class="description-text">SEGUINDO</span>
+      <div class="row">
+        <div class="col-sm-6 border-right">
+          <div class="description-block">
+            <h5 class="description-header">{{$reg->followings()->count()}}</h5>
+            <span class="description-text">SEGUINDO</span>
         </div>
                   <!-- /.description-block -->
       </div>
@@ -60,7 +60,10 @@
     </div>
   </div>
           <!-- /.widget-user -->
+        </div>
+        @endforeach
+  </div>
+<div class="row">
+  {{$users->links()}}
 </div>
-@endforeach
-{{$users->links()}}
 @stop
